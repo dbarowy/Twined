@@ -1,2 +1,2 @@
-open 
+open Combinator
 module Par
