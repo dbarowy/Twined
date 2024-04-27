@@ -2,6 +2,7 @@
 open Eval 
 open AST
 open Combinator
+open System.IO
 
 [<EntryPoint>]
 let main argv = 
@@ -13,12 +14,12 @@ let main argv =
 
     (* read in the input file *)
     let file = argv.[0]
-    // let input = File.ReadAllText file
+    let input = File.ReadAllText file
 
     (* does the user want parser debugging turned on? *)
     let do_debug = if argv.Length = 2 then true else false
 
-    let ast = parse file do_debug
+    let ast = parse input do_debug
     printfn "%A" ast
 
     0
