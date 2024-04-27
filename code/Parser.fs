@@ -3,8 +3,8 @@ module Par
 open Combinator
 
 type Expr =
-| Node of string * Expr
-| Node_list of string list
+| Node of Expr * Expr
+| Node_list of Expr list
 | Str of string
 | Num of int
 | EString of string
@@ -12,13 +12,13 @@ type Expr =
 | Assignment of Expr * Expr
 | Plus of Expr * Expr
 | Print of Expr
-| Sequence of Expr list
 
 
-(*a parser that takes either a variable, abstraction or application parser*)
+(*a parser allows later definition of expr*)
 let expr, exprImpl = recparser()
 
-let node_name = pmany1 (pletter <|> pdigit) |>> stringify
+
+let node_name = pmany1 (pletter <|> pdigit) |>> stringify |>> Str
 
 (*a parser that parses abstractions taking the form (L<var>.<expr>)*)
 let node_list : Parser<Expr> = pbetween
@@ -26,7 +26,7 @@ let node_list : Parser<Expr> = pbetween
                                         (pseq
                                             (pleft node_name  (pchar ','))
                                             expr
-                                            (fun (c,cs) -> Node_list(c::cs))
+                                            (fun c -> Node(c))
                                         )
                                         (pchar ')')
 
@@ -37,7 +37,7 @@ let node: Parser<Expr> =
         (pseq
             (pleft node_name  (pchar ','))
             node_list
-            (fun c -> Node(c))
+            (fun (c, cs) -> Node(c, cs))
         )
         (pchar '}')
 

@@ -11,5 +11,7 @@ let main argv =
     else
         let input = argv[0]
         let ast = parse input
+        printfn "%A" ast
+        
         0
 
