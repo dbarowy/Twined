@@ -3,30 +3,49 @@ module Par
 open Combinator
 
 type Expr =
-| Node of string * Expr list
-| Variable of char 
+| Node of string * string list
+| Node_list of string list
 | Abstraction of char * Expr 
-| Application of Expr * Expr
+
 
 (*a parser that takes either a variable, abstraction or application parser*)
 let expr, exprImpl = recparser()
 
-(*parses a node*)
-let node: Parser<Expr> = pmany1 (pletter <|> pdigit) |>> stringify |>> (fun s -> Node(s,[]))
+let node_name = pmany1 (pletter <|> pdigit) |>> stringify //
 
-let node_list: Parser<Expr> = failwith "1"
+(*parses a single node*)
+let node: Parser<Expr> = 
+    pbetween
+        (pstr "{")
+        (pseq
+            (pleft node_name  (pchar ','))
+            expr
+            (fun c -> Node(c))
+        )
+        (pchar '}')
+
+
+// (*trying to parse a list of nodes are connected to the starting node*)
+// let node_in_list: Parser<Expr> = 
+//     (pseq
+//         (pleft node  (pchar ','))
+//         (expr)
+//         (fun c -> n)
+//     )
+                                    
+                                    // pmany1 (pletter <|> pdigit) |>> stringify |>> (fun s -> Node(s,[]))
 
 (*a parser that parses abstractions taking the form (L<var>.<expr>)*)
-let graph_list : Parser<Expr> = pbetween
+let node_list : Parser<Expr> = pbetween
                                         (pstr "(")
                                         (pseq
-                                            (pleft node  (pchar ':'))
-                                            (expr)
-                                            (fun c -> Abstraction(c))
+                                            (pleft node_name  (pchar ','))
+                                            expr
+                                            (fun (c,cs) -> Node_list(c::cs))
                                         )
                                         (pchar ')')
 
-(*a parser that pares applications given in the form (<expr><expr>)*)
+(*here as a template*)
 let application : Parser<Expr> =  pbetween
                                         (pstr "(")
                                         (pseq
@@ -36,11 +55,9 @@ let application : Parser<Expr> =  pbetween
                                         )
                                         (pchar ')')
 
-(*the implimentation of the expression parser*)
-exprImpl := variable <|> abstraction <|> application
+(*here as a template*)
+exprImpl := graph_list <|> abstraction <|> application
 
-
-let expr = pmany0 (pstr "aa")
 
 (* pad p
  *   Parses p, surrounded by optional whitespace.
