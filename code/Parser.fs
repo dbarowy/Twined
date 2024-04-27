@@ -5,13 +5,20 @@ open Combinator
 type Expr =
 | Node of string * Expr
 | Node_list of string list
-| Abstraction of char * Expr 
+| Str of string
+| Num of int
+| EString of string
+| Variable of string
+| Assignment of Expr * Expr
+| Plus of Expr * Expr
+| Print of Expr
+| Sequence of Expr list
 
 
 (*a parser that takes either a variable, abstraction or application parser*)
 let expr, exprImpl = recparser()
 
-let node_name = pmany1 (pletter <|> pdigit) |>> stringify //
+let node_name = pmany1 (pletter <|> pdigit) |>> stringify
 
 (*a parser that parses abstractions taking the form (L<var>.<expr>)*)
 let node_list : Parser<Expr> = pbetween
@@ -35,30 +42,7 @@ let node: Parser<Expr> =
         (pchar '}')
 
 
-// (*trying to parse a list of nodes are connected to the starting node*)
-// let node_in_list: Parser<Expr> = 
-//     (pseq
-//         (pleft node  (pchar ','))
-//         (expr)
-//         (fun c -> n)
-//     )
-                                    
-                                    // pmany1 (pletter <|> pdigit) |>> stringify |>> (fun s -> Node(s,[]))
-
-
-
-// (*here as a template*)
-// let application : Parser<Expr> =  pbetween
-//                                         (pstr "(")
-//                                         (pseq
-//                                             expr
-//                                             expr
-//                                             (fun c -> Application(c))
-//                                         )
-//                                         (pchar ')')
-
-(*here as a template*)
-exprImpl := node // <|> application
+exprImpl := node <|> node_list
 
 
 (* pad p
@@ -66,15 +50,11 @@ exprImpl := node // <|> application
  *)
 let pad p = pbetween pws0 p pws0
 
-let graph = pad (pstr "aa")
+let graph = pad (node)
 
-let g_expr = pright graph expr
+let grammar = pleft graph peof
 
-let grammar = pleft g_expr peof
-
-let parse (input:string) : Expr option =
-    match grammar (prepare input) with
-    |Success(ast,_) -> Some ast
-    |Failure(_,_) -> None
-
-
+let parse (s:string) : Expr option =
+    match grammar (prepare s) with 
+    | Success(ex,_) -> Some ex
+    | Failure(_,_) -> None
