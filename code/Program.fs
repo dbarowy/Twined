@@ -16,9 +16,10 @@ let main argv =
 
     (* does the user want parser debugging turned on? *)
     let do_debug = if argv.Length = 2 then true else false
+    printfn "%A" do_debug
 
     (* try to parse what they gave us *)
-    let ast_maybe = parse file do_debug
+    // let ast_maybe = parse file do_debug
     // match ast_maybe with
     //                     | Some ast ->
     //                         printfn "%A" ast
@@ -36,9 +37,7 @@ let main argv =
 
 
 
-
-    let input = argv[0]
-    let ast = parse input
+    let ast = parse file do_debug
     printfn "%A" ast
 
     0
