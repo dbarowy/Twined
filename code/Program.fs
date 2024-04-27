@@ -1,6 +1,15 @@
 ﻿open Par
-open Exal
+open Eval 
+open AST
+open Combinator
 
+[<EntryPoint>]
+let main argv = 
+    if argv.Length <> 1 then
+        printfn "usage dotnet run \"string to parse\""
+        exit 1
+    else
+        let input = argv[0]
+        let ast = parse input
+        0
 
-// For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
