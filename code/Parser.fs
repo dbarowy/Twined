@@ -54,7 +54,14 @@ let graph = pad (node)
 
 let grammar = pleft graph peof
 
-let parse (s:string) : Expr option =
-    match grammar (prepare s) with 
-    | Success(ex,_) -> Some ex
-    | Failure(_,_) -> None
+
+let parse (input: string)(do_debug: bool) : Expr option =
+    let i = (if do_debug then debug else prepare) input
+    match grammar i with
+    | Success(ast,_) -> Some ast
+    | Failure(_,_)   -> None
+
+// let parse (s:string) : Expr option =
+//     match grammar (prepare s) with 
+//     | Success(ex,_) -> Some ex
+//     | Failure(_,_) -> None
