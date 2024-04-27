@@ -11,6 +11,7 @@ type Expr =
 | Variable of string
 | Assignment of Expr * Expr
 | Plus of Expr * Expr
+| Empty of int
 | Print of Expr
 
 
@@ -33,7 +34,7 @@ let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!
 let node_list : Parser<Expr> = pbetween
                                         (pstr "(")
                                         (pseq
-                                            (pleft pad_node_name  (pchar ','))
+                                            (pleft pad_node_name  (pmany0 (pchar ',')))
                                             (pmany0 node_in_list)
                                             (fun (c,cs) -> Node_list(c::cs))
                                         )
@@ -55,7 +56,6 @@ let node: Parser<Expr> =
 let pad_node = pad node <!> "pad_node"
 
 let pad_list_of_nodes: Parser<Expr> = pad (pmany1 pad_node) |>> Node_list <!> "list of nodes"
-
 
 exprImpl := pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_node_list 
 
