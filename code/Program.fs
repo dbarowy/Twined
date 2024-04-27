@@ -8,8 +8,7 @@ open System.IO
 let main argv = 
 
     if argv.Length <> 1 && argv.Length <> 2 then
-        printfn "Usage: dotnet run \"{node, (node2, node3, node4)} {node2, (node, node3)}\" [debug]"
-        // printfn "Usage: dotnet run <file> [debug]"
+        printfn "Usage: dotnet run <file> [debug]"
         exit 1
 
     (* read in the input file *)
@@ -21,6 +20,5 @@ let main argv =
 
     let ast = parse input do_debug
     printfn "%A" ast
-
     0
 

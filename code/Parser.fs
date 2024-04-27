@@ -6,13 +6,7 @@ type Expr =
 | Node of Expr * Expr
 | Node_list of Expr list
 | Str of string
-| Num of int
-| EString of string
-| Variable of string
-| Assignment of Expr * Expr
-| Plus of Expr * Expr
-| Empty of int
-| Print of Expr
+
 
 
 (* pad p
@@ -23,14 +17,16 @@ let pad p = pbetween pws0 p pws0
 (*a parser allows later definition of expr*)
 let expr, exprImpl = recparser()
 
-
+(*takes a series of characters or strings as the name for a node*)
 let node_name = pmany1 (pletter <|> pdigit) |>> stringify |>> Str
 
+(*allows whitespace infron of or behind a nodename*)
 let pad_node_name = pad node_name
 
+(*reads in a series of strings separated by spaces or "," and put them in a list of connections*)
 let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!> "node in list"
 
-(*a parser that parses abstractions taking the form (L<var>.<expr>)*)
+(*parses a list of nodes that share an edge with the node associated with the list*)
 let node_list : Parser<Expr> = pbetween
                                         (pstr "(")
                                         (pseq
@@ -40,9 +36,10 @@ let node_list : Parser<Expr> = pbetween
                                         )
                                         (pchar ')') <!> "node list"
 
+(*pads a node list to allow for whitespace*)
 let pad_node_list = pad node_list
 
-(*parses a single node*)
+(*parses a single node to see the name of the node and the names of the nodes it is connected to*)
 let node: Parser<Expr> = 
     pbetween
         (pstr "{")
@@ -53,22 +50,20 @@ let node: Parser<Expr> =
         )
         (pchar '}') <!> "node"
 
+(*allows whitespace before and after a node*)
 let pad_node = pad node <!> "pad_node"
 
+(*parses a list of one or more nodes in a graph*)
 let pad_list_of_nodes: Parser<Expr> = pad (pmany1 pad_node) |>> Node_list <!> "list of nodes"
 
 exprImpl := pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_node_list 
 
+(*defines how language can be interpreted*)
 let grammar = pleft expr peof
 
-
+(*parses a string to determine if the grammar is followed, if yes returns an AST if not returns none*)
 let parse (input: string)(do_debug: bool) : Expr option =
     let i = (if do_debug then debug else prepare) input
     match grammar i with
     | Success(ast,_) -> Some ast
     | Failure(_,_)   -> None
-
-// let parse (s:string) : Expr option =
-//     match grammar (prepare s) with 
-//     | Success(ex,_) -> Some ex
-//     | Failure(_,_) -> None

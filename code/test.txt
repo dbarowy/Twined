@@ -1,3 +1,3 @@
 {bob, (sally, jonny, sarah)}
 {jim, (sally, bob, sarah)}
-{jonny, (jim, sally, bob)}
+{jonny, (0)}
