@@ -24,7 +24,7 @@ VERSION_0.4
 
 VERSION_0.3
 
-      FOLDERS INPUT/OUTPUT: 
+    FOLDERS INPUT/OUTPUT: 
 
         - added folders to help with clutter, text folder holds text files that contain Graphviz
         representations of a text file
@@ -34,6 +34,9 @@ VERSION_0.3
         - probably need a better system for this but for now it helps with readibility
 
     FILE: Parser.fs
+
+        CHANGES:
+            - added ability to have spaces in node names
 
         ISSUE:
             - I think that we need to adapt the parser to handle better cases of text input. Currently, 

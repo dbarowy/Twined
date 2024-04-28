@@ -11,7 +11,7 @@ let pad p = pbetween pws0 p pws0
 let expr, exprImpl = recparser()
 
 (*takes a series of characters or strings as the name for a node*)
-let node_name = pmany1 (pletter <|> pdigit) |>> stringify |>> Str
+let node_name = pmany1 (pletter <|> pdigit <|> pchar ' ') |>> stringify |>> Str
 
 (*allows whitespace infront of or behind a nodename*)
 let pad_node_name = pad node_name

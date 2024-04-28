@@ -1,5 +1,5 @@
 digraph G {
-"Sunlight" -> "PlantGrowth";
+"Sunlight love" -> "PlantGrowth";
 "Water" -> "PlantGrowth";
 "SoilNutrients" -> "PlantGrowth";
 }
