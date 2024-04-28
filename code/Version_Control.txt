@@ -12,9 +12,10 @@ HOW TO TRACK VERSIONS:
     2. Update the version number (e.g., VERSION_0.1, VERSION_1.0) in each block when making changes or adding features.
     3. Maintain a log of changes under each version number to track the evolution of the project.
 
+
 ################################################
 
-VERSION_0.0
+VERSION_0.1
 
     FILE: AST.fs
 
@@ -24,6 +25,7 @@ VERSION_0.0
 
         CHANGES
             - Initial Tests
+            - Updated type values, removed from parser
 
     FILE: Evaluator.fs
 
@@ -55,7 +57,9 @@ VERSION_0.0
         CHANGES
             - Initial Tests
 
-VERSION_0.1
+################################################
+
+VERSION_0.0
 
     FILE: AST.fs
 
@@ -65,7 +69,6 @@ VERSION_0.1
 
         CHANGES
             - Initial Tests
-            - Updated type values, removed from parser
 
     FILE: Evaluator.fs
 
