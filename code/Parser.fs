@@ -1,13 +1,6 @@
 module Par
-//open AST
+open AST
 open Combinator
-
-type Expr =
-| Node of Expr * Expr
-| Node_list of Expr list
-| Str of string
-
-
 
 (* pad p
  *   Parses p, surrounded by optional whitespace.
