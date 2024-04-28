@@ -1,0 +1,3 @@
+{Sunlight, (PlantGrowth)}
+{Water, (PlantGrowth)}
+{SoilNutrients, (PlantGrowth)}

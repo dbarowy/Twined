@@ -16,18 +16,18 @@ let node_name = pmany1 (pletter <|> pdigit) |>> stringify |>> Str
 (*allows whitespace infront of or behind a nodename*)
 let pad_node_name = pad node_name
 
-(*reads in a series of strings separated by spaces or "," and put them in a list of connections*)
+// (*reads in a series of strings separated by spaces or "," and put them in a list of connections*)
 let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!> "node in list"
 
 (*parses a list of nodes that share an edge with the node associated with the list*)
 let node_list : Parser<Expr> = pbetween
-                                        (pstr "(")
+                                         (pstr "(")
                                         (pseq
-                                            (pleft pad_node_name  (pmany0 (pchar ',')))
-                                            (pmany0 node_in_list)
-                                            (fun (c,cs) -> Node_list(c::cs))
-                                        ) //<|> (pchar '0') |>> int |>> Num) trying to make lists empty
-                                        (pchar ')') <!> "node list"
+                                             (pleft pad_node_name  (pmany0 (pchar ',')))
+                                             (pmany0 node_in_list)
+                                             (fun (c,cs) -> Node_list(c::cs))
+                                         ) //<|> (pchar '0') |>> int |>> Num) trying to make lists empty
+                                         (pchar ')') <!> "node list"
 
 (*pads a node list to allow for whitespace*)
 let pad_node_list = pad node_list

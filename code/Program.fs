@@ -1,13 +1,11 @@
 ﻿open Par
-open Eval 
+open Eval
 open AST
 open Combinator
 open System.IO
 
 [<EntryPoint>]
-
-let main argv = 
-
+let main argv =
     if argv.Length <> 1 && argv.Length <> 2 then
         printfn "Usage: dotnet run <file> [debug]"
         exit 1
@@ -20,6 +18,16 @@ let main argv =
     let do_debug = if argv.Length = 2 then true else false
 
     let ast = parse input do_debug
-    printfn "%A" ast
-    0
 
+    match ast with
+    | Some ast ->
+        let gvText = evalExpr ast
+        File.WriteAllText("gv.txt", gvText)
+        printfn "Graph representation written to gv.txt"
+        
+        (* To generate the SVG file, we can use the following command:
+         dot gv.txt -Tsvg > graph.svg *)
+    | None ->
+        printfn "Failed to parse input"
+
+    0
