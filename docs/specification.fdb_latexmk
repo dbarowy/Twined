@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1714267859.29506 "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" "specification.pdf" "specification" 1714267861.34363 0
+["pdflatex"] 1714268293.22834 "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" "specification.pdf" "specification" 1714268295.19465 0
   "C:/Users/lucas/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714266509 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/lucas/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1714267740 11548 93fde1d36b00bc3621adfbd3d149ba6b ""
   "C:/Users/lucas/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713450572 24236006 a654c3f99abdbd6e7b4febab21686415 ""
@@ -186,6 +186,7 @@
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657800696 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/sectsty/sectsty.sty" 1469029225 23038 d476012cd03f82f9475ad54ba6cd3267 ""
+  "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/setspace/setspace.sty" 1670403145 22490 8cac309b79a4c53a4ffce4b1b07aead0 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/todonotes/todonotes.sty" 1704622898 21404 916e19cbd009b6d289c8194b313d3895 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/tools/calc.sty" 1700599895 10214 547fd4d29642cb7c80bf54b49d447f01 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/tools/enumerate.sty" 1700599895 3468 0ef513f22d965f96b06adb5cff671cd7 ""
@@ -194,10 +195,10 @@
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
-  "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" 1714267858 5335 f5c7d3ea09e0184451bd9d9b3a230682 ""
-  "specification.aux" 1714267860 1225 73835c9de4dca70de7d298d469215f07 "pdflatex"
-  "specification.out" 1714267860 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "specification.tex" 1714267858 5335 f5c7d3ea09e0184451bd9d9b3a230682 ""
+  "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" 1714268290 5394 79943f1615036771636a778f7d8a5e15 ""
+  "specification.aux" 1714268294 1226 017b1fd392051b5602b247cf8139169f "pdflatex"
+  "specification.out" 1714268294 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "specification.tex" 1714268290 5394 79943f1615036771636a778f7d8a5e15 ""
   (generated)
   "specification.aux"
   "specification.log"

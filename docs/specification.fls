@@ -302,6 +302,8 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\setspace\setspace.sty
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\setspace\setspace.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
@@ -348,7 +350,6 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\sym
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb7t.tfm
-INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr7t.vf
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
 INPUT C:\Users\lucas\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
@@ -359,6 +360,7 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb7t.v
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr7t.vf
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT specification.aux
 INPUT .\specification.out
 INPUT .\specification.out
