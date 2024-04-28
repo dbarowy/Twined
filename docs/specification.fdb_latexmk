@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1714268293.22834 "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" "specification.pdf" "specification" 1714268295.19465 0
+["pdflatex"] 1714268797.12033 "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" "specification.pdf" "specification" 1714268799.14175 0
   "C:/Users/lucas/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714266509 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/lucas/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1714267740 11548 93fde1d36b00bc3621adfbd3d149ba6b ""
   "C:/Users/lucas/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1713450572 24236006 a654c3f99abdbd6e7b4febab21686415 ""
@@ -195,10 +195,10 @@
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "C:/Users/lucas/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
-  "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" 1714268290 5394 79943f1615036771636a778f7d8a5e15 ""
-  "specification.aux" 1714268294 1226 017b1fd392051b5602b247cf8139169f "pdflatex"
-  "specification.out" 1714268294 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "specification.tex" 1714268290 5394 79943f1615036771636a778f7d8a5e15 ""
+  "c:/Users/lucas/Projects/CS/Final Project/cs334-project-la5-zss1/docs/specification.tex" 1714268796 5700 0570f70d71a69be90fc987061a9c3ea6 ""
+  "specification.aux" 1714268798 1226 8a8aba9e876f0085c8ff3f28f2a55847 "pdflatex"
+  "specification.out" 1714268798 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "specification.tex" 1714268796 5700 0570f70d71a69be90fc987061a9c3ea6 ""
   (generated)
   "specification.aux"
   "specification.log"
