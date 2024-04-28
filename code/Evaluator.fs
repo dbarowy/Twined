@@ -12,10 +12,10 @@ open AST
 let rec evalExpr (expr: Expr) : string =
     match expr with
     (* Handle the case where the expression is a Node containing a string and a list of expressions. *)
-    | Node (Str n, Node_list ns) ->
+    | Node (Str n, Edge_list ns) ->
         ns (* 'ns' is a list of expressions that are the children or connected nodes of 'n'. *)
         |> List.collect (function  (* Map each element to a new list and concatenate all lists. *)
-            | Node_list ns' -> ns' (* If the element is a Node_list, use its inner list. *)
+            | Edge_list ns' -> ns' (* If the element is a Node_list, use its inner list. *)
             | Num n -> [Str (string n)] (* If it's a number, convert to string and wrap in Str. *)
             | Str s -> [Str s] (* If it's a string, wrap it in Str to maintain type consistency. *)
             | _ -> failwith "Invalid expression" 
@@ -25,7 +25,7 @@ let rec evalExpr (expr: Expr) : string =
         |> String.concat "\n" (* Concatenate all formatted strings with new lines between them. *)
     
     (* Handle the case where the expression is a list of nodes. *)
-    | Node_list ns ->
+    | Edge_list ns ->
         (* Begin a DOT graph declaration. *)
         "digraph G {\n" + 
         (* Recursively evaluate each expression in the list and concatenate them, separated by new lines. *)
