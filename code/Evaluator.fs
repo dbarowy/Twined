@@ -3,6 +3,7 @@ open AST
 open Combinator
 open System
 
-(* Represents a variable environment *)
-
+(*Holds the data from each node in a
+* dictionary, each node name will be a key that map to
+* its data *)
 type Env = Map<string,Expr>

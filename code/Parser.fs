@@ -26,7 +26,7 @@ let node_list : Parser<Expr> = pbetween
                                             (pleft pad_node_name  (pmany0 (pchar ',')))
                                             (pmany0 node_in_list)
                                             (fun (c,cs) -> Node_list(c::cs))
-                                        )
+                                        ) //<|> (pchar '0') |>> int |>> Num) trying to make lists empty
                                         (pchar ')') <!> "node list"
 
 (*pads a node list to allow for whitespace*)
