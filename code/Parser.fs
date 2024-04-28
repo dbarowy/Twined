@@ -20,7 +20,7 @@ let expr, exprImpl = recparser()
 (*takes a series of characters or strings as the name for a node*)
 let node_name = pmany1 (pletter <|> pdigit) |>> stringify |>> Str
 
-(*allows whitespace infron of or behind a nodename*)
+(*allows whitespace infront of or behind a nodename*)
 let pad_node_name = pad node_name
 
 (*reads in a series of strings separated by spaces or "," and put them in a list of connections*)

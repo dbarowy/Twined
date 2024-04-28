@@ -5,6 +5,7 @@ open Combinator
 open System.IO
 
 [<EntryPoint>]
+
 let main argv = 
 
     if argv.Length <> 1 && argv.Length <> 2 then
