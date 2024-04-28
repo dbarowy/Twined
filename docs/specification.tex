@@ -54,7 +54,7 @@
 
 \title{SnappyLanguageName Language Specification} % Replace SnappyLanguageName with your project's name
 
-\author{Partner One \and Parnter Two} % Replace these with real partner names.
+\author{Lucas Weissman \and Zach Sturdevant} % Replace these with real partner names.
 
 \begin{document}
   
@@ -62,27 +62,89 @@
 
 \subsection*{Introduction}
 
+"Twined" represents a transformative approach in how we manage and interact
+ with textual information. By converting unstructured text data from diverse 
+ note-taking formats into structured, navigable knowledge graphs, "Twined" 
+ provides a unique visual perspective that enhances comprehension and analysis.
+
 \todo[inline]{Delete this TODO and replace with 2+ paragraphs.}
+
+Brainstorming Section:
+
+“Twined” intertwines user’s information by managing and interacting with textual 
+information. It converts unstructured text data from various note-taking formats 
+into structured, navigable knowledge graphs. This will allow users to quickly 
+visualize connections and gain insights that might be missed in traditional 
+textual data formats. 
 
 \subsection*{Design Principles}
 
+
 \todo[inline]{Delete this TODO and replace with 1+ paragraphs.}
+
+Brainstorming Section:
+
+Rules:
+Graph Rule: {x, y}, {x, z} → {x, z}, {x, w}, {y, w}, {z, w}
+Hypergraph Rule: {x, y, z} → {x, u, v}, {z, v, w}, {y, w, u}
+
+Examples:
+graph: {Sunlight,Plant Growth},{Water,Plant Growth},{Soil Nutrients,Plant Growth}
+hypergraph: {Sunlight,Water,Soil Nutrients,Plant Growth},{Temperature,Humidity,Water,Plant Growth}
+
+
+A hypergraph is defined as a collection of nodes and hyperedges, where each 
+hyperedge has the capability to connect three or more nodes, unlike traditional
+graphs where edges connect only two nodes. In terms of mathematical 
+representation, edges in standard graphs are noted as pairs of numbers within 
+curly brackets, such as {1, 2}. Conversely, in hypergraphs, hyperedges 
+that connect multiple nodes are denoted by three or more numbers within 
+curly brackets, for example, {1, 2, 3}. Visually, in graphs, edges are depicted
+as connections between white dots (nodes) using white arrows (edges). 
+Hypergraphs extend this visualization by linking three or more white dots 
+(nodes) with multiple arrows and a transparent white web, highlighting the
+complex relationships between nodes.
+
 
 \subsection*{Examples}
 
 \todo[inline]{Delete this TODO and replace with 3+ examples and accompanying descriptions.}
+Brainstorming Section
 
 \subsection*{Language Concepts}
 
+The language concepts behind "Twined" incorporate elements from graph theory 
+and data visualization to support the creation of knowledge graphs and 
+hypergraphs. These concepts are integral in defining how textual data is parsed, 
+how entities within the text are identified as nodes, and how relationships (edges)
+are established based on the context and content of the data. This allows "Twined"
+to dynamically interpret and display information in a way that highlights
+both hierarchical and associative relationships.
+
 \todo[inline]{Delete this TODO and replace with 1+ paragraphs.}
+Brainstorming Section
+
+Terms to be used/contextualized:
+Graph Theory
+Data Visualization
+Knowledge Graphs
+Hypergraphs
+Parsing
+Nodes
+Edges
+Hierarchical Relationships
+Associative Relationships
 
 \subsection*{Formal Syntax}
 
 \todo[inline]{Delete this TODO and replace with BNF.}
+Brainstorming Section
 
 \subsection*{Semantics}
 
 \todo[inline]{Delete this TODO and replace with as much text as is needed.}
+Brainstorming Section
+
 
 % DO NOT DELETE ANYTHING BELOW THIS LINE
 \end{document}
