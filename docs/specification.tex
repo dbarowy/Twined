@@ -21,6 +21,7 @@
 \usepackage{todonotes}
 \usepackage{setspace}
 
+
 % This will set LaTeX to look for figures in the same directory as the .tex file
 \graphicspath{.} % The dot means current directory.
 
@@ -82,8 +83,6 @@
  hypergraph: {Sunlight,Water,Soil Nutrients,Plant Growth},{Temperature,Humidity,Water,Plant Growth}
  \singlespacing
 
- 
-
 
 \singlespacing
 \todo[inline]{Delete this TODO and replace with 2+ paragraphs.}
@@ -110,6 +109,11 @@ Hypergraphs extend this visualization by linking three or more white dots
 (nodes) with multiple arrows and a transparent white web, highlighting the
 complex relationships between nodes.
 
+\singlespacing
+PS. We might adjust the intro to fit within the context of our current 
+deliverables, or we could state the end goal briefily and current stage 
+we are in with the test cases we have built. - Lucas
+
 \newpage
 \subsection*{Design Principles}
 
@@ -123,10 +127,40 @@ Brainstorming Section:
 \newpage
 \subsection*{Examples}
 
+
+
+\begin{figure}[!hb]
+    \centering
+    \includegraphics[width=0.3\linewidth]{images/family_test_0.1.png} 
+    \caption{Family Relationship}
+    \label{figure 1:}
+\end{figure}
+
+This graph represents the relationships between family individuals. Each node represents 
+a person, and each edge represents a direct relationship between two individuals. For example,
+"bob" has relationships with "sally," "jonny," and "sarah," as depicted by the edges 
+connecting their respective nodes. 
+
+\begin{figure}[!hb]
+    \centering
+    \includegraphics[width=0.4\linewidth]{images/plant_test_0.1.png} 
+    \caption{Plant Growth Relationship}
+    \label{figure 2:}
+\end{figure}
+
+The graph represents factors affecting plant growth. Each node represents
+a factor such as "Sunlight," "Water," and "Soil Nutrients," and each edge 
+represents the influence of these factors on "Plant Growth," as depicted 
+by the edges connecting their respective nodes.
+
+
 \singlespacing
 \todo[inline]{Delete this TODO and replace with 3+ examples and accompanying descriptions.}
 Brainstorming Section
 \singlespacing
+
+I have added above an example of image insertion from one of our test cases, we could replace 
+it with a few more/new ones. - Lucas
 
 \newpage
 \subsection*{Language Concepts}
