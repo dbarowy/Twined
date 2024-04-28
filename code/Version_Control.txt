@@ -14,9 +14,38 @@ HOW TO TRACK VERSIONS:
 
 ################################################
 
-VERSION_0.3
+VERSION_0.4
 
     ToBeWritten
+
+################################################
+
+################################################
+
+VERSION_0.3
+
+      FOLDERS INPUT/OUTPUT: 
+
+        - added folders to help with clutter, text folder holds text files that contain Graphviz
+        representations of a text file
+        - test holds text files with desired graphs in them
+        - svg holds output from running the program
+
+        - probably need a better system for this but for now it helps with readibility
+
+    FILE: Parser.fs
+
+        ISSUE:
+            - I think that we need to adapt the parser to handle better cases of text input. Currently, 
+            it can only accept input in the format: {mainEntity, (relatedEntity1, relatedEntity2, ...)}.  
+            
+
+    FILE: Program.fs
+
+        CHANGES
+            - added code that takes the name of the graphviz text file and executes it,
+            stores the outcome in the svg_folder
+
 
 ################################################
 

@@ -3,6 +3,17 @@ open Eval
 open AST
 open Combinator
 open System.IO
+open System.Diagnostics
+
+(*executes a given script as a new process using zsh*)
+let executeScript (filename: string) =
+    let scriptProcess = ProcessStartInfo("zsh", filename)
+    scriptProcess.CreateNoWindow <- true
+    scriptProcess.RedirectStandardOutput <- true
+    scriptProcess.UseShellExecute <- false
+
+    let pro = Process.Start(scriptProcess)
+    pro.WaitForExit() |> ignore
 
 [<EntryPoint>]
 let main argv =
@@ -21,12 +32,18 @@ let main argv =
 
     match ast with
     | Some ast ->
+
+        let file_name = "text_folder/gv.txt"
         let gvText = evalExpr ast
-        File.WriteAllText("gv.txt", gvText)
-        printfn "Graph representation written to gv.txt"
+        File.WriteAllText(file_name, gvText)
+
+        (*generates a .sh file to exicute the graphviz code generating an svg file in
+        the svg folder TODO add ability of user to name the output*)
+        let execution_name = "exe.sh"
+        File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
+        executeScript execution_name
+        printfn "Graph generated, located in svg_folder."
         
-        (* To generate the SVG file, we can use the following command:
-         dot gv.txt -Tsvg > graph.svg *)
     | None ->
         printfn "Failed to parse input"
 

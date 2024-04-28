@@ -1,0 +1,1 @@
+dot -Tsvg text_folder/gv.txt -o svg_folder/graph.svg
