@@ -3,4 +3,8 @@ digraph G {
     Maple->World
     Maple->Hello   
     World->Hello
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7f8fc87dde9d726efb204c5c41e0786abdee0052
