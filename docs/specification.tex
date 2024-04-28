@@ -194,10 +194,50 @@ Associative relationships
 
 \newpage
 \subsection*{Formal Syntax}
-
 \singlespacing
+
+\begin{tabular}{lll}
+    $<\textbf{expression}>$ & ::= & $<\textbf{Node}>$  \\
+                            & $|$  & $<\textbf{edgeList}>$ \\
+                            & $|$  & $<\textbf{nodeName}>$ \\
+                            & $|$  & $<\textbf{listOfNodes}>$ \\
+                            
+    $<\textbf{Node}>$   & ::= & \{ $<\textbf{String}>$, $<\textbf{nodeName}>$ \} \\
+    $<\textbf{nodeName}>$& ::= &  $<\textbf{String}>$ \\
+    $<\textbf{edgeList}>$& ::= & ($<\textbf{nodeName}>$ +) \\
+    $<\textbf{listOfNodes}>$& ::= & $<\textbf{Node}>$ + \\
+    
+    \end{tabular}
+
+\singlespacing   
 \todo[inline]{Delete this TODO and replace with BNF.}
 \singlespacing
+
+\begin{center}
+    \begin{forest}
+      [{$<\textbf{expression}>$} 
+        [{$<\textbf{abstraction}>$}
+          [{$\lambda<\textbf{variable}>$}
+            [{$x$}]
+          ]
+          [{$<\textbf{expression}>$} 
+            [{$<\textbf{application}>$}
+              [{$<\textbf{expression}>$}
+                [{$<\textbf{variable}>$}
+                  [{x}]
+                ]
+              ]
+              [{$<\textbf{expression}>$}
+                [{$<\textbf{variable}>$}
+                  [{y}]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    \end{forest}
+  \end{center}
 
 Brainstorming Section
 
