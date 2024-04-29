@@ -3,6 +3,6 @@ module AST
 type Expr =
 | Node of Expr * Expr
 | Edge_list of Expr list
-| Str of string
+| Node_name of string
 | Num of int
 

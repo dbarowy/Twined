@@ -39,7 +39,10 @@ let main argv =
 
         (*generates a .sh file to exicute the graphviz code generating an svg file in
         the svg folder TODO add ability of user to name the output*)
+        
         let execution_name = "exe.sh"
+        //File.WriteAllText(execution_name, ("dot -Tpng " + file_name + " -o ../docs/images/Fascism.png"))
+
         File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
         executeScript execution_name
         printfn "Graph generated, located in svg_folder."

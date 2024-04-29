@@ -14,10 +14,34 @@ HOW TO TRACK VERSIONS:
 
 ################################################
 
-VERSION_0.4
+VERSION_0.5
 
     ToBeWritten
 
+################################################
+
+################################################
+
+VERSION_0.4
+
+    AST.fs, Parser.fs, Evaluator.fs:
+        - Changed Str to Node_name to improve readibility
+    
+    Parser.fs:
+        - changed edge_list function to allow spaces in node names. This means that every Node_name in
+        a Node_list must be followed by a ',' e.g. (bob, Nancy,) or (bob,)
+
+    text files:
+        - made changes to several for generating new graphs to include in the report
+
+    Program.fs:
+        - todo add capability to input the desired output (png, svg, etc) and name output files 
+
+    specification.tex:
+        - Finished semantics 
+        - added/edited examples
+        - started design principles (dont really think we need both paragraphs but they exist)
+        - added a paragraph to 
 ################################################
 
 ################################################

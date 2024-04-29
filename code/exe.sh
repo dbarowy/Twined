@@ -1,1 +1,1 @@
-dot -Tsvg text_folder/gv.txt -o svg_folder/graph.svg
+dot -Tpng text_folder/gv.txt -o ../docs/images/Fascism.png

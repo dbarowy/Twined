@@ -64,6 +64,9 @@
 
 \subsection*{Introduction}
 
+2+ paragraphs. What problem does your language solve? What makes you think that this problem
+ should have its own programming language?
+
 "Twined" represents a transformative approach in how we manage and interact
  with textual information. By converting unstructured text data from diverse 
  note-taking formats into structured, navigable knowledge graphs, "Twined" 
@@ -82,11 +85,6 @@
  \singlespacing
  hypergraph: {Sunlight,Water,Soil Nutrients,Plant Growth},{Temperature,Humidity,Water,Plant Growth}
  \singlespacing
-
-
-\singlespacing
-\todo[inline]{Delete this TODO and replace with 2+ paragraphs.}
-\singlespacing
 
 Brainstorming Section:
 
@@ -117,8 +115,20 @@ we are in with the test cases we have built. - Lucas
 \newpage
 \subsection*{Design Principles}
 
+1+ paragraphs. Languages can solve problems in many ways. What are the aesthetic or technical 
+ideas that guide its design?
+
 \singlespacing
-\todo[inline]{Delete this TODO and replace with 1+ paragraphs.}
+The goal of this language is to produce useful output with minumal input from the user in an easy to understand
+way. In the current form the user has to design and build the graph themselves, but as continue we plan to add
+features that will allow the user to upload a text and say in english what they hope to get out of it and the
+language will handle the rest. Aesthetic we are attempting to have a simple start that move into a powerful 
+GUI to allow anyone to use the language. 
+
+From a technical stand point we want to utilize generative AI to imporve the ability of people to access
+knowledge in a way that is efficient and allows for multiple kinds of inputs and customization of the
+outputs. Basically use technoligy to make peoples lives better and make knowledge more readily accessable
+to all.
 \singlespacing
 
 Brainstorming Section:
@@ -126,19 +136,32 @@ Brainstorming Section:
 
 \newpage
 \subsection*{Examples}
+\begin{enumerate}
+  \item Program 1 input
+    \begin{verbatium}
+      {Nancy, (Fred, Sally, Sarah,)}
+      {Fred, (Nancy, Sally, Sarah,)}
+      {Sally, (Jeff, Jonny, Timmy,)}
+      {Jeff, (Sally, Jonny, Timmy,)}
+    \end{verbatium}
+  \item Program 1 output
+    \begin{figure}[!hb]
+      \centering
+      \includegraphics[width=0.3\linewidth]{images/family_tree.png} 
+      \caption{Family Relationship}
+      \label{figure 1:}
+    \end{figure}
+    This graph represents the relationships between family individuals. Each node represents 
+    a person, and each edge represents a direct relationship between two individuals. For example,
+    "Nancy" has relationships with "Sally," "Fred," and "Sarah," as depicted by the edges 
+    connecting their respective nodes.
+\end{enumerate}
 
 
-
-\begin{figure}[!hb]
-    \centering
-    \includegraphics[width=0.3\linewidth]{images/family_test_0.1.png} 
-    \caption{Family Relationship}
-    \label{figure 1:}
-\end{figure}
 
 This graph represents the relationships between family individuals. Each node represents 
 a person, and each edge represents a direct relationship between two individuals. For example,
-"bob" has relationships with "sally," "jonny," and "sarah," as depicted by the edges 
+"Nancy" has relationships with "Sally," "Fred," and "Sarah," as depicted by the edges 
 connecting their respective nodes. 
 
 \begin{figure}[!hb]
@@ -153,9 +176,19 @@ a factor such as "Sunlight," "Water," and "Soil Nutrients," and each edge
 represents the influence of these factors on "Plant Growth," as depicted 
 by the edges connecting their respective nodes.
 
+\begin{figure}[!hb]
+  \centering
+  \includegraphics[width=0.5\linewidth]{images/Fascism.png} 
+  \caption{Famious Eureopean Fascists}
+  \label{figure 3:}
+\end{figure}
+
+This graph shows connections between European Fascism and leaders of different Fascist countries.
+Each node represents a topic and how those topics are connected in a top down manner.
+
 
 \singlespacing
-\todo[inline]{Delete this TODO and replace with 3+ examples and accompanying descriptions.}
+
 Brainstorming Section
 \singlespacing
 
@@ -164,6 +197,13 @@ it with a few more/new ones. - Lucas
 
 \newpage
 \subsection*{Language Concepts}
+(What are the core concepts a user needs to understand in order to write programs? 
+Think in terms of both “primitives” and “combining forms.” What are the key ideas and 
+how are they combined?)
+
+Currently the user needs to understand how graph nodes connect. However when comepleted the
+user shouldn't need an understanding of primatives, just input the information they want to explore
+and utilize the GUI to explore the information.
 
 The language concepts behind "Twined" incorporate elements from graph theory 
 and data visualization to support the creation of knowledge graphs and 
@@ -243,9 +283,35 @@ Brainstorming Section
 
 \newpage
 \subsection*{Semantics}
+    \begin{enumerate}
+      \item Primitive values:
+        \begin{enumerate}
+          \item NodeName: A series of characters digits or spaces that represent the name of a node. stored in
+          a string.
+          \item EdgeList: A series of NodeNames, or 0 stored in the form (NodeName, NodeName,) 
+          that contains the NodeNames of nodes connected to the node, stored in a list.
+        \end{enumerate}
+      \item Combining forms:
+        \begin{enumerate}
+          \item Node: A tuple of the form {NodeName, (EdgeList)} that represents a full node, which is
+          the name of the node and its EdgeList. In the future the node name will be used to access
+          a dictionary that contains the information associted with that node
+          \item NodeList: A series of nodes in the form Node Node separated by whitespace including newlines
+          these are used to represent all nodes in a graph
+        \end{enumerate}
+      \item Evalutation:
+          \begin{enumerate}
+            \item The programs in our language read inputs given in a txt file, it parses the text file and
+            separating the series of nodes and their edges.
+            \item When the program is evaluated it produces a graph using the nodes and their edgelist on the
+            screen
+          \end{enumerate}
+            
+          
+    \end{enumerate}
 
 \singlespacing
-\todo[inline]{Delete this TODO and replace with as much text as is needed.}
+
 \singlespacing
 
 Brainstorming Section

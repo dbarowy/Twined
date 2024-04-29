@@ -11,21 +11,23 @@ let pad p = pbetween pws0 p pws0
 let expr, exprImpl = recparser()
 
 (*takes a series of characters or strings as the name for a node*)
-let node_name = pmany1 (pletter <|> pdigit <|> pchar ' ') |>> stringify |>> Str
+let node_name = pmany1 (pletter <|> pdigit <|> pchar ' ') |>> stringify |>> Node_name
 
 (*allows whitespace infront of or behind a nodename*)
 let pad_node_name = pad node_name
 
 // (*reads in a series of strings separated by spaces or "," and put them in a list of connections*)
-let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!> "node in list"
+// let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!> "node in list"
+let node_in_list : Parser<Expr> = (pleft pad_node_name  (pchar ',')) <!> "node in list"
 
 (*parses a list of nodes that share an edge with the node associated with the list*)
 let edge_list : Parser<Expr> = pbetween
                                          (pstr "(")
                                         (pseq
-                                             (pleft pad_node_name  (pmany0 (pchar ',')))
-                                             (pmany0 node_in_list)
-                                             (fun (c,cs) -> Edge_list(c::cs))
+                                            (pleft pad_node_name  (pchar ','))
+                                            // (pleft pad_node_name  (pmany0 (pchar ',')))
+                                            (pmany0 node_in_list)
+                                            (fun (c,cs) -> Edge_list(c::cs))
                                          ) //<|> (pchar '0') |>> int |>> Num) trying to make lists empty
                                          (pchar ')') <!> "node list"
 

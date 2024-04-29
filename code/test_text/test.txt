@@ -1,3 +1,4 @@
-{bob, (sally, jonny, sarah)}
-{jim, (sally, bob, sarah)}
-{jonny, (0)}
+{Nancy, (Fred, Sally, Sarah,)}
+{Fred, (Nancy, Sally, Sarah,)}
+{Sally, (Jeff, Jonny, Timmy,)}
+{Jeff, (Sally, Jonny, Timmy,)}

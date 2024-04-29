@@ -1,5 +1,8 @@
 digraph G {
-"Sunlight love" -> "PlantGrowth";
-"Water" -> "PlantGrowth";
-"SoilNutrients" -> "PlantGrowth";
+"European Fascism" -> "Germany";
+"European Fascism" -> "Italy";
+"European Fascism" -> "Spain";
+"Germany" -> "Adolf Hitler";
+"Italy" -> "Benito Mussolini";
+"Spain" -> "Francisco Franco";
 }
