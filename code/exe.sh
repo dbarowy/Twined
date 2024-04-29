@@ -1,1 +1,1 @@
-dot -Tpng text_folder/gv.txt -o ../docs/images/Fascism.png
+dot -Tpng text_folder/gv.txt -o ../docs/images/plant_test_0.1.png
