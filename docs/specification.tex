@@ -64,177 +64,159 @@
 
 \subsection*{Introduction}
 
-\begin{spacing}{1.2}
-"Twined" is a knowledge programming language that aims to revolutionize the way
-we manage and interact with textual information. By converting unstructured text
-data into structured, navigable knowledge graphs, "Twined" enhances comprehension
-and analysis, providing a unique interactive interface that allows users to 
-explore information and create insights through based reasoning visualizations.
-\end{spacing}
-\singlespacing
+  \begin{spacing}{1.2}
+    \hspace*{1cm} "Twined" is a knowledge programming language that aims to revolutionize the way
+    we manage and interact with textual information. By converting unstructured text
+    data into structured, navigable knowledge graphs, "Twined" enhances comprehension
+    and analysis, providing a unique interactive interface that allows users to 
+    explore information and create insights through based reasoning visualizations.
+    \end{spacing}
+  \singlespacing
 
-\begin{spacing}{1.2}
-"Twined" addresses the problem of inefficient management and interaction with the 
-ever-growing volume of new information one can retain, making it a powerful tool
-for researchers, analysts, students, and anyone who works with text-based 
-information and wants to uncover hidden connections, identify patterns, and
-derive meaningful conclusions. By providing a platform that encourages 
-exploration, critical thinking, and the synthesis of ideas from various fields, 
-"Twined" aims to replicate the transformative learning experience offered by 
-liberal arts institutions by promoting users to twine the
-threads of information into their own personal tapestry of knowledge.
-\end{spacing}
+  \begin{spacing}{1.2}
+  "Twined" addresses the problem of inefficient management and interaction with the 
+  ever-growing volume of new information one can retain, making it a powerful tool
+  for researchers, analysts, students, and anyone who works with text-based 
+  information and wants to uncover hidden connections, identify patterns, and
+  derive meaningful conclusions. By providing a platform that encourages 
+  exploration, critical thinking, and the synthesis of ideas from various fields, 
+  "Twined" aims to replicate the transformative learning experience offered by 
+  liberal arts institutions by promoting users to twine the
+  threads of information into their own personal tapestry of knowledge.
+  \end{spacing}
 
-\singlespacing
 \subsection*{Design Principles}
-\singlespacing
 
-\begin{spacing}{1.2}
-The design of "Twined" is guided by both aesthetic and technical ideas that aim
-to make knowledge more accessible and manageable for users. From an aesthetic
-standpoint, the language strives to provide a simple and intuitive starting
-point that gradually evolves into a powerful graphical user interface. This
-approach ensures that users of all skill levels can easily interact with 
-the language and leverage its capabilities without being overwhelmed by
-complexity. By prioritizing user experience and usability, "Twined" aims to
-create an engaging and visually appealing environment that encourages exploration
-and discovery. 
-\end{spacing}
+  \begin{spacing}{1.2}
+    \hspace*{1cm} The design of "Twined" is guided by both aesthetic and technical ideas that aim
+    to make knowledge more accessible and manageable for users. From an aesthetic
+    standpoint, the language strives to provide a simple and intuitive starting
+    point that gradually evolves into a powerful graphical user interface. This
+    approach ensures that users of all skill levels can easily interact with 
+    the language and leverage its capabilities without being overwhelmed by
+    complexity. By prioritizing user experience and usability, "Twined" aims to
+    create an engaging and visually appealing environment that encourages exploration
+    and discovery. 
+  \end{spacing}
 
-\singlespacing
-
-\begin{spacing}{1.2}
-From a technical perspective, "Twined" harnesses the power of generative AI to
-enhance the efficiency and effectiveness of knowledge access and management.
-The language aims to minimize user input while maximizing the usefulness
-of the output, allowing users to obtain valuable insights and connections
-with minimal effort. As the language evolves, it will incorporate features 
-that enable users to upload text and express their desired outcomes
-in natural language. "Twined" will then handle the complex processing and
-analysis tasks, delivering customized outputs that cater to the user's
-specific needs.
-\end{spacing}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=1\linewidth]{images/ArchitectureDiagram.png} 
-  \label{figure 1:}
-\end{figure}
+  \begin{spacing}{1.2}
+  From a technical perspective, "Twined" uses the power of generative AI to
+  enhance the efficiency and effectiveness of knowledge access and management.
+  The language aims to minimize user input while maximizing the usefulness
+  of the output, allowing users to obtain valuable insights and connections
+  with minimal effort. As the language evolves, it will incorporate features 
+  that enable users to upload text and express their desired outcomes
+  in natural language. "Twined" will then handle customized outputs
+  to the user.
+  \end{spacing}
 
 \newpage
-
-\subsection*{Examples}
-\begin{enumerate}
-  \item 
+  \subsection*{Examples}
     \begin{enumerate}
-      \item Program 1 input
-        \begin{verbatim}
-          {Nancy, (Fred, Sally, Sarah,)}
-          {Fred, (Nancy, Sally, Sarah,)}
-          {Sally, (Jeff, Jonny, Timmy,)}
-          {Jeff, (Sally, Jonny, Timmy,)}
-        \end{verbatim}
-      \item Program 1 output
-        \begin{figure}[!hb]
-          \centering
-          \includegraphics[width=0.3\linewidth]{images/family_tree.png} 
-          \caption{Family Relationship}
-          \label{figure 2:}
-        \end{figure}
+      \item 
+        \begin{enumerate}
+          \item Program 1 input
+            \begin{verbatim}
+              {Nancy, (Fred, Sally, Sarah,)}
+              {Fred, (Nancy, Sally, Sarah,)}
+              {Sally, (Jeff, Jonny, Timmy,)}
+              {Jeff, (Sally, Jonny, Timmy,)}
+            \end{verbatim}
+          \item Program 1 output
+            \begin{figure}[!hb]
+              \centering
+              \includegraphics[width=0.3\linewidth]{images/family_tree.png} 
+              \caption{Family Relationship}
+              \label{figure 1:}
+            \end{figure}
+          \item
+            This graph represents the relationships between family individuals. Each node represents 
+            a person, and each edge represents a direct relationship between two individuals. For example,
+            "Nancy" has relationships with "Sally," "Fred," and "Sarah," as depicted by the edges 
+            connecting their respective nodes.
+        \end{enumerate}
+      
       \item
-        This graph represents the relationships between family individuals. Each node represents 
-        a person, and each edge represents a direct relationship between two individuals. For example,
-        "Nancy" has relationships with "Sally," "Fred," and "Sarah," as depicted by the edges 
-        connecting their respective nodes.
-    \end{enumerate}
-  \item
-    \begin{enumerate}
-      \item Program 2 input
-        \begin{verbatim}
-          {Sunlight, (PlantGrowth,)}
-          {Water, (PlantGrowth,)}
-          {SoilNutrients, (PlantGrowth,)}
-        \end{verbatim}
-      \item Program 2 output
-        \begin{figure}[!hb]
-          \centering
-          \includegraphics[width=0.4\linewidth]{images/plant_test_0.1.png} 
-          \caption{Plant Growth Relationship}
-          \label{figure 3:}
-        \end{figure}
+        \begin{enumerate}
+          \item Program 2 input
+            \begin{verbatim}
+              {Sunlight, (PlantGrowth,)}
+              {Water, (PlantGrowth,)}
+              {SoilNutrients, (PlantGrowth,)}
+            \end{verbatim}
+          \item Program 2 output
+            \begin{figure}[!hb]
+              \centering
+              \includegraphics[width=0.4\linewidth]{images/plant_test_0.1.png} 
+              \caption{Plant Growth Relationship}
+              \label{figure 2:}
+            \end{figure}
+          \item
+            The graph represents factors affecting plant growth. Each node represents
+            a factor such as "Sunlight," "Water," and "Soil Nutrients," and each edge 
+            represents the influence of these factors on "Plant Growth," as depicted 
+            by the edges connecting their respective nodes.
+        \end{enumerate}
+        
       \item
-        The graph represents factors affecting plant growth. Each node represents
-        a factor such as "Sunlight," "Water," and "Soil Nutrients," and each edge 
-        represents the influence of these factors on "Plant Growth," as depicted 
-        by the edges connecting their respective nodes.
+        \begin{enumerate}
+          \item Program 3 input
+            \begin{verbatim}
+              {European Fascism, (Germany, Italy, Spain,)}
+              {Germany, (Adolf Hitler,)}
+              {Italy, (Benito Mussolini,)}
+              {Spain,(Francisco Franco,)}
+            \end{verbatim}
+          \item Program 3 output
+            \begin{figure}[!hb]
+              \centering
+              \includegraphics[width=0.5\linewidth]{images/Fascism.png} 
+              \caption{Famious Eureopean Fascists}
+              \label{figure 3:}
+            \end{figure}
+          \item
+            This graph shows connections between European Fascism and leaders 
+            of different Fascist countries. Each node represents a topic and 
+            how those topics are connected in a top down manner.
+            
+        \end{enumerate}
     \end{enumerate}
-  \item
-    \begin{enumerate}
-      \item Program 3 input
-        \begin{verbatim}
-          {European Fascism, (Germany, Italy, Spain,)}
-          {Germany, (Adolf Hitler,)}
-          {Italy, (Benito Mussolini,)}
-          {Spain,(Francisco Franco,)}
-        \end{verbatim}
-      \item Program 3 output
-        \begin{figure}[!hb]
-          \centering
-          \includegraphics[width=0.5\linewidth]{images/Fascism.png} 
-          \caption{Famious Eureopean Fascists}
-          \label{figure 4:}
-        \end{figure}
-      \item
-        This graph shows connections between European Fascism and leaders 
-        of different Fascist countries. Each node represents a topic and 
-        how those topics are connected in a top down manner.
-    \end{enumerate}
-\end{enumerate}
 
 
-\singlespacing
-
-
+\newpage
 \subsection*{Language Concepts}
+    \begin{spacing}{1.2}
+      \hspace*{1cm} To effectively use "Twined," users should understand the fundamental concepts of
+      knowledge graphs and how they represent information. While the language aims to
+      minimize the need for users to grasp low-level primitives, a basic understanding
+      of nodes and edges is still beneficial. Nodes represent entities or concepts 
+      within the text, while edges signify the relationships or connections between 
+      them. These concepts enables "Twined" to create dynamic interactive knowledge graphs 
+      that highlight both hierarchical and associative relationships. By comprehending 
+      how these elements interact, users can better navigate and interpret the visual 
+      representation of their data. 
 
-\singlespacing
+      \singlespacing
+      "Twined" will provide an intuitive and user-friendly experience through an interface,
+      for inputting their desired information to explore knowledge graphs. The user interface 
+      will offer tools for navigating the graph, filtering information, and discovering new
+      connections.
+    \end{spacing}
 
-\begin{spacing}{1.2}
-To effectively use "Twined," users should understand the fundamental concepts of
-knowledge graphs and how they represent information. While the language aims to
-minimize the need for users to grasp low-level primitives, a basic understanding
-of nodes and edges is still beneficial. Nodes represent entities or concepts 
-within the text, while edges signify the relationships or connections between 
-them. These concepts enables "Twined" to create dynamic interactive knowledge graphs 
-that highlight both hierarchical and associative relationships. By comprehending 
-how these elements interact, users can better navigate and interpret the visual 
-representation of their data. 
-\end{spacing}
-
-\singlespacing
-
-\begin{spacing}{1.2}
-"Twined" will provide an intuitive and user-friendly experience through an interface,
-for inputting their desired information to explore knowledge graphs. The user interface 
-will offer tools for navigating the graph, filtering information, and discovering new
-connections.
-\end{spacing}
-
-\subsection*{Formal Syntax}
-\singlespacing
-
-\begin{tabular}{lll}
-    $<\textbf{expression}>$ & ::= & $<\textbf{Node}>$  \\
-                            & $|$  & $<\textbf{edgeList}>$ \\
-                            & $|$  & $<\textbf{nodeName}>$ \\
-                            & $|$  & $<\textbf{listOfNodes}>$ \\
-                            
-    $<\textbf{Node}>$   & ::= & \{ $<\textbf{String}>$, $<\textbf{nodeName}>$ \} \\
-    $<\textbf{nodeName}>$& ::= &  $<\textbf{String}>$ \\
-    $<\textbf{edgeList}>$& ::= & ($<\textbf{nodeName}>$ +) \\
-    $<\textbf{listOfNodes}>$& ::= & $<\textbf{Node}>$ + \\
-    
-    \end{tabular}
+  \subsection*{Formal Syntax}
+    \singlespacing
+      \begin{tabular}{lll}
+          $<\textbf{expression}>$ & ::= & $<\textbf{Node}>$  \\
+                                  & $|$  & $<\textbf{edgeList}>$ \\
+                                  & $|$  & $<\textbf{nodeName}>$ \\
+                                  & $|$  & $<\textbf{listOfNodes}>$ \\
+                                  
+          $<\textbf{Node}>$   & ::= & \{ $<\textbf{String}>$, $<\textbf{nodeName}>$ \} \\
+          $<\textbf{nodeName}>$& ::= &  $<\textbf{String}>$ \\
+          $<\textbf{edgeList}>$& ::= & ($<\textbf{nodeName}>$ +) \\
+          $<\textbf{listOfNodes}>$& ::= & $<\textbf{Node}>$ + \\
+          
+          \end{tabular}
 
 \subsection*{Semantics}
     \begin{enumerate}
@@ -260,13 +242,10 @@ connections.
             \item When the program is evaluated it produces a graph using the nodes and their edgelist on the
             screen
           \end{enumerate}
-            
-          
     \end{enumerate}
 
-\singlespacing
-
-\singlespacing
-
+\begin{figure} 
+  \includegraphics[width=1\linewidth]{images/ArchitectureDiagram.png} 
+\end{figure}
 % DO NOT DELETE ANYTHING BELOW THIS LINE
 \end{document}
