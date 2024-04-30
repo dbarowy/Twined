@@ -20,8 +20,6 @@ VERSION_0.5
 
 ################################################
 
-################################################
-
 VERSION_0.4
 
     AST.fs, Parser.fs, Evaluator.fs:
@@ -42,7 +40,6 @@ VERSION_0.4
         - added/edited examples
         - started design principles (dont really think we need both paragraphs but they exist)
         - added a paragraph to 
-################################################
 
 ################################################
 
