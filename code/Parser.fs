@@ -48,10 +48,12 @@ let node: Parser<Expr> =
 (*allows whitespace before and after a node*)
 let pad_node = pad node <!> "pad_node"
 
+let exit = pstr "exit()" |>> (fun _ -> Exit) <!> "exit"
+
 (*parses a list of one or more nodes in a graph*)
 let pad_list_of_nodes: Parser<Expr> = pad (pmany1 pad_node) |>> Edge_list <!> "list of nodes"
 
-exprImpl := pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list 
+exprImpl := exit <|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list 
 
 (*defines how language can be interpreted*)
 let grammar = pleft expr peof

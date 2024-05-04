@@ -1,1 +1,1 @@
-dot -Tpng text_folder/gv.txt -o ../docs/images/plant_test_0.1.png
+dot -Tsvg text_folder/gv.txt -o svg_folder/graph.svg

@@ -6,6 +6,7 @@ open AST
 // * its data *)
 // type Env = Map<string,Expr>
 
+
 (*  Recursive function evalExpr that takes an expression of type Expr and returns a string. *)
 let rec evalExpr (expr: Expr) : string =
     match expr with
@@ -32,6 +33,9 @@ let rec evalExpr (expr: Expr) : string =
         "\n}"
     | Node_name s -> s  
     | Num n -> string n  
+    | Exit -> 
+        printfn "Thanks for using Twined!"
+        exit(0)
     | _ -> failwith "Invalid expression"  
 
 

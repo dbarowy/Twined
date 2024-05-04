@@ -12,11 +12,41 @@ HOW TO TRACK VERSIONS:
     2. Update the version number (e.g., VERSION_0.1, VERSION_1.0) in each block when making changes or adding features.
     3. Maintain a log of changes under each version number to track the evolution of the project.
 
+
+################################################
+
+VERSION_0.6
+
+    Next version
+
+################################################
+
 ################################################
 
 VERSION_0.5
 
-    ToBeWritten
+    AST.fs 
+        - added Exit type to allow exit to be parsed
+
+    Evaluator.fs
+        - Added handling of the the Exit expression
+    
+    Parser.fs
+        - added a parser to parse exit codes
+
+    program
+        - added ability to recursively ask the user for additional inputs
+        to answer new questions, still need to hook up to a LLM API to see 
+        if it functions when connected.
+
+
+    Brainstorm
+        - should figure out a way to open/reload the svg for the user if
+        possible so they can see the information
+        - still need to add an information section to each node to allow the
+        user to read more about each topic
+
+
 
 ################################################
 
