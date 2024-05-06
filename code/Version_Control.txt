@@ -14,6 +14,13 @@ HOW TO TRACK VERSIONS:
 
 ################################################
 
+VERSION_0.8
+
+    - Program.fs
+        - Cleared the unused code and comments. 
+
+################################################
+
 VERSION_0.7 
 
     - Program.fs
