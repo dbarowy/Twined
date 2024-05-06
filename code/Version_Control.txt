@@ -18,6 +18,14 @@ VERSION_0.8
 
     - Program.fs
         - Cleared the unused code and comments. 
+   
+    - text_samples
+        - Created folder with plain text from a wikipedia page on the topic of photosynthesis. 
+    
+    - TODO 
+        - Use text_samples docs as an input to the API and generate a text graph that will be parsed and converted into a gv file.
+        - maybe we should start our program without having to first input a file right way.
+        - New parameters to manipulate SVG building.
 
 ################################################
 
