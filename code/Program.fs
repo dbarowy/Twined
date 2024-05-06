@@ -9,6 +9,16 @@ open System.Net.Http
 open System.Text
 open Newtonsoft.Json
 
+let zsh_check =
+    try
+        let psi = new System.Diagnostics.ProcessStartInfo("zsh", "--version")
+        psi.UseShellExecute <- false
+        let pro = System.Diagnostics.Process.Start(psi)
+        pro.WaitForExit()
+        pro.ExitCode = 0
+    with
+    | _ -> false
+    
 let apiKey = "***REMOVED***"
 
 //type Message = { role: string; content: string }
