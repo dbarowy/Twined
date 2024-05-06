@@ -12,14 +12,21 @@ HOW TO TRACK VERSIONS:
     2. Update the version number (e.g., VERSION_0.1, VERSION_1.0) in each block when making changes or adding features.
     3. Maintain a log of changes under each version number to track the evolution of the project.
 
+################################################
+
+VERSION_0.7 
+    - ToBeWritten
 
 ################################################
 
 VERSION_0.6
 
-    Next version
-
-################################################
+    Program.fs 
+        - New Prompt Menu for user interaction with txt and gv file.
+        - Added menu options to be featured/explored.
+        - Changed zhs to powershell to run on Windows.
+        - Added function to open svg file. 
+        - Began to brainstorm OpenAI API call for menu option 1 (expand graph).
 
 ################################################
 
