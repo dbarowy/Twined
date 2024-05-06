@@ -20,3 +20,7 @@ type Choice = {
 type CompletionResponse = {
     choices: Choice[]
 }
+
+type Canvas = Line list
+
+let CANVAS_SZ = 400
