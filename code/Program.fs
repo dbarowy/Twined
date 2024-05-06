@@ -11,7 +11,7 @@ open Newtonsoft.Json
 let zsh_check =
     try
         let psi = new System.Diagnostics.ProcessStartInfo("zsh", "--version")
-        psi.UseShellExecute <- false
+        //psi.UseShellExecute <- false
         let pro = System.Diagnostics.Process.Start(psi)
         pro.WaitForExit()
         pro.ExitCode = 0
@@ -62,13 +62,13 @@ let makeChatCompletionRequest (userPrompt: string) =
     }
 
 
-(*executes a given script as a new process using zsh*)
+(*executes a given script as a new process using azsh or powershell as avaible*)
 let executeScript (filename: string) =
     if zsh_check then
         let scriptProcess = ProcessStartInfo("zsh", filename) 
-        scriptProcess.CreateNoWindow <- true
-        scriptProcess.RedirectStandardOutput <- true
-        scriptProcess.UseShellExecute <- false
+        // scriptProcess.CreateNoWindow <- true
+        // scriptProcess.RedirectStandardOutput <- true
+        // scriptProcess.UseShellExecute <- false
 
         let pro = Process.Start(scriptProcess)
         pro.WaitForExit() |> ignore
@@ -192,6 +192,16 @@ let main argv =
 
     (* read in the input file *)
     let file = argv.[0]
+
+    // try
+    //     Path.GetFullPath(file)
+    // with
+    // | Success ->
+    // | _ -> 
+    //     printfn "invalid file, please ensure the file is in the directory"
+    //     exit 1
+
+
     let fullPath = Path.GetFullPath(file)
     let input = File.ReadAllText fullPath
 

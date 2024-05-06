@@ -14,6 +14,38 @@ HOW TO TRACK VERSIONS:
 
 ################################################
 
+VERSION_0.9
+    
+    - Next
+
+################################################
+
+################################################
+
+VERSION_0.9
+
+    - Parser.fs
+        - added parsers to handle adding node info to the environment 
+    
+    - AST.fs
+        - added Assignment and Node_info to types
+
+    - Program.fs
+        - Commented out code that wasn't necessary. 
+   
+    - Evaluator.fs
+        - trying to add environment to Evaluator 
+    
+    - TODO 
+        - Use text_samples docs as an input to the API and generate a text graph that will be parsed and converted into a gv file.
+        - maybe we should start our program without having to first input a file right way.
+        - New parameters to manipulate SVG building.
+        - Maybe we also should test another API: Tesseract, so that we can capture image-text notes?
+
+################################################
+
+################################################
+
 VERSION_0.8
 
     - Program.fs

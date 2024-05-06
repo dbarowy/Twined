@@ -45,15 +45,50 @@ let node: Parser<Expr> =
         )
         (pchar '}') <!> "node"
 
+
+
 (*allows whitespace before and after a node*)
 let pad_node = pad node <!> "pad_node"
 
+(*contains all characters allowed for use in Node_info*)
+let allowed_chars = 
+    pletter <|> pdigit <|> pchar ' ' <|> pchar '?' <|> pchar '!' <|> pchar '@' <|> pchar '#'
+    <|> pchar '$' <|> pchar '%' <|> pchar '&' <|> pchar '*' <|> pchar '(' <|> pchar ')'<|> pchar '_'
+    <|> pchar '-' <|> pchar '+' <|> pchar '=' <|> pchar '{' <|> pchar '}' <|> pchar '[' <|> pchar ']'
+    <|> pchar '|'  <|> pchar ':' <|> pchar ':' <|> pchar '"' <|> pchar ''' <|> pchar '<'  <|> pchar '>'
+    <|> pchar '>' <|> pchar ',' <|> pchar '.'  <|> pchar '/'  <|> pchar '~'  <|> pchar '\n'  <|> pchar '`'
+    <|> pchar '~'
+
+(*Any number of allowed characters*)
+let str = pmany1 allowed_chars
+
+(*converts the string to the Node_info type*)
+let node_info : Parser<Expr> = str |>> stringify |>> (fun s -> Node_info s)
+
+(*Pads node info*)
+let pad_node_info = pad node_info
+
+(*assigns some info in the environment to the nodename*)
+let assignment : Parser<Expr> = 
+    pbetween
+        (pstr"^^")
+        (pseq
+            (pleft pad_node_name (pad (pstr ":=")))
+            pad_node_info
+            (fun (v, st) -> Assignment(v, st))
+        )
+        (pstr"^^") <!> "passign"
+    
+(*Pads assignment*)
+let pad_assignment = pad assignment
+
+(*Allows user to exit*)
 let exit = pstr "exit()" |>> (fun _ -> Exit) <!> "exit"
 
 (*parses a list of one or more nodes in a graph*)
 let pad_list_of_nodes: Parser<Expr> = pad (pmany1 pad_node) |>> Edge_list <!> "list of nodes"
 
-exprImpl := exit <|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list 
+exprImpl := exit <|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list <|> pad_assignment
 
 (*defines how language can be interpreted*)
 let grammar = pleft expr peof
