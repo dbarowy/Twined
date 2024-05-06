@@ -193,6 +193,7 @@ let main argv =
     (* read in the input file *)
     let file = argv.[0]
 
+    (*make sure file exists, doesnt work yet*)
     // try
     //     Path.GetFullPath(file)
     // with
