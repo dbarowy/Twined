@@ -75,13 +75,34 @@ let makeChatCompletionRequest (userPrompt: string) =
 
 (*executes a given script as a new process using zsh*)
 let executeScript (filename: string) =
-    let scriptProcess = ProcessStartInfo("powershell", filename) // had to change to powershell instead of zsh to run on windows.
-    scriptProcess.CreateNoWindow <- true
-    scriptProcess.RedirectStandardOutput <- true
-    scriptProcess.UseShellExecute <- false
+    if zsh_check then
+        let scriptProcess = ProcessStartInfo("zsh", filename) // had to change to powershell instead of zsh to run on windows.
+        scriptProcess.CreateNoWindow <- true
+        scriptProcess.RedirectStandardOutput <- true
+        scriptProcess.UseShellExecute <- false
 
-    let pro = Process.Start(scriptProcess)
-    pro.WaitForExit() |> ignore
+        let pro = Process.Start(scriptProcess)
+        pro.WaitForExit() |> ignore
+    else
+        let scriptProcess = ProcessStartInfo("powershell", filename) // had to change to powershell instead of zsh to run on windows.
+        scriptProcess.CreateNoWindow <- true
+        scriptProcess.RedirectStandardOutput <- true
+        scriptProcess.UseShellExecute <- false
+
+        let pro = Process.Start(scriptProcess)
+        pro.WaitForExit() |> ignore
+
+let open_graph (fullPath: string): (unit) =
+
+    if zsh_check then
+        let execution_name = "exe.sh"
+        File.WriteAllText(execution_name, ("open -a 'Google Chrome' " + fullPath + " -o svg_folder/graph.svg"))
+        executeScript execution_name
+    
+    else
+        let psi = new System.Diagnostics.ProcessStartInfo("powershell", sprintf "Start '%s'" fullPath)
+        psi.UseShellExecute <- false
+        System.Diagnostics.Process.Start(psi) |> ignore
 
 let update_svg (ast: Expr) (fullPath: string): unit =
     let gvText = evalExpr ast  // Convert AST to a string or graph format.
@@ -254,9 +275,7 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 
             if System.IO.File.Exists(fullPath) then
                 printfn "\n(Twined) -> Viewing graph... (This will open the generated SVG file located at %s)" fullPath
-                let psi = new System.Diagnostics.ProcessStartInfo("powershell", sprintf "Start '%s'" fullPath)
-                psi.UseShellExecute <- false
-                System.Diagnostics.Process.Start(psi) |> ignore
+                open_graph(fullPath)
 
                 printfn "\n(Twined) -> Graph is open!"
             else
