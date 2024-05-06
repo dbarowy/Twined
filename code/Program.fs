@@ -21,30 +21,10 @@ let zsh_check =
     
 let apiKey = "***REMOVED***"
 
-//type Message = { role: string; content: string }
 (*
     https://learn.microsoft.com/en-us/dotnet/api/system.net.http.headers.authenticationheadervalue.-ctor?view=net-8.0
     https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0 
     
-*)
-
-(*
-    From OpenAI Documentation
-    {
-    "model": "gpt-3.5-turbo",
-    "messages": [
-        {
-        "role": "user",
-        "content": ""
-        }
-    ],
-    "temperature": 1,
-    "max_tokens": 256,
-    "top_p": 1,
-    "frequency_penalty": 0,
-    "presence_penalty": 0
-    }
-
 *)
 
 let httpClient = new HttpClient()
@@ -86,7 +66,7 @@ let makeChatCompletionRequest (userPrompt: string) =
 (*executes a given script as a new process using zsh*)
 let executeScript (filename: string) =
     if zsh_check then
-        let scriptProcess = ProcessStartInfo("zsh", filename) // had to change to powershell instead of zsh to run on windows.
+        let scriptProcess = ProcessStartInfo("zsh", filename) 
         scriptProcess.CreateNoWindow <- true
         scriptProcess.RedirectStandardOutput <- true
         scriptProcess.UseShellExecute <- false
@@ -94,7 +74,7 @@ let executeScript (filename: string) =
         let pro = Process.Start(scriptProcess)
         pro.WaitForExit() |> ignore
     else
-        let scriptProcess = ProcessStartInfo("powershell", filename) // had to change to powershell instead of zsh to run on windows.
+        let scriptProcess = ProcessStartInfo("powershell", filename) 
         scriptProcess.CreateNoWindow <- true
         scriptProcess.RedirectStandardOutput <- true
         scriptProcess.UseShellExecute <- false
@@ -123,135 +103,6 @@ let update_svg (ast: Expr) (fullPath: string): unit =
     executeScript executionName
     printfn "Graph generated, located at %s." (fullPath.Replace(".txt", ".svg"))
 
-(*let callOpenAiApi topic =
-    let requestBody = sprintf """
-    {
-        "model": "gpt-3.5-turbo",
-        "prompt": "Expand on the topic of %s in the format of '{Sunlight, (Plant Growth,)} {Water, (Plant Growth,)} {Soil Nutrients, (Plant Growth,)}', give me the output",
-        "temperature": 1,
-        "max_tokens": 256,
-        "top_p": 1,
-        "frequency_penalty": 0,
-        "presence_penalty": 0
-    }
-    """ topic *)
-
-(*let update_svg (ast): unit =
-    let file_name = "text_folder/gv.txt"
-    let gvText = evalExpr ast
-    File.WriteAllText(file_name, gvText)
-
-    (*generates a .sh file to exicute the graphviz code generating an svg file in
-    the svg folder TODO add ability of user to name the output*)
-    
-    let execution_name = "exe.sh"
-    // File.WriteAllText(execution_name, ("dot -Tpng " + file_name + " -o ../docs/images/plant_test_0.1.png"))
-
-    File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
-    executeScript execution_name
-    printfn "Graph generated, located in svg_folder." *)
-
-(*where we switch to taking user input to answer questions*)
-(*let rec maintwo (debug: bool): unit =
-    printfn "Would you like to further explore one of these topics, if so which one?"
-    let input = System.Console.ReadLine()
-    // need to see if input is exit() so we know to stop
-    let final_input = 
-        "Using the information provided before can you ..." +
-        input + " in the form {name, (node1, node2, node3,)}"
-
-    //send final_input to LLM of choice to get a new graph.
-    printfn "%A" final_input
-    let ast = parse final_input debug
-    match ast with
-    |Some ast ->
-        update_svg(ast) |> ignore
-        maintwo(debug)
-    |None ->
-        printfn "Failed to parse input, retry or type \"exit()\" to exit."
-        maintwo(debug)*)
-
-(*let rec maintwo (debug: bool): unit =
-    printfn "Would you like to further explore one of these topics, if so which one? Type 'No' to exit."
-    let input = System.Console.ReadLine()
-
-    match input.Trim().ToLower() with
-    | "No" -> 
-        printfn "Exiting program. Thank you for using the application."
-        System.Environment.Exit(0)
-    | _ ->
-        let final_input = 
-            sprintf "Using the information provided before can you ...%s in the form {name, (node1, node2, node3,)}" input
-        printfn "%A" final_input
-        let ast = parse final_input debug
-
-        match ast with
-        | Some ast ->
-            printfn "Please enter a name for the output file (e.g., graph1.svg):"
-            let fileName = System.Console.ReadLine()
-            let fullPath = sprintf "svg_folder/%s.svg" fileName  // Directly use .svg to avoid confusion
-            update_svg ast fullPath  // Ensure update_svg function is defined to accept (ast: Expr) (fullPath: string)
-
-            printfn "File generated: %s. Would you like to open it? (yes/no)" fullPath
-
-            match System.Console.ReadLine().ToLower() with
-            | "yes" ->
-                let psi = new System.Diagnostics.ProcessStartInfo("powershell", sprintf "Start %s" fullPath)
-                psi.UseShellExecute <- false
-                System.Diagnostics.Process.Start(psi) |> ignore
-            | _ -> ()
-            printfn "Would you like to run another operation? (yes/no)"
-            match System.Console.ReadLine().ToLower() with
-            | "yes" -> maintwo debug
-            | _ -> printfn "Thank you for using the application."
-        | None ->
-            printfn "Failed to parse input, retry or type \"exit\" to exit."
-            maintwo debug *)
-
-(*let rec maintwo (debug: bool): unit =
-    printfn "You can type 'exit' at any point to stop. What would you like to do next? (type 'help' for options)"
-    let input = System.Console.ReadLine().Trim().ToLower()
-
-    match input with
-    | "exit" -> 
-        printfn "Exiting program. Thank you for using the application."
-        System.Environment.Exit(0)
-    | "help" ->
-        printfn "Help: Enter graph specifications in the form {name, (node1, node2, node3,)}, or 'exit' to quit."
-        maintwo debug
-    | _ ->
-        let final_input = sprintf "Using the information provided before can you ...%s" input
-        printfn "Processing: %s" final_input
-        let ast = parse final_input debug
-
-        match ast with
-        | Some ast ->
-            printfn "Please enter a name for the output file (default 'graph1.svg'):"
-            let defaultFileName = "graph1.svg"
-            let fileName = System.Console.ReadLine()
-            let effectiveFileName = if fileName = "" then defaultFileName else fileName
-            let fullPath = sprintf "svg_folder/%s" effectiveFileName
-
-            printfn "Generating graph... %s" fullPath
-            update_svg ast fullPath
-
-            printfn "File generated: %s. Would you like to view this graph now? (yes/no)" fullPath
-            match System.Console.ReadLine().ToLower() with
-            | "yes" ->
-                let psi = new System.Diagnostics.ProcessStartInfo("powershell", sprintf "Start %s" fullPath)
-                psi.UseShellExecute <- false
-                System.Diagnostics.Process.Start(psi) |> ignore
-                printfn "Graph is open, close the viewer to continue."
-            | _ -> printfn "Not viewing the graph."
-
-            printfn "Would you like to run another operation? (yes/no)"
-            match System.Console.ReadLine().ToLower() with
-            | "yes" -> maintwo debug
-            | _ -> printfn "Thank you for using the application."
-        | None ->
-            printfn "Failed to parse input, please try again or type 'help' for more information."
-            maintwo debug*)
-
 let rec maintwo (debug: bool) (inputFilePath: string): unit =
     printfn "\n(Twined) -> Graph generated with success! It is now located in the svg_folder.\n"
     printfn "(Twined) -> What would you like to do next? (type 'help' for options or 'exit' to quit)\n"
@@ -269,7 +120,8 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
     let handleUserSelection input =
         match input with
 
-        | "1" -> //printfn "\n(Twined) -> The feature to expand is not yet implemented!"
+        | "1" -> 
+            //printfn "\n(Twined) -> The feature to expand is not yet implemented!"
             //printfn "\n(Twined) -> Please enter your prompt:"
             // let userPrompt = System.Console.ReadLine().Trim()
             // let response = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
