@@ -8,3 +8,16 @@ type Expr =
 | Node_info of string
 | Exit
 
+type Message = {
+    role: string
+    content: string
+}
+
+type Choice = {
+    index: int
+    message: Message
+}
+
+type CompletionResponse = {
+    choices: Choice[]
+}

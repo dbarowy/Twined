@@ -5,9 +5,9 @@ open Combinator
 open System.IO
 open System.Diagnostics
 
-
-(*let apiKey = ""  
-  let httpClient = new HttpClient()*)
+open System.Net.Http
+open System.Text
+open Newtonsoft.Json
 
 let zsh_check =
     try
@@ -19,6 +19,69 @@ let zsh_check =
     with
     | _ -> false
     
+let apiKey = "***REMOVED***"
+
+//type Message = { role: string; content: string }
+(*
+    https://learn.microsoft.com/en-us/dotnet/api/system.net.http.headers.authenticationheadervalue.-ctor?view=net-8.0
+    https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0 
+    
+*)
+
+(*
+    From OpenAI Documentation
+    {
+    "model": "gpt-3.5-turbo",
+    "messages": [
+        {
+        "role": "user",
+        "content": ""
+        }
+    ],
+    "temperature": 1,
+    "max_tokens": 256,
+    "top_p": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0
+    }
+
+*)
+
+let httpClient = new HttpClient()
+httpClient.DefaultRequestHeaders.Authorization <-
+    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey)
+
+httpClient.DefaultRequestHeaders.Accept.Add(
+    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"))
+
+
+let makeChatCompletionRequest (userPrompt: string) =
+    async {
+        let payload = 
+            {|
+                model = "gpt-3.5-turbo"
+                messages = [| { role = "user"; content = userPrompt } |]
+                temperature = 1.0
+                max_tokens = 256
+                top_p = 1.0
+                frequency_penalty = 0.0
+                presence_penalty = 0.0
+            |} |> JsonConvert.SerializeObject
+
+        let content = new StringContent(payload, Encoding.UTF8, "application/json")
+        
+        let! response = httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content) |> Async.AwaitTask
+        let! responseBody = response.Content.ReadAsStringAsync() |> Async.AwaitTask
+
+        //return responseBody
+
+        let parsedResponse = JsonConvert.DeserializeObject<CompletionResponse>(responseBody)
+      
+        match parsedResponse.choices |> Array.tryHead with
+        | Some choice -> return choice.message.content
+        | None -> return "No response content available."
+    }
+
 
 (*executes a given script as a new process using zsh*)
 let executeScript (filename: string) =
@@ -206,7 +269,16 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
     let handleUserSelection input =
         match input with
 
-        | "1" -> printfn "\n(Twined) -> The feature to expand is not yet implemented!"
+        | "1" -> //printfn "\n(Twined) -> The feature to expand is not yet implemented!"
+            //printfn "\n(Twined) -> Please enter your prompt:"
+            // let userPrompt = System.Console.ReadLine().Trim()
+            // let response = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
+            // printfn "\n(Twined) -> Model response: %s" response
+
+            printfn "\n(Twined) -> Please enter your prompt:"
+            let userPrompt = System.Console.ReadLine().Trim()
+            let responseContent = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
+            printfn "\n(Twined) -> Model response content: %s" responseContent
 
         | "2" ->
             let fullPath = "svg_folder/graph.svg"
