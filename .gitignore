@@ -260,3 +260,5 @@ MyProject_coverage.xml
 # latex
 *.aux
 *.out
+
+exe.sh

@@ -28,6 +28,15 @@ VERSION_0.6
         - Added function to open svg file. 
         - Began to brainstorm OpenAI API call for menu option 1 (expand graph).
 
+    AST.fs
+        - added Node_info type
+    
+    Evaluator.fs
+        - added Node_info processing
+
+    Parser.fs
+        - added Node_info parser
+
 ################################################
 
 VERSION_0.5
