@@ -7,3 +7,16 @@ type Expr =
 | Num of int
 | Exit
 
+type Message = {
+    role: string
+    content: string
+}
+
+type Choice = {
+    index: int
+    message: Message
+}
+
+type CompletionResponse = {
+    choices: Choice[]
+}

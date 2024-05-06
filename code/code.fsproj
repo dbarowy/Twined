@@ -13,4 +13,9 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenAI.Client" Version="0.2.0" />
+  </ItemGroup>
+
 </Project>
