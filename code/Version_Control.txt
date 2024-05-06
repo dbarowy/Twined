@@ -15,7 +15,20 @@ HOW TO TRACK VERSIONS:
 ################################################
 
 VERSION_0.7 
-    - ToBeWritten
+
+    - Program.fs
+        - OpenAI API call is now working, but needs to be refined for its own specific promtps.
+        - Need to handle promtp output to cycle back into the pipeline of parser and evaluator.
+        - Check for powershell vs zsh was added
+
+    - WEB 
+        - Began to brainstorm a very simple visualization of the svgs with HTML and CSS. Check folder Web0.5
+            follow instructions and install npm.
+        - Tested a few elements on the screen for a future design.
+
+    - AST.fs
+        - Add new types for OpenAI call, and was thinking of adding new types to paramentize the properties of our
+            generated SVGs such as color, size, and other types of graphs.
 
 ################################################
 
