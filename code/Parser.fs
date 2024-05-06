@@ -34,27 +34,6 @@ let edge_list : Parser<Expr> = pbetween
 (*pads a node list to allow for whitespace*)
 let pad_edge_list = pad edge_list
 
-let allowed_info = 
-    pletter <|> pdigit <|> pchar '.' <|> pchar '?' <|> pchar '!' <|> pchar ' ' <|> pchar ',' <|> pchar ':' <|> pchar ';'
-    <|> pchar '+' <|> pchar '-' <|> pchar '=' <|> pchar '_' <|> pchar '"' <|> pchar ''' <|> pchar '@' <|> pchar '$'
-    <|> pchar '%' <|> pchar '(' <|> pchar ')' <|> pchar '[' <|> pchar ']' <|> pchar '<' <|> pchar '>' <|> pchar '\n'
-
-let node_info = pbetween
-                    (pchar '|')
-                            (pmany0 allowed_info |>> stringify |>> Node_info)
-                            (pchar '|') <!> "node list"
-
-(*parses a single node to see the name of the node and the names of the nodes it is connected to*)
-let node: Parser<Expr> = 
-    pbetween
-        (pstr "{")
-        (pseq
-            (pleft pad_node_name  (pchar ','))
-            pad_edge_list
-            (fun (c, cs) -> Node(c, cs))
-        )
-        (pchar '}') <!> "node"
-
 (*parses a single node to see the name of the node and the names of the nodes it is connected to*)
 let node: Parser<Expr> = 
     pbetween

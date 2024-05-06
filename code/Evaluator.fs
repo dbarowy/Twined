@@ -33,7 +33,6 @@ let rec evalExpr (expr: Expr) : string =
         "\n}"
     | Node_name s -> s  
     | Num n -> string n  
-    | Node_info s -> string s
     | Exit -> 
         printfn "Thanks for using Twined!"
         exit(0)
