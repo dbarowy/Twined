@@ -14,7 +14,7 @@ HOW TO TRACK VERSIONS:
 
 ################################################
 
-VERSION_0.9
+VERSION_1.0
     
     - Next
 
@@ -32,9 +32,11 @@ VERSION_0.9
 
     - Program.fs
         - Commented out code that wasn't necessary. 
+        - added an environment and changes the way outputs are handled to accomidate the env
    
     - Evaluator.fs
-        - trying to add environment to Evaluator 
+        - addded environment to evaluator, now works for inputs with definistions or without
+        definitions 
     
     - TODO 
         - Use text_samples docs as an input to the API and generate a text graph that will be parsed and converted into a gv file.

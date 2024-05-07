@@ -70,25 +70,35 @@ let assignment : Parser<Expr> =
     pbetween
         (pstr"^^")
         (pseq
-            (pleft pad_node_name (pad (pstr ":=")))
+            (pleft pad_node_name (pstr ":="))
             pad_node_info
             (fun (v, st) -> Assignment(v, st))
         )
         (pstr"^^") <!> "passign"
     
 (*Pads assignment*)
-let pad_assignment = pad assignment
+let pad_assignment: Parser<Expr> = pad assignment <!> "Assignments"
+
+let pad_list_of_assignment: Parser<Expr> = pad (pmany0 pad_assignment)|>> Assignment_list <!> "Assignment_list"
 
 (*Allows user to exit*)
-let exit = pstr "exit()" |>> (fun _ -> Exit) <!> "exit"
+let exit: Parser<Expr> = pstr "exit()" |>> (fun _ -> Exit) <!> "exit"
 
 (*parses a list of one or more nodes in a graph*)
 let pad_list_of_nodes: Parser<Expr> = pad (pmany1 pad_node) |>> Edge_list <!> "list of nodes"
 
-exprImpl := exit <|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list <|> pad_assignment
+let sequence: Parser<Expr> = 
+        pseq
+            pad_list_of_nodes
+            pad_list_of_assignment
+            (fun (nodes, assignments) -> Nodes_and_Assignments(nodes,assignments))
+
+exprImpl := exit <|> sequence //<|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list 
 
 (*defines how language can be interpreted*)
-let grammar = pleft expr peof
+let grammar = pleft sequence peof
+
+// let grammar = pleft expr peof
 
 (*parses a string to determine if the grammar is followed, if yes returns an AST if not returns none*)
 let parse (input: string)(do_debug: bool) : Expr option =
