@@ -17,7 +17,6 @@ let node_name = pmany1 (pletter <|> pdigit <|> pchar ' ') |>> stringify |>> Node
 let pad_node_name = pad node_name
 
 // (*reads in a series of strings separated by spaces or "," and put them in a list of connections*)
-// let node_in_list : Parser<Expr> = (pleft pad_node_name  (pmany0 (pchar ','))) <!> "node in list"
 let node_in_list : Parser<Expr> = (pleft pad_node_name  (pchar ',')) <!> "node in list"
 
 (*parses a list of nodes that share an edge with the node associated with the list*)
@@ -44,8 +43,6 @@ let node: Parser<Expr> =
             (fun (c, cs) -> Node(c, cs))
         )
         (pchar '}') <!> "node"
-
-
 
 (*allows whitespace before and after a node*)
 let pad_node = pad node <!> "pad_node"
