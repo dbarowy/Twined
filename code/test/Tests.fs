@@ -54,16 +54,9 @@ type TestClass () =
             {Italy, (Benito Mussolini,)}
             {Spain,(Francisco Franco,)}"
 
-        let expected = File.ReadAllText "test_text/answers/valid_eval.txt"
-          
-            // "digraph G {
-            //     \"European Fascism\" -> \"Germany\";
-            //     \"European Fascism\" -> \"Italy\";
-            //     \"European Fascism\" -> \"Spain\";
-            //     \"Germany\" -> \"Adolf Hitler\";
-            //     \"Italy\" -> \"Benito Mussolini\";
-            //     \"Spain\" -> \"Francisco Franco\";
-            //     }"
+        (*for some reason this trys to look in bin if you dont back out first*)
+        let fullPath = Path.GetFullPath("../../../txt_files/answers/valid_eval.txt")
+        let expected = File.ReadAllText fullPath
     
         let result = parse input false
         
