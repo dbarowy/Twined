@@ -28,7 +28,7 @@ let edge_list : Parser<Expr> = pbetween
                                             (pmany0 node_in_list)
                                             (fun (c,cs) -> Edge_list(c::cs))
                                          ) //<|> (pchar '0') |>> int |>> Num) trying to make lists empty
-                                         (pchar ')') //<!> "node list"
+                                         (pchar ')') <!> "node list"
 
 (*pads a node list to allow for whitespace*)
 let pad_edge_list = pad edge_list
@@ -42,7 +42,7 @@ let node: Parser<Expr> =
             pad_edge_list
             (fun (c, cs) -> Node(c, cs))
         )
-        (pchar '}') //<!> "node"
+        (pchar '}') <!> "node"
 
 (*allows whitespace before and after a node*)
 let pad_node = pad node <!> "pad_node"

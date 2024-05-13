@@ -347,7 +347,7 @@ let main argv =
     
     match ast with
     | Some ast ->
-
+        printfn "%A" ast
         let file_name = "text_folder/gv.txt"
         let gvText, envi = eval ast Map.empty
 
