@@ -1,5 +1,0 @@
-digraph G {
-    Sunlight -> "Plant Growth" [label="Promotes"]
-    Water -> "Plant Growth" [label="Essential for"]
-    "Soil Nutrients" -> "Plant Growth" [label="Supports"]
-}

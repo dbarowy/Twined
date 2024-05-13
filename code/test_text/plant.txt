@@ -1,6 +1,0 @@
-{Sunlight, (Plant Growth,)}
-{Water, (Plant Growth,)}
-{Soil Nutrients, (Plant Growth,)}
-^^Sunlight := sun makes plants go burrrrr^^
-^^Water := Water makes the plants grow tall^^
-^^Soil Nutrients := plants eat me^^

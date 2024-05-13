@@ -1,7 +1,0 @@
-digraph G {
-    Hello->World
-    Maple->World
-    Maple->Hello   
-    World->Hello
-    World->Hello
-}
