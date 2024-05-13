@@ -1,1 +1,0 @@
-open -a 'Google Chrome' svg_folder/graph.svg -o svg_folder/graph.svg
