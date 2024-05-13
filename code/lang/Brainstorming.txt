@@ -1,0 +1,20 @@
+
+Brainstorming 
+
+    V_0.0
+        1. Read input from "plant.txt" or "test.txt"
+            As for now, it expects input in the format: {mainEntity, (relatedEntity1, relatedEntity2, ...)},
+        2. Parse the input 
+        3. Convert the AST into DOT format suitable for Graphviz
+        4. Output the DOT format to "gv.txt" 
+        5. Convert the "gv.txt" to "file.svg"
+        6. Opening manually "file.svg"
+
+
+    
+        Notes Meeting [ToBeDeleted]
+            Node names should correspond to folder names.
+            Distinguish between Primitive Node and Combined Node.
+            Syntax should include elements like nodes, hyperedges (keys for dictionary mapping),
+                 maintaining consistent sets or sorted lists.
+            Consider metadata or meta-circular aspects for comprehensive understanding and structure.
