@@ -20,6 +20,7 @@
 \usepackage{fancyvrb}
 \usepackage{todonotes}
 \usepackage{setspace}
+\usepackage{multirow}
 
 
 % This will set LaTeX to look for figures in the same directory as the .tex file
@@ -222,14 +223,37 @@
 
   \begin{table}[h!]
     \begin{center}
+      %\caption{Multirow table.}
       \label{tab:table1}
       \begin{tabular}{l|c|r|l}
-        \textbf{Syntax} & \textbf{Abstract Syntax} & \textbf{Prec./Assoc.} & \textbf{Meaning}\\ % <-- added & and content for each column
-        %$\alpha$ & $\beta$ & $\gamma$ & $\delta$ \\ % <--
+        \textbf{Syntax} & \textbf{Abstract Syntax} & \textbf{Prec./Assoc.} & \textbf{Meaning}\\
         \hline
-        $<\textbf{nodeName}>$ & 1110.1 & a & e\\ % <--
-        2 & 10.1 & b & f\\ % <--
-        3 & 23.113231 & c & g\\ % <--
+        $<$\text{NodeName}$>$ & Name of string & N/A & NodeName is a primative represented\\
+         & & & using an f\# string\\
+        
+        \hline
+        $<$\text{EdgeList}$>$ & NodeName list & N/A & An edgeList is a list of NodeNames\\
+         & & & stored in an f\# list\\
+        \hline
+        $<$\text{Node}$>$ & Node of (NodeName * EdgeList) & N/A & A node is a combining form\\
+        & & & that stores a NodeName and \\
+        & & & a list of nodes that that node is connected\\
+        & & & to in an f\# list \\
+        \hline
+        $<$\text{NodeList}$>$ & Node list & N/A &A series of nodes in the form Node Node\\
+        & & & separated by whitespace including\\ 
+        & & &  newlines these are used to represent all \\
+        & & & nodes in a graph\\
+        \hline
+        $<$\text{NodeInfo}$>$& NodeInfo of String & N/A & primative of information that will be\\
+        & & & associated with a node represented\\
+        & & & with an f\# string.\\
+        
+        \hline
+        $<$\text{NodeName}$>$ := $<$\text{NodeInfo}$>$& Definition of NodeName := NodeInfo & N/A & A node is a combining form that stores a\\
+        & & & NodeName and a list of nodes that that \\
+        & & &  node is connected to in an f\# list \\
+
       \end{tabular}
     \end{center}
   \end{table}
