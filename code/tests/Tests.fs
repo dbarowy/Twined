@@ -1,9 +1,10 @@
 namespace tests
 open Par
 open AST
+open Eval
 open System
 open System.IO
-
+open System.Text
 open Microsoft.VisualStudio.TestTools.UnitTesting
 
 [<TestClass>]
@@ -18,6 +19,7 @@ type TestClass () =
     [<TestMethod>]
     member this.TestValidNodeParsing () =
         // let input = File.ReadAllText "test_text/political_systems.txt"
+
         let input = 
             "{European Fascism, (Germany, Italy, Spain,)}
             {Germany, (Adolf Hitler,)}
@@ -44,7 +46,33 @@ type TestClass () =
         | None ->
             Assert.IsTrue false
 
-        // Assert.AreEqual(expected, result)
+    [<TestMethod>]
+    member this.TestValidEval () =
+        let input = 
+            "{European Fascism, (Germany, Italy, Spain,)}
+            {Germany, (Adolf Hitler,)}
+            {Italy, (Benito Mussolini,)}
+            {Spain,(Francisco Franco,)}"
 
+        let expected = File.ReadAllText "test_text/answers/valid_eval.txt"
+          
+            // "digraph G {
+            //     \"European Fascism\" -> \"Germany\";
+            //     \"European Fascism\" -> \"Italy\";
+            //     \"European Fascism\" -> \"Spain\";
+            //     \"Germany\" -> \"Adolf Hitler\";
+            //     \"Italy\" -> \"Benito Mussolini\";
+            //     \"Spain\" -> \"Francisco Franco\";
+            //     }"
+    
+        let result = parse input false
+        
+        match result with
+        | Some ast -> 
 
+            let evaluation, _ = eval ast Map.empty  
 
+            Assert.AreEqual(expected, evaluation)
+
+        | None ->
+            Assert.IsTrue false
