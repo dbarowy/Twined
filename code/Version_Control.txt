@@ -16,7 +16,8 @@ HOW TO TRACK VERSIONS:
 
 VERSION_1.0
     
-    - Next
+    - specification.tex
+        - added new parts for mostly working check point
 
 ################################################
 

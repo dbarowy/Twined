@@ -228,31 +228,33 @@
       \begin{tabular}{l|c|r|l}
         \textbf{Syntax} & \textbf{Abstract Syntax} & \textbf{Prec./Assoc.} & \textbf{Meaning}\\
         \hline
-        $<$\text{NodeName}$>$ & Name of string & N/A & NodeName is a primative represented\\
-         & & & using an f\# string\\
+        $<$\text{NodeName}$>$ & Name of string & N/A & NodeName is a primative\\
+        & & & represented using an f\# string\\
         
         \hline
-        $<$\text{EdgeList}$>$ & NodeName list & N/A & An edgeList is a list of NodeNames\\
-         & & & stored in an f\# list\\
+        $<$\text{EdgeList}$>$ & NodeName list & N/A & An edgeList is a list of\\
+        & & &  NodeNames stored in an f\# list\\
         \hline
         $<$\text{Node}$>$ & Node of (NodeName * EdgeList) & N/A & A node is a combining form\\
         & & & that stores a NodeName and \\
-        & & & a list of nodes that that node is connected\\
-        & & & to in an f\# list \\
+        & & & a list of nodes that that node is\\
+        & & & connected to in an f\# list \\
         \hline
-        $<$\text{NodeList}$>$ & Node list & N/A &A series of nodes in the form Node Node\\
+        $<$\text{NodeList}$>$ & Node list & N/A &A series of nodes in the form\\
+        & & & \{node\} \{node\}\\
         & & & separated by whitespace including\\ 
-        & & &  newlines these are used to represent all \\
+        & & & newlines these are used to store all \\
         & & & nodes in a graph\\
         \hline
-        $<$\text{NodeInfo}$>$& NodeInfo of String & N/A & primative of information that will be\\
-        & & & associated with a node represented\\
-        & & & with an f\# string.\\
+        $<$\text{NodeInfo}$>$& NodeInfo of String & N/A & primative of information that will\\
+        & & &  be associated with a node\\
+        & & & represented with an f\# string.\\
         
         \hline
-        $<$\text{NodeName}$>$ := $<$\text{NodeInfo}$>$& Definition of NodeName := NodeInfo & N/A & A node is a combining form that stores a\\
-        & & & NodeName and a list of nodes that that \\
-        & & &  node is connected to in an f\# list \\
+        $<$\text{NodeName}$>$ := $<$\text{NodeInfo}$>$& Definition of NodeName := NodeInfo & N/A & A node is a combining form that\\
+        & & & stores a NodeName and a list of \\
+        & & & nodes that the named node is \\
+        & & &  connected to in an f\# list \\
 
       \end{tabular}
     \end{center}
