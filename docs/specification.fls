@@ -1,6 +1,6 @@
-PWD c:\Users\lucas\Projects\CS\Final Project\cs334-project-la5-zss1\docs
+PWD c:\Users\lucas\Projects\CS\Twined_Final\cs334-project-la5-zss1\docs
 INPUT C:\Users\lucas\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\lucas\Projects\CS\Final Project\cs334-project-la5-zss1\docs\specification.tex
+INPUT c:\Users\lucas\Projects\CS\Twined_Final\cs334-project-la5-zss1\docs\specification.tex
 OUTPUT specification.log
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
@@ -304,6 +304,8 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\tools\calc.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\setspace\setspace.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\setspace\setspace.sty
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\multirow\multirow.sty
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\multirow\multirow.sty
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ot1ptm.fd
@@ -403,20 +405,22 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb7t.
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\omsptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\omsptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\omsptm.fd
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb7t.vf
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
+INPUT .\images\ArchitectureDiagram.png
 INPUT specification.aux
 INPUT .\specification.out
 INPUT .\specification.out
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\type1\urw\courier\ucrr8a.pfb

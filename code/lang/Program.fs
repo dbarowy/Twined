@@ -9,6 +9,10 @@ open System.Text
 open Newtonsoft.Json
 open Tesseract
 
+// ---------------------------------
+// CHECKS OS FOR CMD TYPE
+// ---------------------------------
+
 let zsh_check =
     try
         let psi = new System.Diagnostics.ProcessStartInfo("zsh", "--version")
@@ -19,7 +23,30 @@ let zsh_check =
         pro.ExitCode = 0
     with
     | _ -> false
-    
+
+(*executes a given script as a new process using azsh or powershell as avaible*)
+let executeScript (filename: string) =
+    if zsh_check then
+        let scriptProcess = ProcessStartInfo("zsh", filename) 
+        // scriptProcess.CreateNoWindow <- true
+        // scriptProcess.RedirectStandardOutput <- true
+        // scriptProcess.UseShellExecute <- false
+
+        let pro = Process.Start(scriptProcess)
+        pro.WaitForExit() |> ignore
+    else
+        let scriptProcess = ProcessStartInfo("powershell", filename) 
+        scriptProcess.CreateNoWindow <- true
+        scriptProcess.RedirectStandardOutput <- true
+        scriptProcess.UseShellExecute <- false
+
+        let pro = Process.Start(scriptProcess)
+        pro.WaitForExit() |> ignore
+
+// ---------------------------------
+// OpenAI
+// ---------------------------------
+
 let apiKey = "***REMOVED***"
 
 (*
@@ -63,6 +90,10 @@ let makeChatCompletionRequest (userPrompt: string) =
         | None -> return "No response content available."
     }
 
+// ---------------------------------
+// OCR 
+// ---------------------------------
+
 (*OCR TEST BUT NOT FULLY WORKING*)
 
 let ocrImage (imagePath: string) (outputPath: string) =
@@ -72,26 +103,6 @@ let ocrImage (imagePath: string) (outputPath: string) =
     let text = page.GetText()
     File.WriteAllText(outputPath, text)
     printfn "OCR completed. Output saved to %s." outputPath
-
-(*executes a given script as a new process using azsh or powershell as avaible*)
-let executeScript (filename: string) =
-    if zsh_check then
-        let scriptProcess = ProcessStartInfo("zsh", filename) 
-        // scriptProcess.CreateNoWindow <- true
-        // scriptProcess.RedirectStandardOutput <- true
-        // scriptProcess.UseShellExecute <- false
-
-        let pro = Process.Start(scriptProcess)
-        pro.WaitForExit() |> ignore
-    else
-        let scriptProcess = ProcessStartInfo("powershell", filename) 
-        scriptProcess.CreateNoWindow <- true
-        scriptProcess.RedirectStandardOutput <- true
-        scriptProcess.UseShellExecute <- false
-
-        let pro = Process.Start(scriptProcess)
-        pro.WaitForExit() |> ignore
-
 
 (*OCR NOT FULLY WORKING*)
 let openImage (imagePath: string): unit =
@@ -103,6 +114,11 @@ let openImage (imagePath: string): unit =
         let psi = new ProcessStartInfo("powershell", sprintf "Start '%s'" imagePath)
         psi.UseShellExecute <- false
         Process.Start(psi) |> ignore
+
+
+// ---------------------------------
+// Opens Graph 
+// ---------------------------------
 
 let open_graph (fullPath: string): (unit) =
 
@@ -116,6 +132,9 @@ let open_graph (fullPath: string): (unit) =
         psi.UseShellExecute <- false
         System.Diagnostics.Process.Start(psi) |> ignore
 
+// ---------------------------------
+// Generating New Graph 
+// ---------------------------------
 
 let update_svg (ast: Expr) (envi: Env) (fullPath: string): unit =
     let gvText, _ = eval ast envi  // Convert AST to a string or graph format.
@@ -125,6 +144,10 @@ let update_svg (ast: Expr) (envi: Env) (fullPath: string): unit =
     File.WriteAllText(executionName, sprintf "dot -Tsvg %s -o %s" fullPath (fullPath.Replace(".txt", ".svg")))
     executeScript executionName
     printfn "Graph generated, located at %s." (fullPath.Replace(".txt", ".svg"))
+
+// ---------------------------------------------------
+// Recursive Main Method that Handles the User's Input 
+// ---------------------------------------------------
 
 let rec maintwo (debug: bool) (inputFilePath: string): unit =
     printfn "\n(Twined) -> Graph generated with success! It is now located in the svg_folder.\n"
@@ -146,12 +169,6 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
         match input with
 
         | "1" -> 
-            //printfn "\n(Twined) -> The feature to expand is not yet implemented!"
-            //printfn "\n(Twined) -> Please enter your prompt:"
-            // let userPrompt = System.Console.ReadLine().Trim()
-            // let response = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
-            // printfn "\n(Twined) -> Model response: %s" response
-
             printfn "\n(Twined) -> Please enter your prompt:"
             let userPrompt = System.Console.ReadLine().Trim()
             let responseContent = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
@@ -229,18 +246,25 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 
     processInput () 
 
+// ---------------------------------------------------
+// PDF TO TEXT Converter (Not Working Properly Yet) 
+// ---------------------------------------------------
+
 let pdf_convert (file_name: string) =
 
     printfn"%A" file_name
     // create the converter object in your code where you want to run conversion
-    let converter = new PdfToTextConverter();
+    // let converter = new PdfToTextConverter();
     // extract the text from PDF
-    let extractedText = converter.ConvertToText(file_name);
+    // let extractedText = converter.ConvertToText(file_name);
     let target_name = "PdfToText.txt"
     // write the .NET string to a text file
-    System.IO.File.WriteAllText(target_name, extractedText, System.Text.Encoding.UTF8);
+    // System.IO.File.WriteAllText(target_name, extractedText, System.Text.Encoding.UTF8);
     target_name
 
+// ---------------------------------------------------
+// Checking Path (CHOSING PATHS BY TYPE INPUT) 
+// ---------------------------------------------------    
 
 let pdf_path (filename: string) (do_debug: bool) : unit =
     failwith "1"
@@ -276,7 +300,9 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
         printfn "Failed to parse input"
 
     
-
+// -----------------------------------------------------------
+// MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
+// -----------------------------------------------------------
 
 [<EntryPoint>]
 let main argv =
