@@ -8,6 +8,7 @@ open System.Net.Http
 open System.Text
 open Newtonsoft.Json
 open Tesseract
+open EvoPdf.PdfToText
 
 let zsh_check =
     try
@@ -91,6 +92,8 @@ let executeScript (filename: string) =
 
         let pro = Process.Start(scriptProcess)
         pro.WaitForExit() |> ignore
+
+
 (*OCR NOT FULLY WORKING*)
 let openImage (imagePath: string): unit =
     if zsh_check then
@@ -227,6 +230,18 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 
     processInput () 
 
+let pdf_convert (file_name: string) =
+
+    printfn"%A" file_name
+    // create the converter object in your code where you want to run conversion
+    let converter = new PdfToTextConverter();
+    // extract the text from PDF
+    let extractedText = converter.ConvertToText(file_name);
+    let target_name = "PdfToText.txt"
+    // write the .NET string to a text file
+    System.IO.File.WriteAllText(target_name, extractedText, System.Text.Encoding.UTF8);
+    target_name
+
 
 let pdf_path (filename: string) (do_debug: bool) : unit =
     failwith "1"
@@ -254,12 +269,14 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
         File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
         executeScript execution_name
         //printfn "Graph generated, located in svg_folder."
+
+        maintwo(do_debug) fullPath
         
     | None ->
-
+    
         printfn "Failed to parse input"
 
-    maintwo(do_debug) fullPath
+    
 
 
 [<EntryPoint>]
@@ -281,8 +298,8 @@ let main argv =
     let do_debug = if argv.Length = 2 then true else false
     
     if fullPath.EndsWith(".pdf") then
-        let input = "abc"
-        // let input = pdf_convert(fullPath)
+        // let input = "abc"
+        let input = pdf_convert(fullPath)
         printfn "conversion complete"
         pdf_path input do_debug
         0
