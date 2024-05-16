@@ -16,7 +16,10 @@ HOW TO TRACK VERSIONS:
 
 VERSION_1.1
     
-    - 
+    - Program.fs
+        - removed old code
+        - streamlined main method
+
 
 ################################################
 
