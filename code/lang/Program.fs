@@ -7,6 +7,7 @@ open System.Diagnostics
 open System.Net.Http
 open System.Text
 open Newtonsoft.Json
+open Tesseract
 
 let zsh_check =
     try
@@ -62,6 +63,15 @@ let makeChatCompletionRequest (userPrompt: string) =
         | None -> return "No response content available."
     }
 
+(*OCR TEST BUT NOT FULLY WORKING*)
+
+let ocrImage (imagePath: string) (outputPath: string) =
+    let engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default)
+    let img = Pix.LoadFromFile(imagePath)
+    let page = engine.Process(img)
+    let text = page.GetText()
+    File.WriteAllText(outputPath, text)
+    printfn "OCR completed. Output saved to %s." outputPath
 
 (*executes a given script as a new process using azsh or powershell as avaible*)
 let executeScript (filename: string) =
@@ -81,6 +91,16 @@ let executeScript (filename: string) =
 
         let pro = Process.Start(scriptProcess)
         pro.WaitForExit() |> ignore
+(*OCR NOT FULLY WORKING*)
+let openImage (imagePath: string): unit =
+    if zsh_check then
+        let scriptCommand = sprintf "open '%s'" imagePath
+        File.WriteAllText("openImage.sh", scriptCommand)
+        executeScript "openImage.sh"
+    else
+        let psi = new ProcessStartInfo("powershell", sprintf "Start '%s'" imagePath)
+        psi.UseShellExecute <- false
+        Process.Start(psi) |> ignore
 
 let open_graph (fullPath: string): (unit) =
 
@@ -259,6 +279,8 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
         printfn "    5 - Print content of the original text file"
         printfn "    6 - Print content of the generated GV file"
         printfn "    7 - Exit to quit the program\n"
+        printfn "    8 - View and OCR an image"
+        printfn "    9 - View OCR text results"
 
     let handleUserSelection input =
         match input with
@@ -297,12 +319,33 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 
         | "6" ->
             let gvText = File.ReadAllText "text_folder/gv.txt"
-            printfn "\n(Twined) -> Contents of the generated GV file:\n"
+            printfn "\n(Twined) -> Contents of the generated GV file:"
             printfn "%s\n" gvText
 
         | "7" ->
             printfn "\n(Twined) -> Exiting the program, see you soon!"
             System.Environment.Exit(0)
+
+        | "8" -> 
+            let imagePath = "image_samples/Hello-Text.png"
+            let outputPath = "text_samples/ocr.txt"
+            if File.Exists(imagePath) then
+                openImage imagePath
+                printfn "\n(Twined) -> Image opened: %s" imagePath
+                printfn "\n(Twined) -> Performing OCR..."
+                ocrImage imagePath outputPath
+                printfn "\n(Twined) -> OCR text available at: %s" outputPath
+            else
+                printfn "\n(Twined) -> Error: The specified image file does not exist at %s." imagePath
+
+        | "9" ->
+            let txtPath = "text_samples/ocr.txt"
+            if File.Exists(txtPath) then
+                let ocrText = File.ReadAllText(txtPath)
+                printfn "\n(Twined) -> Contents of the OCR text file:\n"
+                printfn "%s" ocrText
+            else
+                printfn "\n(Twined) -> Error: The OCR text file does not exist at %s." txtPath
 
         | _ -> printfn "\n(Twined) -> Invalid selection. Please try again or type 'help' for options."
 

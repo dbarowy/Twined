@@ -23,3 +23,4 @@ type Choice = {
 type CompletionResponse = {
     choices: Choice[]
 }
+
