@@ -273,7 +273,7 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
         maintwo(do_debug) fullPath
         
     | None ->
-    
+
         printfn "Failed to parse input"
 
     
@@ -298,8 +298,8 @@ let main argv =
     let do_debug = if argv.Length = 2 then true else false
     
     if fullPath.EndsWith(".pdf") then
-        // let input = "abc"
-        let input = pdf_convert(fullPath)
+        let input = "abc"
+        // let input = pdf_convert(fullPath)
         printfn "conversion complete"
         pdf_path input do_debug
         0
