@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.PDF" Version="24.5.1" />
-    <PackageReference Include="Aspose.Words" Version="24.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenAI.Client" Version="0.2.0" />
     <PackageReference Include="Tesseract" Version="5.2.0" />
