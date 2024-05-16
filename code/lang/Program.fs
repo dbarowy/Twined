@@ -8,7 +8,6 @@ open System.Net.Http
 open System.Text
 open Newtonsoft.Json
 open Tesseract
-open EvoPdf.PdfToText
 
 let zsh_check =
     try
