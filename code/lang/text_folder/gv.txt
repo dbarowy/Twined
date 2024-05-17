@@ -1,6 +1,21 @@
 digraph G {
+<<<<<<< HEAD
 "Heat" -> "Melting Glass";
 "Silica" -> "Melting Glass";
 "Soda Ash" -> "Melting Glass";
 "Lime" -> "Melting Glass";
+=======
+"Sunlight" -> "Plant Growth";
+"Sunlight" -> "Photolysis";
+"Sunlight" -> "Electron Excitation";
+"Sunlight" -> "ATP Formation";
+"Sunlight" -> "NADPH Formation";
+"Water" -> "Plant Growth";
+"Water" -> "Photolysis";
+"Water" -> "Electron Supply";
+"Water" -> "Proton Gradient";
+"Photolysis" -> "Oxygen";
+"Photolysis" -> "Electron Supply";
+"Photolysis" -> "Proton Gradient";
+>>>>>>> f60e1e2bf148eca872c90522f59e4ae060122442
 }
