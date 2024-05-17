@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>_2022_12_fsharp_giraffe_example</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
