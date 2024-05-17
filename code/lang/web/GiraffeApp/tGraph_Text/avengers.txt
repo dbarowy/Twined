@@ -1,0 +1,8 @@
+{Iron Man, (Avengers)}
+{Thor, (Avengers)}
+{Hulk, (Avengers)}
+{Captain America, (Avengers)}
+^^Iron Man := Iron Man provides high-tech firepower^^
+^^Thor := Thor wields supernatural power^^
+^^Hulk := Hulk adds immense strength^^
+^^Captain America := Captain America contributes strategic leadership^^
