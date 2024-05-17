@@ -284,22 +284,17 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 
 let pdf_convert (file_name: string) =
 
-    printfn"%A" file_name
-    // create the converter object in your code where you want to run conversion
-    // let converter = new PdfToTextConverter();
-    // extract the text from PDF
-    // let extractedText = converter.ConvertToText(file_name);
-    let target_name = "PdfToText.txt"
-    // write the .NET string to a text file
-    // System.IO.File.WriteAllText(target_name, extractedText, System.Text.Encoding.UTF8);
+    (*convert pdf to text using a python script because it is open source/free*)    
+    let executionName = "exe.sh"
+    File.WriteAllText(executionName, sprintf "python3.9 pdf_extract.py %s" file_name )
+    executeScript executionName
+    let target_name = "pdf_folder/pdf_output.txt"
+    
     target_name
 
 // ---------------------------------------------------
 // Checking Path (CHOSING PATHS BY TYPE INPUT) 
 // ---------------------------------------------------    
-
-let pdf_path (filename: string) (do_debug: bool) : unit =
-    failwith "1"
 
 let text_path (fullPath: string) (do_debug: bool) : unit =
     let input = File.ReadAllText fullPath
@@ -331,6 +326,29 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
 
         printfn "Failed to parse input"
 
+
+let pdf_path (filename: string) (do_debug: bool) : unit =
+
+    let example = "{Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}\n{Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}\n{Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}\n^^Sunlight := Sunlight provides the energy that excites electrons in chlorophyll, driving the light-dependent reactions of photosynthesis. This energy is crucial for splitting water molecules (photolysis), forming ATP through chemiosmosis, and generating NADPH for the Calvin cycle.^^\n^^Water := Water is crucial in photosynthesis as it provides the electrons and protons needed for the light-dependent reactions. The splitting of water molecules (photolysis) supplies the electrons that drive the electron transport chain and the protons that contribute to the formation of a proton gradient for ATP synthesis.^^\n^^Oxygen := Oxygen is released as a byproduct of photosynthesis when water molecules are split during photolysis. This oxygen is essential for the survival of aerobic organisms, including humans.^^\n^^Soil Nutrients := Plants absorb essential nutrients from the soil, which are necessary for their growth and overall health. These nutrients support various biochemical processes, including photosynthesis.^^\n^^Photolysis := Photolysis is the process of using light energy absorbed by chlorophyll and other pigments to split water molecules into oxygen, protons, and electrons. This process occurs in the thylakoid membranes of the chloroplasts and is essential for providing the necessary components for the light-dependent reactions of photosynthesis.^^\n"
+
+    printfn "\n(Twined) -> are there any topics you would like to focus on? (for a broad overview type \"none\")"
+    let input = System.Console.ReadLine().Trim().ToLower()
+    match input with
+
+    (*want a broad overview of the topic*)
+    |"none" ->
+        let prompt = "Given the following example graph " + example + " in as many nodes as is needed can you discribe"
+        let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper prompt))
+
+        text_path responseContent do_debug
+
+    (*incase they want to exit*)
+    | "exit" -> 
+        printfn "Exiting the program, see you soon!"
+
+    (*asking for something specific*)
+    | _ ->
+        printfn "yay!"
     
 // -----------------------------------------------------------
 // MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
@@ -366,21 +384,20 @@ let main argv =
 
         |"2" ->
 
-            printfn "Please enter the path of your graph"
+            printfn "Please enter the path of your file you wish to access"
             printf "(User) -> "
             let input = System.Console.ReadLine().Trim().ToLower()
             let fullPath = Path.GetFullPath(input)
 
             if File.Exists(fullPath) then
                 let do_debug = if argv.Length = 1 then true else false
-                text_path fullPath do_debug
 
                 if fullPath.EndsWith(".pdf") then
-                    let input = "abc"
-                    // let input = pdf_convert(fullPath)
-                    printfn "conversion complete"
+
+                    let input = pdf_convert(fullPath)
                     pdf_path input do_debug
                     0
+
                 else
                     text_path fullPath do_debug
                     0
