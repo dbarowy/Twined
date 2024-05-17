@@ -145,6 +145,21 @@ let update_svg (ast: Expr) (envi: Env) (fullPath: string): unit =
     executeScript executionName
     printfn "Graph generated, located at %s." (fullPath.Replace(".txt", ".svg"))
 
+
+let prompt_helper (initial: string) : string =
+    let final = 
+        "given the following example graph
+        {Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}
+        {Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}
+        {Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}
+        ^^Sunlight := Sunlight provides the energy that excites electrons in chlorophyll, driving the light-dependent reactions of photosynthesis. This energy is crucial for splitting water molecules (photolysis), forming ATP through chemiosmosis, and generating NADPH for the Calvin cycle.^^
+        ^^Water := Water is crucial in photosynthesis as it provides the electrons and protons needed for the light-dependent reactions. The splitting of water molecules (photolysis) supplies the electrons that drive the electron transport chain and the protons that contribute to the formation of a proton gradient for ATP synthesis.^^
+        ^^Oxygen := Oxygen is released as a byproduct of photosynthesis when water molecules are split during photolysis. This oxygen is essential for the survival of aerobic organisms, including humans.^^
+        ^^Soil Nutrients := Plants absorb essential nutrients from the soil, which are necessary for their growth and overall health. These nutrients support various biochemical processes, including photosynthesis.^^
+        ^^Photolysis := Photolysis is the process of using light energy absorbed by chlorophyll and other pigments to split water molecules into oxygen, protons, and electrons. This process occurs in the thylakoid membranes of the chloroplasts and is essential for providing the necessary components for the light-dependent reactions of photosynthesis.^^
+        can you give explain " + initial + " in the same way with no extra words"
+    final
+
 // ---------------------------------------------------
 // Recursive Main Method that Handles the User's Input 
 // ---------------------------------------------------
@@ -171,8 +186,25 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
         | "1" -> 
             printfn "\n(Twined) -> Please enter your prompt:"
             let userPrompt = System.Console.ReadLine().Trim()
-            let responseContent = Async.RunSynchronously (makeChatCompletionRequest userPrompt)
-            printfn "\n(Twined) -> Model response content: %s" responseContent
+            let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper userPrompt))
+            
+            let ast = parse responseContent false
+            match ast with
+            |Some expr -> 
+
+                let file_name = "text_folder/gv.txt"
+                let gvText, envi = eval expr Map.empty
+
+                File.WriteAllText(file_name, gvText)
+
+                (*generates a .sh file to exicute the graphviz code generating an svg file in
+                the svg folder TODO add ability of user to name the output*)
+                let execution_name = "exe.sh"
+                File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
+                executeScript execution_name   
+                
+            | None -> 
+                printfn "\n(Twined) -> %s" responseContent
 
         | "2" ->
             let fullPath = "svg_folder/graph.svg"
@@ -306,30 +338,61 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
 
 [<EntryPoint>]
 let main argv =
-    if argv.Length <> 1 && argv.Length <> 2 then
-        printfn "Usage: dotnet run <file> [debug]"
-        1
-    else 
+    if argv.Length <> 0 && argv.Length <> 1 then
+            printfn "Usage: dotnet run [debug]"
+            1
 
-    (* read in the input file *)
-    let file = argv.[0]
-    let fullPath = Path.GetFullPath(file)
-
-    if File.Exists(fullPath) = false then
-        printfn "invalid file "
-        1
     else
+        printfn 
+            "Welcome to Twined: \nWould you like to\n1: Open an exiting graph in a text file?\n2: Open a pdf, image, or other text file with raw data\n"
+        printf "(User) -> "
+        let input = System.Console.ReadLine().Trim().ToLower()
+        match input with
+        |"1" ->
+            printfn "Please enter the path of your graph"
+            printf "(User) -> "
+            let input = System.Console.ReadLine().Trim().ToLower()
+            
+            let fullPath = Path.GetFullPath(input)
 
-    let do_debug = if argv.Length = 2 then true else false
-    
-    if fullPath.EndsWith(".pdf") then
-        let input = "abc"
-        // let input = pdf_convert(fullPath)
-        printfn "conversion complete"
-        pdf_path input do_debug
-        0
-    else
-        text_path fullPath do_debug
-        0  
+            if File.Exists(fullPath) then
+                let do_debug = if argv.Length = 1 then true else false
+                text_path fullPath do_debug
+                0
+                
+            else
+                printfn "invalid file "
+                1
 
+        |"2" ->
+
+            printfn "Please enter the path of your graph"
+            printf "(User) -> "
+            let input = System.Console.ReadLine().Trim().ToLower()
+            let fullPath = Path.GetFullPath(input)
+
+            if File.Exists(fullPath) then
+                let do_debug = if argv.Length = 1 then true else false
+                text_path fullPath do_debug
+
+                if fullPath.EndsWith(".pdf") then
+                    let input = "abc"
+                    // let input = pdf_convert(fullPath)
+                    printfn "conversion complete"
+                    pdf_path input do_debug
+                    0
+                else
+                    text_path fullPath do_debug
+                    0
+                    
+            else
+                printfn "invalid file"
+                1
+              
+        | "exit" ->
+            printfn "Exiting the program, see you soon!"
+            0
+        | _ ->
+            printfn "Please choose 1 or 2"
+            1
 
