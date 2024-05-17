@@ -1,5 +1,6 @@
 digraph G {
-"Sunlight" -> "Plant Growth";
-"Water" -> "Plant Growth";
-"Soil Nutrients" -> "Plant Growth";
+"Heat" -> "Melting Glass";
+"Silica" -> "Melting Glass";
+"Soda Ash" -> "Melting Glass";
+"Lime" -> "Melting Glass";
 }
