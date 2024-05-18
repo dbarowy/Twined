@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="6.4.0" />
-    
   </ItemGroup>
 
 </Project>
