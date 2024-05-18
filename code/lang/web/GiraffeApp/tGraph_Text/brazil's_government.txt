@@ -1,9 +1,0 @@
-{Politics, (Brazil's Government,)}
-{Economy, (Brazil's Government,)}
-{Constitution, (Brazil's Government,)}
-{Federal Republic, (Brazil's Government,)}
-
-^^Politics := Politics shapes the governance and policies of Brazil^^
-^^Economy := Economy influences the decision-making in Brazil’s government^^
-^^Constitution := Constitution provides the legal framework for Brazil's government^^
-^^Federal Republic := Brazil is structured as a federal republic^^

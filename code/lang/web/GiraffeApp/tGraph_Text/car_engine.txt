@@ -1,8 +1,0 @@
-{Fuel, (Running Car Engine,)}
-{Air, (Running Car Engine,)}
-{Spark, (Running Car Engine,)}
-{Pistons, (Running Car Engine,)}
-^^Fuel := Fuel provides energy for the engine^^
-^^Air := Air is necessary for combustion in the engine^^
-^^Spark := Spark ignites the fuel-air mixture^^
-^^Pistons := Pistons convert combustion energy into mechanical motion^^

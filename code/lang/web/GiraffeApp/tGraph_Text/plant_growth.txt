@@ -1,8 +1,0 @@
-{Sunlight, (Plant Growth,)}
-{Water, (Plant Growth,)}
-{Carbon Dioxide, (Plant Growth,)}
-{Nutrients, (Plant Growth,)}
-^^Sunlight := Sunlight is required for photosynthesis^^
-^^Water := Water is essential for photosynthesis and transport of nutrients^^
-^^Carbon Dioxide := Carbon Dioxide is utilized in photosynthesis to produce food for the plant^^
-^^Nutrients := Nutrients in soil are essential for plant growth and health^^

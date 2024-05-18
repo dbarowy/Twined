@@ -1,9 +1,0 @@
-{Stone Blocks, (Building Egyptian Pyramids,)}
-{Slaves, (Building Egyptian Pyramids,)}
-{Tools, (Building Egyptian Pyramids,)}
-{Mathematics, (Building Egyptian Pyramids,)}
-
-^^Stone Blocks := Stone blocks are the primary building material of pyramids^^  
-^^Slaves := Slaves provided labor for pyramid construction^^  
-^^Tools := Tools were used to shape stone blocks and construct pyramids^^  
-^^Mathematics := Mathematics was essential for architectural planning of pyramids^^
