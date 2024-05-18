@@ -1,0 +1,53 @@
+TwinedChat: Hello, how are you?
+"Hello! I don't have feelings, but I'm here to help you. How can I assist you today?"
+
+#########################################
+TwinedGraph:
+Graph explanation saved to tGraph_Text\.txt
+{Heat, (Melting Glass,)}  
+{Silica, (Melting Glass,)}  
+{Soda Ash, (Melting Glass,)}  
+{Lime, (Melting Glass,)}  
+^^Heat := Heat causes glass to melt^^  
+^^Silica := Silica is the main component of glass^^  
+^^Soda Ash := Soda Ash reduces the melting point of glass^^  
+^^Lime := Lime adds durability to the glass^^
+
+#########################################
+TwinedGraph: ancient_china
+Graph explanation saved to tGraph_Text\ancient_china.txt
+{Bronze Making Methods, (Ancient China,)}
+{Silk Production, (Ancient China,)}
+{Paper Invention, (Ancient China,)}
+{Gunpowder Creation, (Ancient China,)}
+^^Bronze Making Methods := Bronze Making Methods were advanced in Ancient China^^
+^^Silk Production := Silk Production was pioneered and refined in Ancient China^^
+^^Paper Invention := Paper was invented in Ancient China^^
+^^Gunpowder Creation := Gunpowder was first created in Ancient China^^
+
+#########################################
+TwinedOpSVG:
+
+SVG Files:
+direct.svg
+Family_tree.svg
+graph.svg
+graph_plant.svg
+hello.svg
+plant_simple_graph.svg
+
+#########################################
+TwinedOpSVG: graph
+
+#########################################
+
+TwinedText:
+undefined
+undefined
+
+#########################################
+TwinedText: Aztec Sun
+undefined
+undefined
+
+#########################################
