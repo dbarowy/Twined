@@ -9,7 +9,38 @@ document.addEventListener("DOMContentLoaded", function() {
     sendButton.addEventListener("click", function() {
         const userPrompt = commandInput.value.trim();
         
-        if (userPrompt.startsWith("TwinedChat:")) {
+
+        // calling main method
+        if (userPrompt.startsWith("S:")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
+
+            fetch("/api/callMain", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.text())
+            .then(data => {
+                const aiMessage = document.createElement("div");
+                aiMessage.className = "message twined";
+                aiMessage.textContent = data;
+                chatContainer.appendChild(aiMessage);
+                commandInput.value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+
+
+
+
+        } else if (userPrompt.startsWith("TwinedChat:")) {
             const userMessage = document.createElement("div");
             userMessage.className = "message user";
             userMessage.textContent = userPrompt;

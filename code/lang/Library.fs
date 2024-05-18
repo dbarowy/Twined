@@ -360,26 +360,33 @@ let pdf_path (filename: string) (do_debug: bool) : unit =
     (*asking for something specific*)
     | _ ->
         printfn "yay!"
+
+
+let sender (str: string) =
+    failwith "1"
+
+let receiver (str: string) =
+    failwith "1"
+
     
 // -----------------------------------------------------------
 // MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
 // -----------------------------------------------------------
 
-// [<EntryPoint>]
-let start_up (argv: string list): int =
+(*sender should send messages via post, reciever accepts messages via get*)
+let rec start_up (argv: string list): int =
     if argv.Length <> 0 && argv.Length <> 1 then
-            printfn "Usage: dotnet run [debug]"
+            sender "Usage: dotnet run [debug]"
             1
 
     else
-        printfn 
+        sender 
             "Welcome to Twined: \nWould you like to\n1: Open an exiting graph in a text file?\n2: Open a pdf, image, or other text file with raw data\n"
-        printf "(User) -> "
+        
         let input = System.Console.ReadLine().Trim().ToLower()
         match input with
         |"1" ->
-            printfn "Please enter the path of your graph"
-            printf "(User) -> "
+            sender "Please enter the path of your graph"
             let input = System.Console.ReadLine().Trim().ToLower()
             
             let fullPath = Path.GetFullPath(input)
@@ -390,13 +397,12 @@ let start_up (argv: string list): int =
                 0
                 
             else
-                printfn "invalid file "
-                1
+                sender "invalid file "
+                start_up argv
 
         |"2" ->
 
-            printfn "Please enter the path of your file you wish to access"
-            printf "(User) -> "
+            sender "Please enter the path of your file you wish to access"
             let input = System.Console.ReadLine().Trim().ToLower()
             let fullPath = Path.GetFullPath(input)
 
@@ -414,13 +420,13 @@ let start_up (argv: string list): int =
                     0
                     
             else
-                printfn "invalid file"
-                1
+                sender "invalid file"
+                start_up argv
               
         | "exit" ->
-            printfn "Exiting the program, see you soon!"
+            sender "Exiting the program, see you soon!"
             0
         | _ ->
-            printfn "Please choose 1 or 2"
-            1
+            sender "Please choose 1 or 2"
+            start_up argv
 

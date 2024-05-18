@@ -245,6 +245,17 @@ let indexHandler (name : string) =
     let view      = Views.index model
     htmlView view
 
+let mainHandler : HttpHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+        task{
+            let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+            let userInput = userPrompt.userPrompt.Trim()
+
+            let args = [userInput]
+            let result = start_up args
+            return! json result next ctx
+        }
+
 // Update the API handler
 let apiHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
@@ -335,6 +346,7 @@ let webApp =
         POST >=> 
             choose [
                 route "/api/chat" >=> apiHandler
+                route "/api/callMain" >=> mainHandler
             ]
         setStatusCode 404 >=> text "Not Found" ]
 
@@ -387,8 +399,8 @@ let configureLogging (builder : ILoggingBuilder) =
 // Define the main entry point
 [<EntryPoint>]
 let main args =
-    (*the start of the code from library*)
-    let apples = start_up []
+    // (*the start of the code from library*)
+    // let apples = start_up []
 
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")
