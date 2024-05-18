@@ -1,5 +1,5 @@
 ﻿module Library
-
+open OpenAI
 open Par
 open Eval
 open AST
@@ -8,8 +8,8 @@ open System.IO
 open System.Diagnostics
 open System.Net.Http
 open System.Text
-// open Newtonsoft.Json
-// open Tesseract
+open Newtonsoft.Json
+open Tesseract
 
 // ---------------------------------
 // CHECKS OS FOR CMD TYPE
@@ -58,62 +58,62 @@ let executeScript (filename: string) =
 // // OpenAI
 // // ---------------------------------
 
-// let apiKey = "***REMOVED***"
+let apiKey = "***REMOVED***"
 
-// (*
-//     https://learn.microsoft.com/en-us/dotnet/api/system.net.http.headers.authenticationheadervalue.-ctor?view=net-8.0
-//     https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0 
+(*
+    https://learn.microsoft.com/en-us/dotnet/api/system.net.http.headers.authenticationheadervalue.-ctor?view=net-8.0
+    https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0 
     
-// *)
+*)
 
-// let httpClient = new HttpClient()
-// httpClient.DefaultRequestHeaders.Authorization <-
-//     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey)
+let httpClient = new HttpClient()
+httpClient.DefaultRequestHeaders.Authorization <-
+    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey)
 
-// httpClient.DefaultRequestHeaders.Accept.Add(
-//     new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"))
+httpClient.DefaultRequestHeaders.Accept.Add(
+    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"))
 
 
-// let makeChatCompletionRequest (userPrompt: string) =
-//     async {
-//         let payload = 
-//             {|
-//                 model = "gpt-3.5-turbo"
-//                 messages = [| { role = "user"; content = userPrompt } |]
-//                 temperature = 1.0
-//                 max_tokens = 256
-//                 top_p = 1.0
-//                 frequency_penalty = 0.0
-//                 presence_penalty = 0.0
-//             |} |> JsonConvert.SerializeObject
+let makeChatCompletionRequest (userPrompt: string) =
+    async {
+        let payload = 
+            {|
+                model = "gpt-3.5-turbo"
+                messages = [| { role = "user"; content = userPrompt } |]
+                temperature = 1.0
+                max_tokens = 256
+                top_p = 1.0
+                frequency_penalty = 0.0
+                presence_penalty = 0.0
+            |} |> JsonConvert.SerializeObject
 
-//         let content = new StringContent(payload, Encoding.UTF8, "application/json")
+        let content = new StringContent(payload, Encoding.UTF8, "application/json")
         
-//         let! response = httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content) |> Async.AwaitTask
-//         let! responseBody = response.Content.ReadAsStringAsync() |> Async.AwaitTask
+        let! response = httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content) |> Async.AwaitTask
+        let! responseBody = response.Content.ReadAsStringAsync() |> Async.AwaitTask
 
-//         //return responseBody
+        //return responseBody
 
-//         let parsedResponse = JsonConvert.DeserializeObject<CompletionResponse>(responseBody)
+        let parsedResponse = JsonConvert.DeserializeObject<CompletionResponse>(responseBody)
       
-//         match parsedResponse.choices |> Array.tryHead with
-//         | Some choice -> return choice.message.content
-//         | None -> return "No response content available."
-//     }
+        match parsedResponse.choices |> Array.tryHead with
+        | Some choice -> return choice.message.content
+        | None -> return "No response content available."
+    }
 
-// // ---------------------------------
-// // OCR 
-// // ---------------------------------
+// ---------------------------------
+// OCR 
+// ---------------------------------
 
-// (*OCR TEST BUT NOT FULLY WORKING*)
+(*OCR TEST BUT NOT FULLY WORKING*)
 
-// let ocrImage (imagePath: string) (outputPath: string) =
-//     let engine = new TesseractEngine(@"./inputs/tessdata", "eng", EngineMode.Default)
-//     let img = Pix.LoadFromFile(imagePath)
-//     let page = engine.Process(img)
-//     let text = page.GetText()
-//     File.WriteAllText(outputPath, text)
-//     printfn "OCR completed. Output saved to %s." outputPath
+let ocrImage (imagePath: string) (outputPath: string) =
+    let engine = new TesseractEngine(@"./inputs/tessdata", "eng", EngineMode.Default)
+    let img = Pix.LoadFromFile(imagePath)
+    let page = engine.Process(img)
+    let text = page.GetText()
+    File.WriteAllText(outputPath, text)
+    printfn "OCR completed. Output saved to %s." outputPath
 
 (*OCR NOT FULLY WORKING*)
 let openImage (imagePath: string): unit =
@@ -157,19 +157,19 @@ let update_svg (ast: Expr) (envi: Env) (fullPath: string): unit =
     printfn "Graph generated, located at %s." (fullPath.Replace(".txt", ".svg"))
 
 
-// let prompt_helper (initial: string) : string =
-//     let final = 
-//         "given the following example graph
-//         {Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}
-//         {Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}
-//         {Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}
-//         ^^Sunlight := Sunlight provides the energy that excites electrons in chlorophyll, driving the light-dependent reactions of photosynthesis. This energy is crucial for splitting water molecules (photolysis), forming ATP through chemiosmosis, and generating NADPH for the Calvin cycle.^^
-//         ^^Water := Water is crucial in photosynthesis as it provides the electrons and protons needed for the light-dependent reactions. The splitting of water molecules (photolysis) supplies the electrons that drive the electron transport chain and the protons that contribute to the formation of a proton gradient for ATP synthesis.^^
-//         ^^Oxygen := Oxygen is released as a byproduct of photosynthesis when water molecules are split during photolysis. This oxygen is essential for the survival of aerobic organisms, including humans.^^
-//         ^^Soil Nutrients := Plants absorb essential nutrients from the soil, which are necessary for their growth and overall health. These nutrients support various biochemical processes, including photosynthesis.^^
-//         ^^Photolysis := Photolysis is the process of using light energy absorbed by chlorophyll and other pigments to split water molecules into oxygen, protons, and electrons. This process occurs in the thylakoid membranes of the chloroplasts and is essential for providing the necessary components for the light-dependent reactions of photosynthesis.^^
-//         can you give explain " + initial + " in the same way with no extra words"
-//     final
+let prompt_helper (initial: string) : string =
+    let final = 
+        "given the following example graph
+        {Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}
+        {Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}
+        {Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}
+        ^^Sunlight := Sunlight provides the energy that excites electrons in chlorophyll, driving the light-dependent reactions of photosynthesis. This energy is crucial for splitting water molecules (photolysis), forming ATP through chemiosmosis, and generating NADPH for the Calvin cycle.^^
+        ^^Water := Water is crucial in photosynthesis as it provides the electrons and protons needed for the light-dependent reactions. The splitting of water molecules (photolysis) supplies the electrons that drive the electron transport chain and the protons that contribute to the formation of a proton gradient for ATP synthesis.^^
+        ^^Oxygen := Oxygen is released as a byproduct of photosynthesis when water molecules are split during photolysis. This oxygen is essential for the survival of aerobic organisms, including humans.^^
+        ^^Soil Nutrients := Plants absorb essential nutrients from the soil, which are necessary for their growth and overall health. These nutrients support various biochemical processes, including photosynthesis.^^
+        ^^Photolysis := Photolysis is the process of using light energy absorbed by chlorophyll and other pigments to split water molecules into oxygen, protons, and electrons. This process occurs in the thylakoid membranes of the chloroplasts and is essential for providing the necessary components for the light-dependent reactions of photosynthesis.^^
+        can you give explain " + initial + " in the same way with no extra words"
+    final
 
 // ---------------------------------------------------
 // Recursive Main Method that Handles the User's Input 
@@ -194,28 +194,28 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
     let handleUserSelection input =
         match input with
 
-        // | "1" -> 
-        //     printfn "\n(Twined) -> Please enter your prompt:"
-        //     let userPrompt = System.Console.ReadLine().Trim()
-        //     let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper userPrompt))
+        | "1" -> 
+            printfn "\n(Twined) -> Please enter your prompt:"
+            let userPrompt = System.Console.ReadLine().Trim()
+            let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper userPrompt))
             
-        //     let ast = parse responseContent false
-        //     match ast with
-        //     |Some expr -> 
+            let ast = parse responseContent false
+            match ast with
+            |Some expr -> 
 
-        //         let file_name = gv_location
-        //         let gvText, envi = eval expr Map.empty
+                let file_name = gv_location
+                let gvText, envi = eval expr Map.empty
 
-        //         File.WriteAllText(file_name, gvText)
+                File.WriteAllText(file_name, gvText)
 
-        //         (*generates a .sh file to exicute the graphviz code generating an svg file in
-        //         the svg folder TODO add ability of user to name the output*)
-        //         let execution_name = exe_location
-        //         File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
-        //         executeScript execution_name   
+                (*generates a .sh file to exicute the graphviz code generating an svg file in
+                the svg folder TODO add ability of user to name the output*)
+                let execution_name = exe_location
+                File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
+                executeScript execution_name   
                 
-        //     | None -> 
-        //         printfn "\n(Twined) -> %s" responseContent
+            | None -> 
+                printfn "\n(Twined) -> %s" responseContent
 
         | "2" ->
             let fullPath = svg_location
@@ -246,17 +246,17 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
             printfn "\n(Twined) -> Exiting the program, see you soon!"
             System.Environment.Exit(0)
 
-        // | "8" -> 
-        //     let imagePath = "image_samples/Hello-Text.png"
-        //     let outputPath = "text_samples/ocr.txt"
-        //     if File.Exists(imagePath) then
-        //         openImage imagePath
-        //         printfn "\n(Twined) -> Image opened: %s" imagePath
-        //         printfn "\n(Twined) -> Performing OCR..."
-        //         ocrImage imagePath outputPath
-        //         printfn "\n(Twined) -> OCR text available at: %s" outputPath
-        //     else
-        //         printfn "\n(Twined) -> Error: The specified image file does not exist at %s." imagePath
+        | "8" -> 
+            let imagePath = "image_samples/Hello-Text.png"
+            let outputPath = "text_samples/ocr.txt"
+            if File.Exists(imagePath) then
+                openImage imagePath
+                printfn "\n(Twined) -> Image opened: %s" imagePath
+                printfn "\n(Twined) -> Performing OCR..."
+                ocrImage imagePath outputPath
+                printfn "\n(Twined) -> OCR text available at: %s" outputPath
+            else
+                printfn "\n(Twined) -> Error: The specified image file does not exist at %s." imagePath
 
         | "9" ->
             let txtPath = "text_samples/ocr.txt"
@@ -347,11 +347,11 @@ let pdf_path (filename: string) (do_debug: bool) : unit =
     match input with
 
     (*want a broad overview of the topic*)
-    // |"none" ->
-    //     let prompt = "Given the following example graph " + example + " in as many nodes as is needed can you discribe"
-    //     let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper prompt))
+    |"none" ->
+        let prompt = "Given the following example graph " + example + " in as many nodes as is needed can you discribe"
+        let responseContent = Async.RunSynchronously (makeChatCompletionRequest (prompt_helper prompt))
 
-    //     text_path responseContent do_debug
+        text_path responseContent do_debug
 
     (*incase they want to exit*)
     | "exit" -> 
