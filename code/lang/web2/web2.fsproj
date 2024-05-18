@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\code.fsproj" />
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Giraffe" Version="6.4.0" />
   </ItemGroup>

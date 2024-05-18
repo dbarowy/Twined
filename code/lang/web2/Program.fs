@@ -14,6 +14,10 @@ open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Http
 open Giraffe
+open AST
+open Eval
+open Final
+
 
 // ---------------------------------
 // Models

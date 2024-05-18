@@ -1,4 +1,6 @@
-﻿open Par
+﻿module Final
+
+open Par
 open Eval
 open AST
 open Combinator
@@ -12,6 +14,15 @@ open Tesseract
 // ---------------------------------
 // CHECKS OS FOR CMD TYPE
 // ---------------------------------
+
+(*the location of the exe.sh file*)
+let exe_location = "outputs/exe.sh"
+
+let gv_location = "inputs/text_folder/gv.txt"
+
+let svg_location = "outputs/svg_folder/graph.svg"
+
+let pdf_location = "input/pdf_folder/pdf_output.txt"
 
 let zsh_check =
     try
@@ -97,7 +108,7 @@ let makeChatCompletionRequest (userPrompt: string) =
 (*OCR TEST BUT NOT FULLY WORKING*)
 
 let ocrImage (imagePath: string) (outputPath: string) =
-    let engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default)
+    let engine = new TesseractEngine(@"./inputs/tessdata", "eng", EngineMode.Default)
     let img = Pix.LoadFromFile(imagePath)
     let page = engine.Process(img)
     let text = page.GetText()
@@ -123,8 +134,8 @@ let openImage (imagePath: string): unit =
 let open_graph (fullPath: string): (unit) =
 
     if zsh_check then
-        let execution_name = "exe.sh"
-        File.WriteAllText(execution_name, ("open -a 'Google Chrome' " + fullPath + " -o svg_folder/graph.svg"))
+        let execution_name = exe_location
+        File.WriteAllText(execution_name, ("open -a 'Google Chrome' " + fullPath + " -o " + svg_location))
         executeScript execution_name
     
     else
@@ -140,7 +151,7 @@ let update_svg (ast: Expr) (envi: Env) (fullPath: string): unit =
     let gvText, _ = eval ast envi  // Convert AST to a string or graph format.
     File.WriteAllText(fullPath, gvText)  // Write the output to the specified path.
 
-    let executionName = "exe.sh"
+    let executionName = exe_location
     File.WriteAllText(executionName, sprintf "dot -Tsvg %s -o %s" fullPath (fullPath.Replace(".txt", ".svg")))
     executeScript executionName
     printfn "Graph generated, located at %s." (fullPath.Replace(".txt", ".svg"))
@@ -192,22 +203,22 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
             match ast with
             |Some expr -> 
 
-                let file_name = "text_folder/gv.txt"
+                let file_name = gv_location
                 let gvText, envi = eval expr Map.empty
 
                 File.WriteAllText(file_name, gvText)
 
                 (*generates a .sh file to exicute the graphviz code generating an svg file in
                 the svg folder TODO add ability of user to name the output*)
-                let execution_name = "exe.sh"
-                File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
+                let execution_name = exe_location
+                File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
                 executeScript execution_name   
                 
             | None -> 
                 printfn "\n(Twined) -> %s" responseContent
 
         | "2" ->
-            let fullPath = "svg_folder/graph.svg"
+            let fullPath = svg_location
 
             if System.IO.File.Exists(fullPath) then
                 printfn "\n(Twined) -> Viewing graph... (This will open the generated SVG file located at %s)" fullPath
@@ -227,7 +238,7 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
             printfn "%s" originalText
 
         | "6" ->
-            let gvText = File.ReadAllText "text_folder/gv.txt"
+            let gvText = File.ReadAllText gv_location
             printfn "\n(Twined) -> Contents of the generated GV file:"
             printfn "%s\n" gvText
 
@@ -285,10 +296,10 @@ let rec maintwo (debug: bool) (inputFilePath: string): unit =
 let pdf_convert (file_name: string) =
 
     (*convert pdf to text using a python script because it is open source/free*)    
-    let executionName = "exe.sh"
+    let executionName = exe_location
     File.WriteAllText(executionName, sprintf "python3.9 pdf_extract.py %s" file_name )
     executeScript executionName
-    let target_name = "pdf_folder/pdf_output.txt"
+    let target_name = pdf_location
     
     target_name
 
@@ -305,7 +316,7 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
     
     match ast with
     | Some ast ->
-        let file_name = "text_folder/gv.txt"
+        let file_name = gv_location
         let gvText, envi = eval ast Map.empty
 
         File.WriteAllText(file_name, gvText)
@@ -313,10 +324,10 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
         (*generates a .sh file to exicute the graphviz code generating an svg file in
         the svg folder TODO add ability of user to name the output*)
         
-        let execution_name = "exe.sh"
+        let execution_name = exe_location
         // File.WriteAllText(execution_name, ("dot -Tpng " + file_name + " -o ../docs/images/plant_test_0.1.png"))
 
-        File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o svg_folder/graph.svg"))
+        File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
         executeScript execution_name
         //printfn "Graph generated, located in svg_folder."
 
