@@ -387,6 +387,9 @@ let configureLogging (builder : ILoggingBuilder) =
 // Define the main entry point
 [<EntryPoint>]
 let main args =
+    (*the start of the code from library*)
+    let apples = start_up []
+
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")
     Host.CreateDefaultBuilder(args)
@@ -402,6 +405,5 @@ let main args =
         .Build()
         .Run()
 
-    printfn "hello"
     0
 

@@ -366,7 +366,7 @@ let pdf_path (filename: string) (do_debug: bool) : unit =
 // -----------------------------------------------------------
 
 // [<EntryPoint>]
-let main (argv: string list): int =
+let start_up (argv: string list): int =
     if argv.Length <> 0 && argv.Length <> 1 then
             printfn "Usage: dotnet run [debug]"
             1
