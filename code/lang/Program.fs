@@ -1,4 +1,4 @@
-﻿module web2.App
+﻿module code.App
 
 // Import namespaces
 open System
@@ -401,5 +401,7 @@ let main args =
                     |> ignore)
         .Build()
         .Run()
+
+    printfn "hello"
     0
 
