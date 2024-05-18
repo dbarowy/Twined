@@ -1,10 +1,11 @@
-﻿open System
+module web2.App
+
+// Import namespaces
+open System
 open System.IO
 open System.Net.Http
 open System.Text
-
 open Newtonsoft.Json
-
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Cors.Infrastructure
 open Microsoft.AspNetCore.Hosting
@@ -12,7 +13,6 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Http
-
 open Giraffe
 
 // ---------------------------------
@@ -114,7 +114,7 @@ let makeChatCompletionRequest (userPrompt: string) =
         // Create the request payload
         let payload = 
             {
-                model = "gpt-3.5-turbo"
+                model = "gpt-4-turbo" // "gpt-3.5-turbo"
                 messages = [| { role = "user"; content = userPrompt } |]
                 temperature = 1.0
                 max_tokens = 256
@@ -139,6 +139,97 @@ let makeChatCompletionRequest (userPrompt: string) =
         | None -> return "No response content available."
     }
 
+// Function to handle the "TwinedGraph:" command
+let handleTwinedGraph (userInput: string) =
+    // Define the predefined graph prompt
+    let predefinedPrompt = Printf.StringFormat<string -> string>( 
+        """given the following example graph 
+  
+        {Heat, (Melting Glass,)}
+        {Silica, (Melting Glass,)}
+        {Soda Ash, (Melting Glass,)}
+        {Lime, (Melting Glass,)}
+        ^^Heat := Heat causes glass to melt^^
+        ^^Silica := Silica is the main component of glass^^
+        ^^Soda Ash := Soda Ash reduces the melting point of glass^^
+        ^^Lime := Lime adds durability to the glass^^
+        
+        Explain "%s" in the same way with no extra words:
+        """
+    )
+
+    // Format the prompt with the user's input
+    let prompt = sprintf predefinedPrompt userInput
+
+    // Create the chat completion request and return the response content
+    makeChatCompletionRequest prompt
+
+// Function to handle the "TwinedOpSVG:" command
+let handleTwinedOpSVG (userInput: string) =
+    let directoryPath = "tSVG_Op"
+    if String.IsNullOrWhiteSpace(userInput) then
+        // Return the list of SVG files
+        let files = Directory.GetFiles(directoryPath, "*.svg") |> Array.map Path.GetFileName
+        let result = String.Join("\n", files)
+        async { return result }
+    else
+        // Return the content of the specific SVG file
+        let filePath = Path.Combine(directoryPath, userInput.Trim() + ".svg")
+        if File.Exists(filePath) then
+            async { return File.ReadAllText(filePath) }
+        else
+            async { return "File not found." }
+
+let handleTwinedText (userInput: string) =
+    let filePath = Path.Combine("tGraph_Text", userInput.Trim() + ".txt")
+    if File.Exists(filePath) then
+        let text = File.ReadAllText(filePath)
+        let mainTopic = text.Split('\n') |> Array.head
+        let nodes = text.Split('\n') |> Array.filter (fun line -> line.StartsWith("{"))
+        let nodeDefinitions = String.Join("\n", nodes)
+
+        let prompt = 
+            sprintf """
+            Given the following example graph:
+            {Heat, (Melting Glass,)}
+            {Silica, (Melting Glass,)}
+            {Soda Ash, (Melting Glass,)}
+            {Lime, (Melting Glass,)}
+            ^^Heat := Heat causes glass to melt^^
+            ^^Silica := Silica is the main component of glass^^
+            ^^Soda Ash := Soda Ash reduces the melting point of glass^^
+            ^^Lime := Lime adds durability to the glass^^
+
+            For each node, starting with "%s," provide a 3-sentence concise definition, then add the following nodes with 3-sentence definitions for each. Conclude with a brief summary of how all the information is interconnected:
+            %s
+            """ mainTopic nodeDefinitions
+
+        async {
+            let responseContent = Async.RunSynchronously (makeChatCompletionRequest prompt)
+            let outputFilePath = Path.Combine("tText_Content", userInput.Trim() + "_content.txt")
+            Directory.CreateDirectory("tText_Content") |> ignore
+            File.WriteAllText(outputFilePath, responseContent)
+            return responseContent
+        }
+    else
+        async { return "File not found." }
+
+// Function to handle the "TwinedOpText:" command
+let handleTwinedOpText (userInput: string) =
+    let directoryPath = "tText_Content"
+    if String.IsNullOrWhiteSpace(userInput) then
+        // Return the list of text files
+        let files = Directory.GetFiles(directoryPath, "*.txt") |> Array.map Path.GetFileName
+        let result = String.Join("\n", files)
+        async { return result }
+    else
+        // Return the content of the specific text file
+        let filePath = Path.Combine(directoryPath, userInput.Trim() + ".txt")
+        if File.Exists(filePath) then
+            async { return File.ReadAllText(filePath) }
+        else
+            async { return "File not found." }
+
 // ---------------------------------
 // Web app
 // ---------------------------------
@@ -150,28 +241,84 @@ let indexHandler (name : string) =
     let view      = Views.index model
     htmlView view
 
-// Define a handler for the API route
+// Update the API handler
 let apiHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
-            
             // Bind the incoming JSON request to the UserPrompt model
             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+            let userInput = userPrompt.userPrompt.Trim()
+
+            // Log the received prompt
+            ctx.GetLogger().LogInformation("Received prompt: {Prompt}", userInput)
 
             // Check if the user prompt starts with "TwinedChat:"
-            if userPrompt.userPrompt.StartsWith("TwinedChat:") then
-
+            if userInput.StartsWith("TwinedChat:") then
                 // Make the chat completion request and get the response content
-                let responseContent = Async.RunSynchronously (makeChatCompletionRequest userPrompt.userPrompt)
+                let responseContent = Async.RunSynchronously (makeChatCompletionRequest userInput)
+
+                // Return the response content as JSON
+                return! json responseContent next ctx
+
+            // Check if the user prompt starts with "TwinedGraph:"
+            elif userInput.StartsWith("TwinedGraph:") then
+                // Extract the topic from the user prompt
+                let topic = userInput.Substring("TwinedGraph:".Length).Trim()
+
+                // Handle the "TwinedGraph:" command and get the response content
+                let responseContent = Async.RunSynchronously (handleTwinedGraph topic)
+
+                // Save the response content to a file
+                let filePath = Path.Combine("tGraph_Text", sprintf "%s.txt" (topic.Replace(" ", "_").ToLower()))
+                Directory.CreateDirectory("tGraph_Text") |> ignore
+                File.WriteAllText(filePath, responseContent)
+
+                // Read the content of the file
+                let fileContent = File.ReadAllText(filePath)
+
+                // Return a success message with the file content as JSON
+                let response = sprintf "Graph explanation saved to %s" filePath
+                let result = {| message = response; content = fileContent |}
+                return! json result next ctx
+
+            // Check if the user prompt starts with "TwinedOpSVG:"
+            elif userInput.StartsWith("TwinedOpSVG:") then
+                // Extract the file name from the user prompt
+                let fileName = userInput.Substring("TwinedOpSVG:".Length).Trim()
+
+                // Handle the "TwinedOpSVG:" command and get the response content
+                let responseContent = Async.RunSynchronously (handleTwinedOpSVG fileName)
+
+                // Return the response content as JSON
+                return! json responseContent next ctx
+
+            // Check if the user prompt starts with "TwinedText:"
+            elif userInput.StartsWith("TwinedText:") then
+                // Extract the file name from the user prompt
+                let fileName = userInput.Substring("TwinedText:".Length).Trim()
+
+                // Handle the "TwinedText:" command and get the response content
+                let responseContent = Async.RunSynchronously (handleTwinedText fileName)
+
+                // Return the response content as JSON
+                return! json responseContent next ctx
+
+            // Check if the user prompt starts with "TwinedOpText:"
+            elif userInput.StartsWith("TwinedOpText:") then
+                // Extract the file name from the user prompt
+                let fileName = userInput.Substring("TwinedOpText:".Length).Trim()
+
+                // Handle the "TwinedOpText:" command and get the response content
+                let responseContent = Async.RunSynchronously (handleTwinedOpText fileName)
 
                 // Return the response content as JSON
                 return! json responseContent next ctx
 
             else
-
-                // If the prompt does not start with "TwinedChat:", return a default response
-                return! json "Invalid input. Please start your prompt with 'TwinedChat:'" next ctx
+                // If the prompt does not start with a recognized command, return a default response
+                return! json "Invalid input. Please start your prompt with 'TwinedChat:', 'TwinedGraph:', 'TwinedOpSVG:', 'TwinedText:', or 'TwinedOpText:'" next ctx
         }
+
 
 // Define the web application routes
 let webApp =
@@ -251,3 +398,4 @@ let main args =
         .Build()
         .Run()
     0
+

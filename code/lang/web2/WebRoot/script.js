@@ -1,57 +1,157 @@
-// Wait for the DOM to be fully loaded before running the script
 document.addEventListener("DOMContentLoaded", function() {
-
-    // Select the input field and send button
     const commandInput = document.querySelector(".command-line-input");
     const sendButton = document.querySelector(".send-button");
     const chatContainer = document.querySelector(".chat-container");
+    const svgDisplay = document.getElementById("svg-display");
+    const graphContent = document.getElementById("graph-content");
+    const textDisplay = document.getElementById("text-display");
 
-    // Add an event listener to the send button for the click event
     sendButton.addEventListener("click", function() {
-
-        // Get the user's input and trim any whitespace
         const userPrompt = commandInput.value.trim();
         
-        // Check if the user input starts with "TwinedChat:"
         if (userPrompt.startsWith("TwinedChat:")) {
-
-            // Create a div element for the user's message
             const userMessage = document.createElement("div");
             userMessage.className = "message user";
             userMessage.textContent = userPrompt;
-
-            // Append the user's message to the chat container
             chatContainer.appendChild(userMessage);
 
-            // Send a POST request to the server with the user's prompt
             fetch("/api/chat", {
-                method: "POST", // HTTP method
+                method: "POST",
                 headers: {
-                    "Content-Type": "application/json" // Content type
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ userPrompt: userPrompt }) // Request body as JSON
+                body: JSON.stringify({ userPrompt: userPrompt })
             })
-
-            // Convert the response to text
             .then(response => response.text())
             .then(data => {
-
-                // Create a div element for the AI's response
                 const aiMessage = document.createElement("div");
                 aiMessage.className = "message twined";
                 aiMessage.textContent = data;
-
-                // Append the AI's response to the chat container
                 chatContainer.appendChild(aiMessage);
-
-                // Clear the input field
                 commandInput.value = "";
             })
-            
-            // Catch any errors that occur during the fetch request
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        } else if (userPrompt.startsWith("TwinedGraph:")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
+
+            fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const aiMessage = document.createElement("div");
+                aiMessage.className = "message twined";
+                aiMessage.innerHTML = `<strong>${data.message}</strong><br><pre>${data.content}</pre>`;
+                chatContainer.appendChild(aiMessage);
+                commandInput.value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        } else if (userPrompt.startsWith("TwinedOpSVG:")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
+
+            fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (userPrompt.trim() === "TwinedOpSVG:") {
+                    // Display the list of SVG files
+                    const aiMessage = document.createElement("div");
+                    aiMessage.className = "message twined";
+                    aiMessage.innerHTML = `<strong>SVG Files:</strong><br><pre>${data}</pre>`;
+                    chatContainer.appendChild(aiMessage);
+                } else {
+                    // Display the content of the specific SVG file
+                    svgDisplay.innerHTML = data;
+                }
+                commandInput.value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        } else if (userPrompt.startsWith("TwinedText:")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
+
+            fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const aiMessage = document.createElement("div");
+                aiMessage.className = "message twined";
+                aiMessage.innerHTML = `<strong>${data.message}</strong><br><pre>${data.content}</pre>`;
+                chatContainer.appendChild(aiMessage);
+                commandInput.value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        } else if (userPrompt.startsWith("TwinedOpText:")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
+
+            fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (userPrompt.trim() === "TwinedOpText:") {
+                    // Display the list of text files
+                    const aiMessage = document.createElement("div");
+                    aiMessage.className = "message twined";
+                    aiMessage.innerHTML = `<strong>Text Files:</strong><br><pre>${data}</pre>`;
+                    chatContainer.appendChild(aiMessage);
+                } else {
+                    // Display the content of the specific text file
+                    textDisplay.innerHTML = `<pre>${data}</pre>`;
+                }
+                commandInput.value = "";
+            })
             .catch(error => {
                 console.error("Error:", error);
             });
         }
     });
+
+    // Fetch and display the content of the graph
+    fetch("/displayContent")
+        .then(response => response.json())
+        .then(data => {
+            graphContent.textContent = data;
+        })
+        .catch(error => {
+            console.error("Error fetching graph content:", error);
+            graphContent.textContent = "Error loading content.";
+        });
 });

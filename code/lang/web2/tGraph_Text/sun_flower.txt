@@ -1,0 +1,8 @@
+{Sun, (Growing Sunflower,)}
+{Soil, (Growing Sunflower,)}
+{Water, (Growing Sunflower,)}
+{Seeds, (Growing Sunflower,)}
+^^Sun := Sun provides energy for photosynthesis^^
+^^Soil := Soil supplies nutrients to sunflowers^^
+^^Water := Water is essential for sunflower growth^^
+^^Seeds := Seeds are the reproductive unit of sunflowers^^

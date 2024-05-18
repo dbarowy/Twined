@@ -1,0 +1,8 @@
+{Silk, (Ancient China,)}
+{Gunpowder, (Ancient China,)}
+{Paper, (Ancient China,)}
+{Compass, (Ancient China,)}
+^^Silk := Silk was a major trade item in Ancient China^^
+^^Gunpowder := Gunpowder was invented in Ancient China^^
+^^Paper := Paper was developed in Ancient China^^
+^^Compass := The compass was first used in Ancient China^^
