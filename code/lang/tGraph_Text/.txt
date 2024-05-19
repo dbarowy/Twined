@@ -1,2 +1,4 @@
-{Melting Glass, (Heat, Silica, Soda Ash, Lime)}
-^^Melting Glass := Melting glass involves heat, silica, soda ash for lowering the melting point, and lime for added durability.^^
+{Heat, (Melting Glass,)} - Heat causes glass to melt.
+{Silica, (Melting Glass,)} - Silica is the main component of glass.
+{Soda Ash, (Melting Glass,)} - Soda Ash reduces the melting point of glass.
+{Lime, (Melting Glass,)} - Lime adds durability to the glass.

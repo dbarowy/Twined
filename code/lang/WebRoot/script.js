@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
 
         // calling main method
-        if (userPrompt.startsWith("S:")) {
+        if (userPrompt.startsWith("Start")|| userPrompt.startsWith("start") || userPrompt.startsWith("Start:")) {
             const userMessage = document.createElement("div");
             userMessage.className = "message user";
             userMessage.textContent = userPrompt;
@@ -36,11 +36,64 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error("Error:", error);
             });
 
+        // continues conversation with main
+         } else if (userPrompt.startsWith("1") || userPrompt.startsWith("2")) {
+                const userMessage = document.createElement("div");
+                userMessage.className = "message user";
+                userMessage.textContent = userPrompt;
+                chatContainer.appendChild(userMessage);
+    
+                fetch("/api/find", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userPrompt: userPrompt })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    const aiMessage = document.createElement("div");
+                    aiMessage.className = "message twined";
+                    aiMessage.textContent = data;
+                    chatContainer.appendChild(aiMessage);
+                    commandInput.value = "";
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
 
+        } else if (userPrompt.startsWith("3")) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.textContent = userPrompt;
+            chatContainer.appendChild(userMessage);
 
+            fetch("/api/path", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userPrompt: userPrompt })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (userPrompt.trim() === "TwinedOpSVG:") {
+                    // Display the list of SVG files
+                    const aiMessage = document.createElement("div");
+                    aiMessage.className = "message twined";
+                    aiMessage.innerHTML = `<strong>SVG Files:</strong><br><pre>${data}</pre>`;
+                    chatContainer.appendChild(aiMessage);
+                } else {
+                    // Display the content of the specific SVG file
+                    svgDisplay.innerHTML = data;
+                }
+                commandInput.value = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
 
-
-        } else if (userPrompt.startsWith("TwinedChat:")) {
+    } else if (userPrompt.startsWith("TwinedChat:")) {
             const userMessage = document.createElement("div");
             userMessage.className = "message user";
             userMessage.textContent = userPrompt;

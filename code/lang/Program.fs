@@ -15,6 +15,7 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Http
 open Giraffe
 open AST
+open Par
 open Eval
 open Library
 
@@ -64,7 +65,9 @@ type ChatResponse =
 type UserPrompt = {
     userPrompt : string
 }
+type AppState = { mutable LastInput: int }
 
+let state = {LastInput = 0}
 // ---------------------------------
 // Views
 // ---------------------------------
@@ -177,8 +180,8 @@ let handleTwinedOpSVG (userInput: string) =
         let result = String.Join("\n", files)
         async { return result }
     else
-        // Return the content of the specific SVG file
         let filePath = Path.Combine(directoryPath, userInput.Trim() + ".svg")
+            
         if File.Exists(filePath) then
             async { return File.ReadAllText(filePath) }
         else
@@ -245,16 +248,76 @@ let indexHandler (name : string) =
     let view      = Views.index model
     htmlView view
 
+(*starts the main method in main*)
 let mainHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task{
             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
             let userInput = userPrompt.userPrompt.Trim()
+            let response = 
+                "Welcome to Twined: Would you like to              1: Open an exiting graph in a text file?            2: Open a pdf, image, or other text file with raw data?"
 
-            let args = [userInput]
-            let result = start_up args
-            return! json result next ctx
+            return! json response next ctx
         }
+
+
+(* this needs to talk between web and library after the start of main*)
+let path_finder : HttpHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+        task{
+            let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+            let userInput = userPrompt.userPrompt.Trim()
+            match userInput with 
+            | "1" | "2" ->
+                let state = {LastInput = 3}
+                let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph"
+                return! json response next ctx
+            | _ -> 
+                let response = "Please enter one or two"
+                return! json response next ctx
+        }
+
+let path_conversion : HttpHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+            task{
+                let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+                (*trims the first character*)
+                let user_input = userPrompt.userPrompt.Trim().[1..].Trim()
+                let fullPath = Path.GetFullPath(user_input)
+
+                match user_input.EndsWith(".txt") with 
+                | true ->
+                    let input = File.ReadAllText fullPath
+                    let ast = parse input false
+    
+                    match ast with
+                    | Some ast ->
+                        let file_name = gv_location
+                        let gvText, envi = eval ast Map.empty
+
+                        File.WriteAllText(file_name, gvText)
+
+                        (*generates a .sh file to exicute the graphviz code generating an svg file in
+                        the svg folder TODO add ability of user to name the output*)
+                        
+                        let execution_name = exe_location
+
+                        File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
+                        executeScript execution_name
+
+
+                        let responseContent = Async.RunSynchronously (handleTwinedOpSVG "graph")
+                        return! json responseContent next ctx
+                        
+                    | None ->       
+                        let responseContent = "Error displaying graph."
+                        return! json responseContent next ctx
+
+                | false ->
+                    let state = {LastInput = 3}
+                    let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph"
+                    return! json response next ctx
+            }
 
 // Update the API handler
 let apiHandler : HttpHandler =
@@ -347,6 +410,8 @@ let webApp =
             choose [
                 route "/api/chat" >=> apiHandler
                 route "/api/callMain" >=> mainHandler
+                route "/api/find" >=>  path_finder
+                route "/api/path" >=> path_conversion
             ]
         setStatusCode 404 >=> text "Not Found" ]
 

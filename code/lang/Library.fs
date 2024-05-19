@@ -1,4 +1,5 @@
 ﻿module Library
+
 open OpenAI
 open Par
 open Eval
@@ -10,6 +11,14 @@ open System.Net.Http
 open System.Text
 open Newtonsoft.Json
 open Tesseract
+open Giraffe
+open Microsoft.AspNetCore.Http
+
+
+// Define the model for the user's prompt
+type UserPrompt = {
+    userPrompt : string
+}
 
 // ---------------------------------
 // CHECKS OS FOR CMD TYPE
@@ -20,9 +29,13 @@ let exe_location = "outputs/exe.sh"
 
 let gv_location = "inputs/text_folder/gv.txt"
 
-let svg_location = "outputs/svg_folder/graph.svg"
+let svg_location = "tSVG_Op/graph.svg"
 
 let pdf_location = "input/pdf_folder/pdf_output.txt"
+
+type AppState = { mutable LastInput: string option }
+
+let state = {LastInput = None}
 
 let zsh_check =
     try
@@ -329,13 +342,11 @@ let text_path (fullPath: string) (do_debug: bool) : unit =
 
         File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
         executeScript execution_name
-        //printfn "Graph generated, located in svg_folder."
-
-        maintwo(do_debug) fullPath
+        
         
     | None ->
 
-        printfn "Failed to parse input"
+        printfn "failed"
 
 
 let pdf_path (filename: string) (do_debug: bool) : unit =
@@ -362,71 +373,83 @@ let pdf_path (filename: string) (do_debug: bool) : unit =
         printfn "yay!"
 
 
-let sender (str: string) =
-    failwith "1"
+// let sender (text: string) : HttpFunc =
+//     fun (ctx: HttpContext) ->
+//         async {
+//             do! ctx.WriteTextAsync(text)
+//             return! Task.CompletedTask
+//         }
 
-let receiver (str: string) =
-    failwith "1"
-
-    
-// -----------------------------------------------------------
-// MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
-// -----------------------------------------------------------
-
-(*sender should send messages via post, reciever accepts messages via get*)
-let rec start_up (argv: string list): int =
-    if argv.Length <> 0 && argv.Length <> 1 then
-            sender "Usage: dotnet run [debug]"
-            1
-
-    else
-        sender 
-            "Welcome to Twined: \nWould you like to\n1: Open an exiting graph in a text file?\n2: Open a pdf, image, or other text file with raw data\n"
-        
-        let input = System.Console.ReadLine().Trim().ToLower()
-        match input with
-        |"1" ->
-            sender "Please enter the path of your graph"
-            let input = System.Console.ReadLine().Trim().ToLower()
+// let receiver : HttpHandler =
+//     fun (next : HttpFunc) (ctx : HttpContext) ->
+//         task{
+//             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+//             let userInput = userPrompt.userPrompt.Trim()
+//             state.LastInput <- Some userPrompt.userPrompt
             
-            let fullPath = Path.GetFullPath(input)
+//             return None
+//         }
+    
+// // -----------------------------------------------------------
+// // MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
+// // -----------------------------------------------------------
 
-            if File.Exists(fullPath) then
-                let do_debug = if argv.Length = 1 then true else false
-                text_path fullPath do_debug
-                0
+// (*sender should send messages via post, reciever accepts messages via get*)
+// let rec start_up (argv: string list) (ctx: HttpContext): int =
+//     if argv.Length <> 0 && argv.Length <> 1 then
+//             sender "Usage: dotnet run [debug]" ctx |> ignore
+//             1
+
+//     else
+//         let next = 
+//             sender "Welcome to Twined: \nWould you like to\n1: Open an exiting graph in a text file?\n2: Open a pdf, image, or other text file with raw data\n" ctx 
+//         receiver next ctx |> ignore
+//         let input = System.Console.ReadLine().Trim().ToLower()
+//         match input with
+//         |"1" ->
+//             let input = sender "Please enter the path of your graph" ctx 
+            
+            
+            
+//             let fullPath = Path.GetFullPath(input)
+//             if File.Exists(fullPath) then
+//                 let do_debug = if argv.Length = 1 then true else false
+//                 text_path fullPath do_debug
+//                 0
                 
-            else
-                sender "invalid file "
-                start_up argv
+//             else
+//                 sender "invalid file " ctx |> ignore
+//                 start_up argv ctx
+        
+//             0
 
-        |"2" ->
+//         |"2" ->
 
-            sender "Please enter the path of your file you wish to access"
-            let input = System.Console.ReadLine().Trim().ToLower()
-            let fullPath = Path.GetFullPath(input)
+//             sender "Please enter the path of your file you wish to access" ctx |> ignore
+//             let input = System.Console.ReadLine().Trim().ToLower()
+//             let fullPath = Path.GetFullPath(input)
 
-            if File.Exists(fullPath) then
-                let do_debug = if argv.Length = 1 then true else false
+//             if File.Exists(fullPath) then
+//                 let do_debug = if argv.Length = 1 then true else false
 
-                if fullPath.EndsWith(".pdf") then
+//                 if fullPath.EndsWith(".pdf") then
 
-                    let input = pdf_convert(fullPath)
-                    pdf_path input do_debug
-                    0
+//                     let input = pdf_convert(fullPath)
+//                     pdf_path input do_debug
+//                     0
 
-                else
-                    text_path fullPath do_debug
-                    0
+//                 else
+//                     text_path fullPath do_debug
+//                     0
                     
-            else
-                sender "invalid file"
-                start_up argv
+//             else
+//                 sender "invalid file" ctx |> ignore
+//                 start_up argv ctx
               
-        | "exit" ->
-            sender "Exiting the program, see you soon!"
-            0
-        | _ ->
-            sender "Please choose 1 or 2"
-            start_up argv
+//         | "exit" ->
+//             sender "Exiting the program, see you soon!" ctx |> ignore
+//             0
+//         | _ ->
+//             sender "Please choose 1 or 2" ctx |> ignore
+//             start_up argv ctx
 
