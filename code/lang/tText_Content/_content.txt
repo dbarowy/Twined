@@ -1,11 +1,10 @@
-**Heat**
-Definition: Heat is a form of energy that is essential in the process of making glass by melting the raw materials. It causes the solid substances such as silica to transition into a liquid state, forming molten glass. The application of heat is critical to achieve the desired chemical reactions necessary for forming glass.
+**{Heat, (Melting Glass,)} - Heat causes glass to melt.**
+Heat is a form of energy that is essential for melting glass during manufacturing. By raising the temperature to the appropriate level, heat allows the raw materials of glass to fuse together. This process transforms the solid components like silica into a liquid state, suitable for molding and shaping.
 
-**Silica**
-Definition: Silica, primarily in the form of silicon dioxide (SiO2), is the fundamental component of most types of glass. It acts as the glass-forming backbone when exposed to heat, solidifying into a transparent and rigid structure upon cooling. In nature, silica is commonly found in quartz and sand.
+**{Silica, (Melting Glass,)} - Silica is the main component of glass.**
+Silica, primarily sourced from sand, serves as the fundamental constituent of glass. Its high melting point around 1700°C to 2000°C necessitates the use of intense heat. In the glass-making process, silica provides the structural backbone that is transformed into various glass products.
 
-**Soda Ash**
-Definition: Soda Ash, or sodium carbonate (Na2CO3), is a crucial chemical used in the glass-making process. It lowers the melting point of silica, allowing the glass to form at lower temperatures. This reduction in the melting point not only saves energy but also makes the process more efficient and environmentally friendly.
+**{Soda Ash, (Melting Glass,)} - Soda Ash reduces the melting point of glass.**
+Soda ash, or sodium carbonate, is a chemical that is added to the glass-making process to lower the melting point of silica. This reduction in melting point allows the glass to be processed at lower temperatures, saving energy and making the melting process more efficient. Additionally, soda ash helps to stabilize the glass melt and improve its workability.
 
-**Lime**
-Definition: Lime, chemically known as calcium carbonate (CaCO3), is added to the glass mixture to enhance its durability. It helps the glass resist weathering and chemical attacks once it is formed. Moreover, lime improves the viscosity and workability of molten glass
+**{Lime, (Melting Glass,)} - Lime adds

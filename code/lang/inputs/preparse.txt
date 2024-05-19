@@ -1,0 +1,8 @@
+        {Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}
+{Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}
+{Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}
+{Electron Excitation, (ATP Formation, NADPH Formation,)}
+^^Sunlight := Sunlight provides the energy that excites electrons in chlorophyll, driving the light-dependent reactions of photosynthesis. This energy is crucial for splitting water molecules (photolysis), forming ATP through chemiosmosis, and generating NADPH for the Calvin cycle.^^
+^^Water := Water is crucial in photosynthesis as it provides the electrons and protons needed for the light-dependent reactions. The splitting of water molecules (photolysis) supplies the electrons that drive the electron transport chain and the protons that contribute to the formation of a proton gradient for ATP synthesis.^^
+^^Oxygen := Oxygen is released as a byproduct of photosynthesis when water molecules are split during photolysis. This oxygen is essential for the survival of aerobic organisms, including humans.^^
+^^Soil Nutrients := Plants absorb essential nutrients from the soil, which^^

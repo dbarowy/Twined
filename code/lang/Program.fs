@@ -67,7 +67,9 @@ type UserPrompt = {
 }
 type AppState = { mutable LastInput: int }
 
+
 let state = {LastInput = 0}
+let mutable envi : Env = Map.empty
 // ---------------------------------
 // Views
 // ---------------------------------
@@ -149,21 +151,15 @@ let makeChatCompletionRequest (userPrompt: string) =
 // Function to handle the "TwinedGraph:" command
 let handleTwinedGraph (userInput: string) =
     // Define the predefined graph prompt
+    let graph_text = (File.ReadAllText(preparse_location))
     let predefinedPrompt = Printf.StringFormat<string -> string>( 
-        """given the following example graph 
+        """given the following graph 
   
-        {Heat, (Melting Glass,)}
-        {Silica, (Melting Glass,)}
-        {Soda Ash, (Melting Glass,)}
-        {Lime, (Melting Glass,)}
-        ^^Heat := Heat causes glass to melt^^
-        ^^Silica := Silica is the main component of glass^^
-        ^^Soda Ash := Soda Ash reduces the melting point of glass^^
-        ^^Lime := Lime adds durability to the glass^^
+        """ + graph_text + """
         
-        Explain "%s" in the same way with no extra words:
+        Explain "%s" in the same way with no extra words making sure to include the origional graph, all origional definitions that make sense and any additional nodes or definitions needed to answer the question in the output, in addition ensure that definitions take the form ^^defined := the definition^^ and use no extra words outside of the graph format:
         """
-    )
+    ) 
 
     // Format the prompt with the user's input
     let prompt = sprintf predefinedPrompt userInput
@@ -196,20 +192,15 @@ let handleTwinedText (userInput: string) =
         let nodeDefinitions = String.Join("\n", nodes)
 
         let prompt = 
+            let graph_text = (File.ReadAllText(preparse_location))
             sprintf """
-            Given the following example graph:
-            {Heat, (Melting Glass,)}
-            {Silica, (Melting Glass,)}
-            {Soda Ash, (Melting Glass,)}
-            {Lime, (Melting Glass,)}
-            ^^Heat := Heat causes glass to melt^^
-            ^^Silica := Silica is the main component of glass^^
-            ^^Soda Ash := Soda Ash reduces the melting point of glass^^
-            ^^Lime := Lime adds durability to the glass^^
+            Given the following graph:
+            %s
+            
 
             For each node, starting with "%s," provide a 3-sentence concise definition, then add the following nodes with 3-sentence definitions for each. Conclude with a brief summary of how all the information is interconnected:
             %s
-            """ mainTopic nodeDefinitions
+            """ graph_text mainTopic nodeDefinitions
 
         async {
             let responseContent = Async.RunSynchronously (makeChatCompletionRequest prompt)
@@ -282,19 +273,35 @@ let path_conversion : HttpHandler =
             task{
                 let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
                 (*trims the first character*)
-                let user_input = userPrompt.userPrompt.Trim().[1..].Trim()
+                let user_input =
+                    if userPrompt.userPrompt.Trim().StartsWith("3") then
+                        userPrompt.userPrompt.Trim().[1..].Trim()
+                    else
+                        preparse_location
+
                 let fullPath = Path.GetFullPath(user_input)
+                File.WriteAllText(preparse_location, File.ReadAllText fullPath)
 
                 match user_input.EndsWith(".txt") with 
                 | true ->
-                    let input = File.ReadAllText fullPath
+                    let input = File.ReadAllText preparse_location
                     let ast = parse input false
     
                     match ast with
                     | Some ast ->
                         let file_name = gv_location
-                        let gvText, envi = eval ast Map.empty
+                        let gvText, env = eval ast envi
+                        
+                        let resp_list = 
+                            [ for key in env.Keys do
+                                let value = env.[key]
+                                yield string key + ": \n" + string value + "\n\n" ]
 
+                        let response = List.fold (fun acc elem -> acc + elem ) "" resp_list
+
+                        // write the envi to a file
+                        File.WriteAllText(text_location, response)
+                        // write the nodes to a file
                         File.WriteAllText(file_name, gvText)
 
                         (*generates a .sh file to exicute the graphviz code generating an svg file in
@@ -315,8 +322,28 @@ let path_conversion : HttpHandler =
 
                 | false ->
                     let state = {LastInput = 3}
-                    let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph"
+                    let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph ending in .txt"
                     return! json response next ctx
+            }
+
+
+let text_display : HttpHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+            task {
+                    let response = File.ReadAllText(text_location)
+                    return! json response next ctx
+            }
+
+let update : HttpHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+            task {
+                let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+                let input = userPrompt.userPrompt.Trim()
+                ctx.GetLogger().LogInformation("update received prompt: {Prompt}", input)
+                let responseContent = Async.RunSynchronously (handleTwinedGraph input)
+                File.WriteAllText(preparse_location, responseContent)
+
+                return! json preparse_location next ctx
             }
 
 // Update the API handler
@@ -339,25 +366,18 @@ let apiHandler : HttpHandler =
                 return! json responseContent next ctx
 
             // Check if the user prompt starts with "TwinedGraph:"
-            elif userInput.StartsWith("TwinedGraph:") then
+            elif userInput.StartsWith("Expand") || userInput.StartsWith("expand") then
                 // Extract the topic from the user prompt
-                let topic = userInput.Substring("TwinedGraph:".Length).Trim()
+                let topic = userInput.Substring("expand".Length).Trim()
 
                 // Handle the "TwinedGraph:" command and get the response content
                 let responseContent = Async.RunSynchronously (handleTwinedGraph topic)
+                File.WriteAllText(preparse_location, responseContent)
 
-                // Save the response content to a file
-                let filePath = Path.Combine("tGraph_Text", sprintf "%s.txt" (topic.Replace(" ", "_").ToLower()))
-                Directory.CreateDirectory("tGraph_Text") |> ignore
-                File.WriteAllText(filePath, responseContent)
+                return! json preparse_location next ctx
 
-                // Read the content of the file
-                let fileContent = File.ReadAllText(filePath)
 
-                // Return a success message with the file content as JSON
-                let response = sprintf "Graph explanation saved to %s" filePath
-                let result = {| message = response; content = fileContent |}
-                return! json result next ctx
+
 
             // Check if the user prompt starts with "TwinedOpSVG:"
             elif userInput.StartsWith("TwinedOpSVG:") then
@@ -412,6 +432,8 @@ let webApp =
                 route "/api/callMain" >=> mainHandler
                 route "/api/find" >=>  path_finder
                 route "/api/path" >=> path_conversion
+                route "/api/disp_text" >=> text_display
+                route "/api/update" >=> update
             ]
         setStatusCode 404 >=> text "Not Found" ]
 
@@ -464,8 +486,6 @@ let configureLogging (builder : ILoggingBuilder) =
 // Define the main entry point
 [<EntryPoint>]
 let main args =
-    // (*the start of the code from library*)
-    // let apples = start_up []
 
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")

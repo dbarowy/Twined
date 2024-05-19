@@ -29,6 +29,10 @@ let exe_location = "outputs/exe.sh"
 
 let gv_location = "inputs/text_folder/gv.txt"
 
+let preparse_location = "inputs/preparse.txt"
+
+let text_location = "tText_Content/cont.txt"
+
 let svg_location = "tSVG_Op/graph.svg"
 
 let pdf_location = "input/pdf_folder/pdf_output.txt"

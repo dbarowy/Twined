@@ -60,8 +60,16 @@ let rec separate_node_list (xs) =
 
 let rec eval (expr: Expr) (envi: Env): string * Env =
     match expr with
+    // | Nodes_and_Assignments_list l->
+    //     match l with
+    //     | x::xs ->
+    //         let str, env1 = eval x envi
+    //         let str2, envi2 = eval (Nodes_and_Assignments_list(xs)) env1
+    //         str + str2, envi2
+    //     | [] -> " ", envi
+
     | Nodes_and_Assignments (nodes, assignments) ->
-        let str, _ =eval nodes envi
+        let str, _ = eval nodes envi
         let _, envi1 = eval assignments envi
         (str,envi1)
 

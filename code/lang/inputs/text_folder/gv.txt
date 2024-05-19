@@ -11,4 +11,6 @@ digraph G {
 "Photolysis" -> "Oxygen";
 "Photolysis" -> "Electron Supply";
 "Photolysis" -> "Proton Gradient";
+"Electron Excitation" -> "ATP Formation";
+"Electron Excitation" -> "NADPH Formation";
 }

@@ -93,7 +93,9 @@ let sequence: Parser<Expr> =
             pad_list_of_assignment
             (fun (nodes, assignments) -> Nodes_and_Assignments(nodes,assignments))
 
-exprImpl := exit <|> sequence //<|> pad_list_of_nodes <|> pad_node_name <|> pad_node <|> pad_edge_list 
+// let sequence_of_seq: Parser<Expr> = pad (pmany1 sequence) |>> Nodes_and_Assignments_list
+
+exprImpl := exit <|> sequence//_of_seq  
 
 (*defines how language can be interpreted*)
 let grammar = pleft sequence peof
