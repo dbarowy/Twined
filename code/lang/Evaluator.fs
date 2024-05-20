@@ -63,10 +63,14 @@ let rec eval (expr: Expr) (envi: Env): string * Env =
     // | Nodes_and_Assignments_list l->
     //     match l with
     //     | x::xs ->
-    //         let str, env1 = eval x envi
-    //         let str2, envi2 = eval (Nodes_and_Assignments_list(xs)) env1
-    //         str + str2, envi2
-    //     | [] -> " ", envi
+    //         match x with
+    //         | Node n ->
+    //             let str, _ = eval n envi
+    //             str, envi
+    //         | Assignment a -> 
+    //             let v, envi1 = eval a envi
+    //             v, envi
+        
 
     | Nodes_and_Assignments (nodes, assignments) ->
         let str, _ = eval nodes envi

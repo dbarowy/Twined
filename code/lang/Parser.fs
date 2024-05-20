@@ -93,7 +93,6 @@ let sequence: Parser<Expr> =
             pad_list_of_assignment
             (fun (nodes, assignments) -> Nodes_and_Assignments(nodes,assignments))
 
-// let sequence_of_seq: Parser<Expr> = pad (pmany1 sequence) |>> Nodes_and_Assignments_list
 
 exprImpl := exit <|> sequence//_of_seq  
 

@@ -1,16 +1,7 @@
 digraph G {
-"Sunlight" -> "Plant Growth";
-"Sunlight" -> "Photolysis";
-"Sunlight" -> "Electron Excitation";
-"Sunlight" -> "ATP Formation";
-"Sunlight" -> "NADPH Formation";
-"Water" -> "Plant Growth";
-"Water" -> "Photolysis";
-"Water" -> "Electron Supply";
-"Water" -> "Proton Gradient";
-"Photolysis" -> "Oxygen";
-"Photolysis" -> "Electron Supply";
-"Photolysis" -> "Proton Gradient";
-"Electron Excitation" -> "ATP Formation";
-"Electron Excitation" -> "NADPH Formation";
+"apples" -> "tree";
+"tree" -> "seed germination";
+"seed germination" -> "soil nutrients absorption";
+"soil nutrients absorption" -> "tree growth";
+"tree growth" -> "apples";
 }

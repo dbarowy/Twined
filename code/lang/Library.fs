@@ -377,23 +377,7 @@ let pdf_path (filename: string) (do_debug: bool) : unit =
         printfn "yay!"
 
 
-// let sender (text: string) : HttpFunc =
-//     fun (ctx: HttpContext) ->
-//         async {
-//             do! ctx.WriteTextAsync(text)
-//             return! Task.CompletedTask
-//         }
 
-// let receiver : HttpHandler =
-//     fun (next : HttpFunc) (ctx : HttpContext) ->
-//         task{
-//             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
-//             let userInput = userPrompt.userPrompt.Trim()
-//             state.LastInput <- Some userPrompt.userPrompt
-            
-//             return None
-//         }
-    
 // // -----------------------------------------------------------
 // // MAIN METHOD (VERIFY USER'S INPUT - LAUNCHES TO PATH OUTPUT)
 // // -----------------------------------------------------------

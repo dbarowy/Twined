@@ -126,7 +126,7 @@ let makeChatCompletionRequest (userPrompt: string) =
                 model = "gpt-4-turbo" // "gpt-3.5-turbo"
                 messages = [| { role = "user"; content = userPrompt } |]
                 temperature = 1.0
-                max_tokens = 256
+                max_tokens = 4000
                 top_p = 1.0
                 frequency_penalty = 0.0
                 presence_penalty = 0.0
@@ -151,13 +151,56 @@ let makeChatCompletionRequest (userPrompt: string) =
 // Function to handle the "TwinedGraph:" command
 let handleTwinedGraph (userInput: string) =
     // Define the predefined graph prompt
+    let prompt_template = 
+                "input:
+                {Fuel, (Engine Operation,)}
+                {Air, (Engine Operation,)}
+                {Spark, (Engine Operation,)}
+                ^^Fuel := provides energy^^
+                ^^Air := helps burn fuel^^
+                ^^Spark := ignites fuel-air mix^^
+
+                Expand on the types of fuel and what they normally power. Include additional nodes and descriptions related to different fuels such as gasoline, diesel, electricity, and hydrogen, and specify what each fuel powers. Also, include nodes and descriptions for engine operation and vehicle movement.
+
+                The output should be:
+
+                {Fuel, (Engine Operation,)}
+                {Air, (Engine Operation,)}
+                {Spark, (Engine Operation,)}
+                {Engine Operation, (Car Movement,)}
+                {Car Movement, (Travel,)}
+                {Gasoline, (Engine Operation,)}
+                {Diesel, (Engine Operation,)}
+                {Electricity, (Electric Motor Operation,)}
+                {Hydrogen, (Fuel Cell Engine Operation,)}
+                {Electric Motor Operation, (Electric Vehicle Movement,)}
+                {Fuel Cell Engine Operation, (Hydrogen Vehicle Movement,)}
+                {Electric Vehicle Movement, (Travel,)}
+                {Hydrogen Vehicle Movement, (Travel,)}
+                ^^Fuel := provides energy^^
+                ^^Air := helps burn fuel^^
+                ^^Spark := ignites fuel-air mix^^
+                ^^Engine Operation := converts fuel energy to mechanical power^^
+                ^^Car Movement := enables travel^^
+                ^^Travel := allows movement from one location to another^^
+                ^^Gasoline := powers internal combustion engines^^
+                ^^Diesel := powers internal combustion engines, often in trucks and buses^^
+                ^^Electricity := powers electric motors, used in electric vehicles^^
+                ^^Hydrogen := used in fuel cells to power electric motors in hydrogen vehicles^^
+                ^^Electric Motor Operation := converts electricity into mechanical power^^
+                ^^Fuel Cell Engine Operation := converts hydrogen into electrical power^^
+                ^^Electric Vehicle Movement := enables travel of electric vehicles^^
+                ^^Hydrogen Vehicle Movement := enables travel of hydrogen vehicles^^"
+
     let graph_text = (File.ReadAllText(preparse_location))
     let predefinedPrompt = Printf.StringFormat<string -> string>( 
+        """given the following example as a template """ + prompt_template + 
+        
         """given the following graph 
   
         """ + graph_text + """
         
-        Explain "%s" in the same way with no extra words making sure to include the origional graph, all origional definitions that make sense and any additional nodes or definitions needed to answer the question in the output, in addition ensure that definitions take the form ^^defined := the definition^^ and use no extra words outside of the graph format:
+        explain "%s" in the same way making sure to include the origional graph, all origional definitions that make sense, and any additional nodes or definitions needed to answer the question in the output, in addition ensure the response use no extra words outside of the graph format:
         """
     ) 
 
