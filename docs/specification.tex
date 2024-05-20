@@ -278,77 +278,35 @@
         \hline
       \end{tabular}
 
-
-      % \begin{tabular}{l|c|r|l}
-      %   \textbf{Syntax} & \textbf{Abstract Syntax} & \textbf{Prec./Assoc.} & \textbf{Meaning}\\
-      %   \hline
-      %   \text{NodeName} & Name of string & N/A & NodeName is a primative\\
-      %   & & & represented using an f\# string\\
-        
-      %   \hline
-      %   \text{(name1, name2,)} & EdgeList list & N/A & An edgeList is a list of\\
-      %   & & &  NodeNames stored in an f\# list\\
-
-      %   \hline
-      %   \text{NodeInfo} & Info of string & N/A & NodeInfo is a primative\\
-      %   & & & represented using an f\# string\\
-
-      %   \hline
-      %   \text{name, (name1,)} & Node of (NodeName * EdgeList) & N/A & A node is a combining form\\
-      %   & & & that stores a NodeName and \\
-      %   & & & a list of nodes that that node is\\
-      %   & & & connected to in an f\# list \\
-      %   \hline
-      %   \text\{node\} \{node\}  & Node list & N/A & a series of nodes\\
-      %   & & & separated by whitespace including\\ 
-      %   & & & newlines these are used to store all \\
-      %   & & & nodes in a graph\\
-        
-      %   \hline
-      %   \texttt{^^NodeName := NodeInfo^^} & Assignment of NodeName := NodeInfo & N/A & a combining for that\\
-      %   & & & uses a NodeName and its \\
-      %   & & & associated information stored\\
-      %   & & & in an f\# map \\
-
-      %   \hline
-      %   \texttt{^^NodeName := NodeInfo^^}  \texttt{^^NodeName := NodeInfo^^}& List of Assignment & N/A & A series of assignments\\
-      %   & & &  to be stored in an environment\\
-
-      %   \hline
-      %   \text{NodeList}  \text{AssignmentList}& tuple of NodeList AssignmentList & N/A & a list of nodes\\
-      %   & & &  that form the graph\\
-      %   & & &  and the assignments of\\
-      %   & & &  each node\\
-
-      % \end{tabular}
     \end{center}
   \end{table}
 
-    \begin{enumerate}
-      \item Primitive values:
-        \begin{enumerate}
-          \item NodeName: A series of characters digits or spaces that represent the name of a node. stored in
-          a string.
-          \item EdgeList: A series of NodeNames, or 0 stored in the form (NodeName, NodeName,) 
-          that contains the NodeNames of nodes connected to the node, stored in a list.
-        \end{enumerate}
-      \item Combining forms:
-        \begin{enumerate}
-          \item Node: A tuple of the form {NodeName, (EdgeList)} that represents a full node, which is
-          the name of the node and its EdgeList. In the future the node name will be used to access
-          a dictionary that contains the information associted with that node
-          \item NodeList: A series of nodes in the form Node Node separated by whitespace including newlines
-          these are used to represent all nodes in a graph
-        \end{enumerate}
-      \item Evalutation:
-          \begin{enumerate}
-            \item The programs in our language read inputs given in a txt file, it parses the text file and
-            separating the series of nodes and their edges.
-            \item When the program is evaluated it produces a graph using the nodes and their edgelist on the
-            screen
-          \end{enumerate}
-    \end{enumerate}
+\newpage
+\subsection*{Remaining Work} 
+  \begin{enumerate}
+    \item
+      \begin{spacing}{1.2}
+        \hspace*{1cm} 
+        Give the user the capibility to supply a PDF and other input to be summarized 
+        and have a graph created of, we nearly have the PDF functionality but werent able to get it functioning 
+        by the deadline while also getting a working web interface. 
+      \end{spacing}
+    \item
+      \begin{spacing}{1.2}
+        \hspace*{1cm} 
+        Improve the parser to allow more flexible inputs to generate graphs. This came up once we got to the point
+        of integrating chatGPT. Sometimes chatGPT would forget a "," or some other punctuation that would derail everything,
+        it would be nice fix this to prevent graph display errrors.
+      \end{spacing}
+    \item
+      \begin{spacing}{1.2}
+        \hspace*{1cm} 
+        The web interface is curently a bit clunky. That is probably to be expected considering the differance in resources between
+        us as a company like Google or Meta. But it would be nice to get to the point where any input can be accepted bu the chat box
+        and we handle it from there. 
+      \end{spacing}
 
+    \end{enumerate}
 
 \newpage
   \begin{enumerate}
