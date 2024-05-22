@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 const aiMessage = document.createElement("div");
                 aiMessage.className = "message twined";
-                aiMessage.textContent = data;
+                //aiMessage.textContent = data;
+                aiMessage.innerHTML = data; 
                 chatContainer.appendChild(aiMessage);
                 commandInput.value = "";
             })
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(data => {
                     const aiMessage = document.createElement("div");
                     aiMessage.className = "message twined";
-                    aiMessage.textContent = data;
+                    aiMessage.innerHTML = data; 
                     chatContainer.appendChild(aiMessage);
                     commandInput.value = "";
                 })
@@ -347,6 +348,5 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => {
             console.error("Error fetching graph content:", error);
-            graphContent.textContent = "Error loading content.";
         });
 });

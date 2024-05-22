@@ -10,16 +10,12 @@ open Microsoft.VisualStudio.TestTools.UnitTesting
 [<TestClass>]
 type TestClass () =
 
-(*
-    [<TestMethod>]
-    member this.TestMethodPassing () =
-        Assert.IsTrue(true); 
-*)
+    let stripWhitespace (str: string) =
+        str.Replace("\r", "").Replace("\n", "").Replace(" ", "").Replace("\t", "")
 
     [<TestMethod>]
     member this.TestValidNodeParsing () =
-        // let input = File.ReadAllText "test_text/political_systems.txt"
-
+    
         let input = 
             "{European Fascism, (Germany, Italy, Spain,)}
             {Germany, (Adolf Hitler,)}
@@ -27,7 +23,9 @@ type TestClass () =
             {Spain,(Francisco Franco,)}"
 
         let expected = 
+
             Nodes_and_Assignments
+
                 (Edge_list
                     [Node
                         (Node_name "European Fascism",
@@ -37,13 +35,19 @@ type TestClass () =
                     Node (Node_name "Spain", Edge_list [Node_name "Francisco Franco"])],
                 Assignment_list []) 
 
+
         let result = parse input false  
 
         match result with
         | Some ws ->
+
+            printfn "\nParsed result: %A" ws
+
             Assert.AreEqual(expected, ws)
 
         | None ->
+            printfn "\nParsing failed"
+
             Assert.IsTrue false
 
     [<TestMethod>]
@@ -54,18 +58,23 @@ type TestClass () =
             {Italy, (Benito Mussolini,)}
             {Spain,(Francisco Franco,)}"
 
-        (*for some reason this trys to look in bin if you dont back out first*)
         let fullPath = Path.GetFullPath("../../../txt_files/answers/valid_eval.txt")
-        let expected = File.ReadAllText fullPath
-    
+
+        let expected = File.ReadAllText fullPath |> stripWhitespace
+
         let result = parse input false
         
         match result with
         | Some ast -> 
+            printfn "\nParsed AST: %A" ast
 
             let evaluation, _ = eval ast Map.empty  
 
-            Assert.AreEqual(expected, evaluation)
+            printfn "\nEvaluation result: %s" evaluation
 
+            Assert.AreEqual(expected, stripWhitespace evaluation)
         | None ->
+
+            printfn "\nParsing failed"
+
             Assert.IsTrue false

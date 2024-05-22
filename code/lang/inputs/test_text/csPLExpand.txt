@@ -1,0 +1,36 @@
+{Programming Fundamentals, (Syntax, Semantics,)}
+{Syntax, (Grammar, Rules,)}
+{Semantics, (Meaning, Behavior,)}
+{Language Implementation, (Compilers, Interpreters,)}
+{Compilers, (Translation, Optimization,)}
+{Interpreters, (Execution, Runtime,)}
+{Advanced Concepts, (Concurrency, Memory Management,)}
+{Concurrency, (Threads, Synchronization,)}
+{Memory Management, (Allocation, Garbage Collection,)}
+{Paradigms, (OOP, Functional,)}
+{Data Structures, (Types, Control Structures,)}
+{Types, (Primitive, Composite,)}
+{Control Structures, (Loops, Conditionals,)}
+{Optimization, (Code Performance, Type Systems,)}
+{Code Performance, (Efficiency, Optimization,)}
+{Type Systems, (Static, Dynamic,)}
+{Error Handling, (Exceptions, Debugging,)}
+{Language Design, (Abstractions, Features,)}
+^^Programming Fundamentals:= Basics of syntax and semantics.^^
+^^Syntax:= Structure and rules of code.^^
+^^Semantics:= Meaning and behavior of code.^^
+^^Language Implementation:= Building compilers and interpreters.^^
+^^Compilers:= Translating and optimizing code.^^
+^^Interpreters:= Executing code at runtime.^^
+^^Advanced Concepts:= Concurrency and memory management.^^
+^^Concurrency:= Managing threads and synchronization.^^
+^^Memory Management:= Allocating and collecting garbage.^^
+^^Paradigms:= Different programming styles.^^
+^^Data Structures:= Types and control structures.^^
+^^Types:= Primitive and composite variables.^^
+^^Control Structures:= Loops and conditionals.^^
+^^Optimization:= Improving code performance.^^
+^^Code Performance:= Efficiency and optimization.^^
+^^Type Systems:= Static and dynamic checking.^^
+^^Error Handling:= Managing exceptions and debugging.^^
+^^Language Design:= Creating abstractions and features.^^

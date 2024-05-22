@@ -5,6 +5,7 @@ open System
 open System.IO
 open System.Net.Http
 open System.Text
+open System.Diagnostics
 open Newtonsoft.Json
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Cors.Infrastructure
@@ -17,8 +18,7 @@ open Giraffe
 open AST
 open Par
 open Eval
-open Library
-
+//open Library
 
 // ---------------------------------
 // Models
@@ -67,9 +67,58 @@ type UserPrompt = {
 }
 type AppState = { mutable LastInput: int }
 
+// ---------------------------------
+// State and Environment
+// ---------------------------------
 
 let state = {LastInput = 0}
 let mutable envi : Env = Map.empty
+
+let exe_location = "outputs/exe.sh"
+let gv_location = "inputs/text_folder/gv.txt"
+let preparse_location = "inputs/preparse.txt"
+let text_location = "tText_Content/cont.txt"
+let svg_location = "tSVG_Op/graph.svg"
+//let pdf_location = "input/pdf_folder/pdf_output.txt" // Future Feature!
+
+// ---------------------------------
+// Utility Functions
+// ---------------------------------
+
+
+let zsh_check =
+    try
+        let psi = new System.Diagnostics.ProcessStartInfo("zsh", "--version")
+        psi.RedirectStandardOutput <- true
+        psi.UseShellExecute <- false
+        let pro = System.Diagnostics.Process.Start(psi)
+        pro.WaitForExit()
+        pro.ExitCode = 0
+    with
+    | _ -> false
+
+(*executes a given script as a new process using azsh or powershell as avaible*)
+let executeDotCommand (dotPath: string) (inputFile: string) (outputFile: string) =
+    let logOutput (proc: Process) =
+        let output = proc.StandardOutput.ReadToEnd()
+        let error = proc.StandardError.ReadToEnd()
+        proc.WaitForExit()
+        printfn "Script Output:\n%s" output
+        printfn "Script Error:\n%s" error
+        printfn "Exit Code: %d" proc.ExitCode
+
+    let startInfo = ProcessStartInfo()
+    startInfo.FileName <- dotPath
+    startInfo.Arguments <- sprintf "-Tsvg %s -o %s" inputFile outputFile
+    startInfo.RedirectStandardOutput <- true
+    startInfo.RedirectStandardError <- true
+    startInfo.UseShellExecute <- false
+
+    use proc = new Process()
+    proc.StartInfo <- startInfo
+    proc.Start() |> ignore
+    logOutput proc
+
 // ---------------------------------
 // Views
 // ---------------------------------
@@ -104,7 +153,7 @@ module Views =
 // OpenAI API Integration
 // ---------------------------------
 
-let apiKey = "***REMOVED***" // Replace with your actual API key
+let apiKey = "***REMOVED***"
 
 // Create an HttpClient for making HTTP requests
 let httpClient = new HttpClient()
@@ -148,8 +197,13 @@ let makeChatCompletionRequest (userPrompt: string) =
         | None -> return "No response content available."
     }
 
+// ---------------------------------
+// Command Handlers
+// ---------------------------------
+
 // Function to handle the "TwinedGraph:" command
 let handleTwinedGraph (userInput: string) =
+
     // Define the predefined graph prompt
     let prompt_template = 
                 "input:
@@ -259,11 +313,13 @@ let handleTwinedText (userInput: string) =
 let handleTwinedOpText (userInput: string) =
     let directoryPath = "tText_Content"
     if String.IsNullOrWhiteSpace(userInput) then
+
         // Return the list of text files
         let files = Directory.GetFiles(directoryPath, "*.txt") |> Array.map Path.GetFileName
         let result = String.Join("\n", files)
         async { return result }
     else
+
         // Return the content of the specific text file
         let filePath = Path.Combine(directoryPath, userInput.Trim() + ".txt")
         if File.Exists(filePath) then
@@ -289,8 +345,14 @@ let mainHandler : HttpHandler =
             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
             let userInput = userPrompt.userPrompt.Trim()
             let response = 
-                "Welcome to Twined: Would you like to              1: Open an exiting graph in a text file?            2: Open a pdf, image, or other text file with raw data?"
-
+                "Welcome to Twined!!<br>" +
+                "<br> -> Twined is a revolutionary knowledge programming language designed to transform how you manage and interact with textual information.<br>" +
+                "<br> -> It converts unstructured text data into structured, navigable knowledge graphs, enhancing your ability to comprehend and analyze information.<br>" +
+                "<br> -> With Twined, you can explore data interactively and create insights through intuitive graph-based reasoning visualizations.<br>" +
+                "<br>Would you like to:<br>" +
+                "1: Open an existing graph in a text file?<br>" +
+                "2: Open a PDF, image, or other text file with raw data? (Soon!)"
+ 
             return! json response next ctx
         }
 
@@ -298,76 +360,102 @@ let mainHandler : HttpHandler =
 (* this needs to talk between web and library after the start of main*)
 let path_finder : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
-        task{
+        task {
             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
             let userInput = userPrompt.userPrompt.Trim()
-            match userInput with 
-            | "1" | "2" ->
-                let state = {LastInput = 3}
-                let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph"
+            match userInput with
+            | "1" ->
+                let files = Directory.GetFiles("inputs/test_text")
+                let fileList = files |> Array.map Path.GetFileName |> String.concat "<br>"
+                let response = 
+                    "Option One<br><br>" +
+                    "Here is the list of current text files:<br><br>" +
+                    fileList +
+                    "<br><br>Copy the following path followed by the name of your chosen file (e.g., name.txt):<br><br>" +
+                    "I.e Type the Following: 3 inputs/test_text/car.txt"
+                    
                 return! json response next ctx
+
+            | "2" ->
+                let response = "Future Implementation"
+                return! json response next ctx
+
+            | "Exit" | "exit" ->
+                let response = "Exiting Twined. Goodbye!"
+                return! json response next ctx
+
             | _ -> 
-                let response = "Please enter one or two"
+                let response = 
+                    "Please enter a valid option:<br>" +
+                    "1: Open an existing graph in a text file?<br>" +
+                    "Exit: Close the application"
+
                 return! json response next ctx
         }
-
 let path_conversion : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
-            task{
-                let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
-                (*trims the first character*)
-                let user_input =
-                    if userPrompt.userPrompt.Trim().StartsWith("3") then
-                        userPrompt.userPrompt.Trim().[1..].Trim()
-                    else
-                        preparse_location
+        task {
+            let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
+            let user_input =
+                if userPrompt.userPrompt.Trim().StartsWith("3") then
+                    userPrompt.userPrompt.Trim().[1..].Trim()
+                else
+                    preparse_location
 
-                let fullPath = Path.GetFullPath(user_input)
-                File.WriteAllText(preparse_location, File.ReadAllText fullPath)
+            let fullPath = Path.GetFullPath(user_input)
+            File.WriteAllText(preparse_location, File.ReadAllText fullPath)
 
-                match user_input.EndsWith(".txt") with 
-                | true ->
-                    let input = File.ReadAllText preparse_location
-                    let ast = parse input false
-    
-                    match ast with
-                    | Some ast ->
-                        let file_name = gv_location
-                        let gvText, env = eval ast envi
-                        
-                        let resp_list = 
-                            [ for key in env.Keys do
-                                let value = env.[key]
-                                yield string key + ": \n" + string value + "\n\n" ]
+            match user_input.EndsWith(".txt") with 
+            | true ->
+                let input = File.ReadAllText preparse_location
+                ctx.GetLogger().LogInformation("Input file content: {Content}", input)
+                let ast = parse input false
 
-                        let response = List.fold (fun acc elem -> acc + elem ) "" resp_list
+                match ast with
+                | Some ast ->
+                    let file_name = gv_location
+                    let gvText, env = eval ast envi
+                    
+                    let resp_list = 
+                        [ for key in env.Keys do
+                            let value = env.[key]
+                            yield string key + ": \n" + string value + "\n\n" ]
 
-                        // write the envi to a file
-                        File.WriteAllText(text_location, response)
-                        // write the nodes to a file
-                        File.WriteAllText(file_name, gvText)
+                    let response = List.fold (fun acc elem -> acc + elem ) "" resp_list
 
-                        (*generates a .sh file to exicute the graphviz code generating an svg file in
-                        the svg folder TODO add ability of user to name the output*)
-                        
-                        let execution_name = exe_location
+                    File.WriteAllText(text_location, response)
+                    File.WriteAllText(file_name, gvText)
 
-                        File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
-                        executeScript execution_name
+                    ctx.GetLogger().LogInformation("Graphviz file content: {Content}", gvText)
 
+                    let dotPath = "C:\\Program Files\\Graphviz\\bin\\dot.exe" // After installing Dot, We Need to Adjust this path to where dot.exe is located
 
+                    ctx.GetLogger().LogInformation("Executing dot command: {Command}", sprintf "%s -Tsvg %s -o %s" dotPath file_name svg_location)
+
+                    try
+                        executeDotCommand dotPath file_name svg_location
+                    with
+                    | ex ->
+                        ctx.GetLogger().LogError(ex, "Error executing dot command")
+
+                    // Check if the SVG file was created
+                    if File.Exists(svg_location) then
                         let responseContent = Async.RunSynchronously (handleTwinedOpSVG "graph")
                         return! json responseContent next ctx
+                    else
+                        let errorMessage = "SVG file not generated."
+                        ctx.GetLogger().LogError(errorMessage)
+                        return! json errorMessage next ctx
                         
-                    | None ->       
-                        let responseContent = "Error displaying graph."
-                        return! json responseContent next ctx
+                | None ->       
+                    let responseContent = "Error displaying graph."
+                    return! json responseContent next ctx
 
-                | false ->
-                    let state = {LastInput = 3}
-                    let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph ending in .txt"
-                    return! json response next ctx
-            }
+            | false ->
+                let state = {LastInput = 3}
+                let response = "Please enter " + string (state.LastInput) + " followed by the path of your graph ending in .txt"
+                return! json response next ctx
+        }
 
 
 let text_display : HttpHandler =
@@ -389,53 +477,42 @@ let update : HttpHandler =
                 return! json preparse_location next ctx
             }
 
-// Update the API handler
 let apiHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         task {
-            // Bind the incoming JSON request to the UserPrompt model
+
             let! userPrompt = ctx.BindJsonAsync<UserPrompt>()
             let userInput = userPrompt.userPrompt.Trim()
 
-            // Log the received prompt
             ctx.GetLogger().LogInformation("Received prompt: {Prompt}", userInput)
 
-            // Check if the user prompt starts with "TwinedChat:"
             if userInput.StartsWith("TwinedChat:") then
-                // Make the chat completion request and get the response content
+
                 let responseContent = Async.RunSynchronously (makeChatCompletionRequest userInput)
 
-                // Return the response content as JSON
                 return! json responseContent next ctx
 
             // Check if the user prompt starts with "TwinedGraph:"
             elif userInput.StartsWith("Expand") || userInput.StartsWith("expand") then
-                // Extract the topic from the user prompt
+
                 let topic = userInput.Substring("expand".Length).Trim()
 
-                // Handle the "TwinedGraph:" command and get the response content
                 let responseContent = Async.RunSynchronously (handleTwinedGraph topic)
                 File.WriteAllText(preparse_location, responseContent)
 
                 return! json preparse_location next ctx
 
-
-
-
             // Check if the user prompt starts with "TwinedOpSVG:"
             elif userInput.StartsWith("TwinedOpSVG:") then
-                // Extract the file name from the user prompt
+
                 let fileName = userInput.Substring("TwinedOpSVG:".Length).Trim()
 
-                // Handle the "TwinedOpSVG:" command and get the response content
                 let responseContent = Async.RunSynchronously (handleTwinedOpSVG fileName)
 
-                // Return the response content as JSON
                 return! json responseContent next ctx
 
-            // Check if the user prompt starts with "TwinedText:"
             elif userInput.StartsWith("TwinedText:") then
-                // Extract the file name from the user prompt
+
                 let fileName = userInput.Substring("TwinedText:".Length).Trim()
 
                 // Handle the "TwinedText:" command and get the response content
@@ -444,22 +521,22 @@ let apiHandler : HttpHandler =
                 // Return the response content as JSON
                 return! json responseContent next ctx
 
-            // Check if the user prompt starts with "TwinedOpText:"
             elif userInput.StartsWith("TwinedOpText:") then
-                // Extract the file name from the user prompt
+
                 let fileName = userInput.Substring("TwinedOpText:".Length).Trim()
 
-                // Handle the "TwinedOpText:" command and get the response content
                 let responseContent = Async.RunSynchronously (handleTwinedOpText fileName)
 
-                // Return the response content as JSON
                 return! json responseContent next ctx
 
             else
-                // If the prompt does not start with a recognized command, return a default response
                 return! json "Invalid input. Please start your prompt with 'TwinedChat:', 'TwinedGraph:', 'TwinedOpSVG:', 'TwinedText:', or 'TwinedOpText:'" next ctx
         }
 
+
+// ---------------------------------
+// Web Application Routes
+// ---------------------------------
 
 // Define the web application routes
 let webApp =

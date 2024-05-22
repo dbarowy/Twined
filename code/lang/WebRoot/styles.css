@@ -1,4 +1,3 @@
-/* Basic Reset */
 body, html {
     margin: 0;
     padding: 0;
@@ -7,14 +6,12 @@ body, html {
     background-color: #ffffff;
 }
 
-/* Grid Layout for the Whole Page */
 .grid-container {
     display: grid;
     grid-template-rows: 10vh 80vh 10vh;
     height: 100vh;
 }
 
-/* Header Style */
 .title-grid {
     display: flex;
     align-items: center;
@@ -25,14 +22,12 @@ body, html {
     color: #fff;
 }
 
-/* Main Content Grid */
 .content-grid {
     display: grid;
     grid-template-columns: 25% 50% 25%;
     padding: 10px;
 }
 
-/* General Style for Grid Items */
 .grid-item {
     padding: 20px;
     border: 1px solid #ccc;
@@ -43,7 +38,6 @@ body, html {
     overflow: auto;
 }
 
-/* Specific Style for Command Line Interface Area */
 .command-line-interface {
     font-family: 'Courier New', monospace;
     background-color: #eee;
@@ -53,7 +47,6 @@ body, html {
     justify-content: space-between;
 }
 
-/* Input Container within Command Line Interface */
 .command-line-input-container {
     width: 97%;
     display: flex;
@@ -61,7 +54,6 @@ body, html {
     padding: 5px;
 }
 
-/* Style for Text Input */
 .command-line-input {
     flex-grow: 1;
     border: none;
@@ -70,9 +62,8 @@ body, html {
     outline: none;
 }
 
-/* Style for Send Button */
 .send-button {
-    background-color: #007BFF;
+    background-color: #000000;
     border: none;
     color: white;
     padding: 6px 12px;
@@ -81,9 +72,18 @@ body, html {
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
-}
+    border: 2px solid #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 4px; 
+  }
+  
+  .send-button:hover {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    color: #000000;
+    border-radius: 4px; 
 
-/* Chat Container for Displaying Messages */
+  }
 .chat-container {
     padding: 10px;
     background: #fafafa;
@@ -102,9 +102,9 @@ body, html {
     border-radius: 4px;
     background: #e0e0e0;
     word-wrap: break-word;
-    white-space: pre-wrap; /* Ensures preformatted text wraps correctly */
-    width: 100%; /* Ensures messages take the full width of the container */
-    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    white-space: pre-wrap; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 /* Style for Messages from the User */
@@ -119,51 +119,50 @@ body, html {
     align-self: flex-start;
 }
 
-/* Style for SVG Display Area */
 .svg-display {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Ensures that the SVG fits within the container */
+    overflow: hidden; 
     background-color: #ffffff;
 }
 
-/* Ensure the SVG adapts to the container size */
 .svg-display img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Ensures the SVG maintains its aspect ratio */
+    object-fit: contain; 
 }
 
-/* Footer Style */
 .footer-grid {
     background-color: #000000;
     color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-}
+    text-align: center;
+  }
 
 .text-display {
     font-family: 'Times New Roman', Times, serif, sans-serif;
-    background-color: #f4f4f4; /* Light grey background */
-    border: 1px solid #ccc; /* Grey border */
-    display: block; /* Ensures the div acts as a block-level element */
+    background-color: #f4f4f4;
+    border: 1px solid #ccc; 
+    display: block; 
     font-size: 20px;
 }
 
 .text-display h2, .text-display p, .text-display ul {
-    width: 100%; /* Ensures each element takes full width of the container */
-    display: block; /* Ensures each element is treated as a block-level element */
-    margin-bottom: 10px; /* Adds bottom margin for spacing */
+    width: 100%; 
+    display: block; 
+    margin-bottom: 10px; 
 }
 
 .text-display ul {
-    list-style-type: none; /* Removes default bullet points */
-    padding-left: 0; /* Removes padding to align with other text */
+    list-style-type: none;
+    padding-left: 0; 
 }
 
 .text-display li {
-    margin-bottom: 10px; /* Adds space between items */
+    margin-bottom: 10px; 
 }

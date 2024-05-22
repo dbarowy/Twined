@@ -1,0 +1,12 @@
+{Heat, (Melting Glass,)}
+{Silica, (Melting Glass,)}
+{Soda Ash, (Melting Glass,)}
+{Lime, (Melting Glass,)}
+{Melting Glass, (Glass Formation,)}
+{Glass Formation, (Manufacturing,)}
+^^Heat:= Melts glass.^^
+^^Silica:= Main component.^^
+^^Soda Ash:= Lowers melting point.^^
+^^Lime:= Adds durability.^^
+^^Melting Glass:= Forms glass.^^
+^^Glass Formation:= For manufacturing.^^

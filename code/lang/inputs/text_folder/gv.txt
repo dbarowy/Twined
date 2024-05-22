@@ -1,7 +1,3 @@
 digraph G {
-"apples" -> "tree";
-"tree" -> "seed germination";
-"seed germination" -> "soil nutrients absorption";
-"soil nutrients absorption" -> "tree growth";
-"tree growth" -> "apples";
+"Flour" -> "Cake Mix";
 }

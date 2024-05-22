@@ -1,15 +1,3 @@
-apples : 
-grow on trees
-
-seed germination : 
-the process where a seed begins to grow into a new plant
-
-soil nutrients absorption : 
-process where roots absorb water and minerals essential for growth
-
-tree : 
-supports the growth of apples, provides structure and nutrients
-
-tree growth : 
-the increase in size and maturity of a tree, allowing it to bear fruits like apples
+Flour: 
+Provides structure.
 
