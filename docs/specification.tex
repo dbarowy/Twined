@@ -280,33 +280,52 @@
 
     \end{center}
   \end{table}
+  \newpage
+  \newpage
+  \subsection*{Remaining Work}
+  
+    \begin{enumerate}
+    
+      \item \textbf{Backend Enhancements}
+        \begin{enumerate}
+        \item Enable PDF and other input formats for summarization and graph creation.
+        \item Improve the parser for flexible inputs to prevent errors from missing punctuation.
+        \item Optimize parsing and evaluation algorithms for larger datasets and implement caching.
+        \item Refactor the backend for horizontal scaling and utilize cloud services for dynamic scaling.
+        \end{enumerate}
+        
+      \item \textbf{Frontend Improvements}
+        \begin{enumerate}
+        \item Develop a sophisticated, intuitive interface using modern frameworks like React or Vue.js.
+        \item Implement real-time feedback and enhance visualizations with interactive elements and theming options.
+        \item Utilize JavaScript libraries like D3.js for more dynamic and visually appealing graphs.
+        \item Provide export options for graphs in various formats.
+        \end{enumerate}
+        
+      \item \textbf{User Experience and Security}
+        \begin{enumerate}
+        \item Enhance the web interface for smoother interaction and better navigation tools.
+        \item Implement robust authentication systems, including OAuth and connection with student email.
+        \item Integrate OCR technology for extracting text from images and PDFs.
+        \item Add text-to-speech and speech-to-text features for enhanced accessibility.
+        \end{enumerate}
+      
+      \item \textbf{Advanced Features and Documentation}
+        \begin{enumerate}
+        \item Integrate machine learning for insights, recommendations, and automatic node categorization.
+        \item Develop thorough documentation and create a community support portal.
+        \end{enumerate}
 
-\newpage
-\subsection*{Remaining Work} 
-  \begin{enumerate}
-    \item
-      \begin{spacing}{1.2}
-        \hspace*{1cm} 
-        Give the user the capibility to supply a PDF and other input to be summarized 
-        and have a graph created of, we nearly have the PDF functionality but werent able to get it functioning 
-        by the deadline while also getting a working web interface. 
-      \end{spacing}
-    \item
-      \begin{spacing}{1.2}
-        \hspace*{1cm} 
-        Improve the parser to allow more flexible inputs to generate graphs. This came up once we got to the point
-        of integrating chatGPT. Sometimes chatGPT would forget a "," or some other punctuation that would derail everything,
-        it would be nice fix this to prevent graph display errrors.
-      \end{spacing}
-    \item
-      \begin{spacing}{1.2}
-        \hspace*{1cm} 
-        The web interface is curently a bit clunky. That is probably to be expected considering the differance in resources between
-        us as a company like Google or Meta. But it would be nice to get to the point where any input can be accepted bu the chat box
-        and we handle it from there. 
-      \end{spacing}
+      \item \textbf{Features Not Implemented}
+        We had planned to implement several additional features and commands, such as 
+        direct interaction with OpenAI's interface for chatting, and the use of OCR technology
+        to convert PNG/JPG images to work with notes on paper. Additionally, we attempted to
+        work with PDF-to-text conversion. Unfortunately, due to time constraints, we were unable
+        to fully develop and integrate these functionalities by the final submission.
+  \end{enumerate}
 
-    \end{enumerate}
+  \newpage
+\subsection*{}
 
 \newpage
   \begin{enumerate}
@@ -344,10 +363,7 @@
     \item $[\hspace{1em}]$ Is it OK for me to share your project with future CSCI 334 students? Students often tell me that it is helpful to see what others did. If so, please add a file called SHARING.txt to your repository. If you have any conditions on sharing, please put your notes in the f ile, otherwise it’s OK to leave the file blank. If you do not want to share, do not create the file.
   \end{enumerate}
 
-  \newpage
-  \begin{figure} 
-    \includegraphics[width=1\linewidth]{images/ArchitectureDiagram.png} 
-  \end{figure}
+  \subsection*{Remaining Work}
 
 % DO NOT DELETE ANYTHING BELOW THIS LINE
 \end{document}
