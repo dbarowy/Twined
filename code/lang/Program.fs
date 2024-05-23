@@ -378,9 +378,9 @@ let path_finder : HttpHandler =
                     "Option One<br><br>" +
                     "Here is the list of current text files:<br><br>" +
                     fileList +
-                    "<br><br>Copy the following path followed by the name of your chosen file (e.g., name.txt):<br><br>" +
-                    "I.e Type the Following: 3 inputs/test_text/car.txt <br> You can also enter your own program by entered the path
-                    to the text file."
+                    "<br><br> -> Copy the following path followed by the name of your chosen file (e.g., name.txt):<br><br>" +
+                    "I.e Type the Following: 3 inputs/test_text/car.txt" +
+                    "<br><br> -> You can also enter your own program by entered the path to the text file.<br>"
                     
                 return! json response next ctx
 
