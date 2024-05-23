@@ -119,6 +119,13 @@ let executeDotCommand (dotPath: string) (inputFile: string) (outputFile: string)
     proc.Start() |> ignore
     logOutput proc
 
+(*executes a given script as a new process using azsh or powershell as avaible*)
+let executeScript (filename: string) =
+        let scriptProcess = ProcessStartInfo("zsh", filename) 
+        let pro = Process.Start(scriptProcess)
+        pro.WaitForExit() |> ignore
+   
+
 // ---------------------------------
 // Views
 // ---------------------------------
@@ -372,7 +379,8 @@ let path_finder : HttpHandler =
                     "Here is the list of current text files:<br><br>" +
                     fileList +
                     "<br><br>Copy the following path followed by the name of your chosen file (e.g., name.txt):<br><br>" +
-                    "I.e Type the Following: 3 inputs/test_text/car.txt"
+                    "I.e Type the Following: 3 inputs/test_text/car.txt <br> You can also enter your own program by entered the path
+                    to the text file."
                     
                 return! json response next ctx
 
@@ -433,7 +441,12 @@ let path_conversion : HttpHandler =
                     ctx.GetLogger().LogInformation("Executing dot command: {Command}", sprintf "%s -Tsvg %s -o %s" dotPath file_name svg_location)
 
                     try
-                        executeDotCommand dotPath file_name svg_location
+                        if zsh_check then
+                            let execution_name = exe_location
+                            File.WriteAllText(execution_name, ("dot -Tsvg " + file_name + " -o " + svg_location))
+                            executeScript execution_name
+                        else 
+                            executeDotCommand dotPath file_name svg_location    
                     with
                     | ex ->
                         ctx.GetLogger().LogError(ex, "Error executing dot command")

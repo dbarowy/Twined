@@ -1,3 +1,5 @@
 digraph G {
 "Flour" -> "Cake Mix";
+"Cake Mix" -> "Baking";
+"Baking" -> "Cake";
 }
