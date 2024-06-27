@@ -1,6 +1,0 @@
-{Fuel, (Engine Operation,)}
-{Air, (Engine Operation,)}
-{Spark, (Engine Operation,)}
-^^Fuel := provides energy^^
-^^Air := helps burn fuel^^
-^^Spark := ignites fuel-air mix^^

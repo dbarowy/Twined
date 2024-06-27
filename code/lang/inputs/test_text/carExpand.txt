@@ -1,0 +1,21 @@
+{Fuel, (Engine Operation, Combustion,)}
+{Air, (Engine Operation, Combustion,)}
+{Spark, (Engine Operation, Ignition,)}
+{Engine Operation, (Vehicle Movement, Power Generation,)}
+{Combustion, (Power Generation,)}
+{Ignition, (Combustion,)}
+{Vehicle Movement, (Transportation,)}
+{Power Generation, (Vehicle Movement,)}
+{Transportation, (Logistics,)}
+{Logistics, (Economy,)}
+^^Fuel:= Provides Energy.^^
+^^Air:= Allows the burn of the fuel.^^
+^^Spark:= Ignites fuel-air mix.^^
+^^Engine Operation:= Runs Engine.^^
+^^Combustion:= Energy Release.^^
+^^Ignition:= Starts Combustion.^^
+^^Vehicle Movement:= Drives Vehicle.^^
+^^Power Generation:= Produces Power^^
+^^Transportation:= Moves Goods^^
+^^Logistics:= Supply Management^^
+^^Economy:= Wealth Creation.^^

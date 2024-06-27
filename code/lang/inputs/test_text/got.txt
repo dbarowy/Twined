@@ -1,0 +1,29 @@
+{Game of Thrones, (House Stark, House Targaryen,)}
+{House Stark, (Winterfell, Eddard Stark, Jon Snow, Sansa Stark, Arya Stark,)}
+{House Targaryen, (Dragonstone, Daenerys Targaryen, Viserys Targaryen, Dragons,)}
+{Eddard Stark, (Leader, Honorable,)}
+{Jon Snow, (Bastard, Hero,)}
+{Sansa Stark, (Survivor, Leader,)}
+{Arya Stark, (Warrior, Faceless,)}
+{Daenerys Targaryen, (Queen, Dragons,)}
+{Viserys Targaryen, (Exiled, Ambitious,)}
+{Dragons, (Power, Fire,)}
+^^House Stark:= Northern family.^^
+^^House Targaryen:= Dragonlords.^^
+^^Eddard Stark:= Honorable leader.^^
+^^Jon Snow:= Heroic bastard.^^
+^^Sansa Stark:= Survivor leader.^^
+^^Arya Stark:= Skilled warrior.^^
+^^Daenerys Targaryen:= Dragon queen.^^
+^^Viserys Targaryen:= Exiled prince.^^
+^^Dragons:= Fire-breathing power.^^
+^^Winterfell:= Stark's home.^^
+^^Dragonstone:= Targaryen's home.^^
+^^Leader:= Guides people.^^
+^^Hero:= Brave and noble.^^
+^^Survivor:= Endures hardships.^^
+^^Warrior:= Skilled in combat.^^
+^^Queen:= Female ruler.^^
+^^Ambitious:= Seeks power.^^
+^^Power:= Strength and control.^^
+^^Fire:= Destructive force.^^

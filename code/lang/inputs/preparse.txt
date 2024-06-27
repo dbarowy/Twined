@@ -1,0 +1,7 @@
+{Flour, (Cake Mix,)}
+{Cake Mix, (Baking,)}
+{Baking, (Cake,)}
+^^Flour := Provides structure.^^
+^^Cake Mix := Combination of flour and other ingredients ready for baking.^^
+^^Baking := Process of cooking by dry heat, especially in an oven, turning cake mix into cake.^^
+^^Cake := Baked dessert, typically sweet and spongy.^^

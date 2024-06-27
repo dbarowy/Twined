@@ -1,0 +1,22 @@
+{CS, (100-Level, 200-Level, 300-Level,)}
+{100-Level, (CSCI 134, CSCI 136,)}
+{200-Level, (CSCI 237, CSCI 256,)}
+{300-Level, (CSCI 334, CSCI 361, Electives,)}
+{CSCI 134, (ITCS,)}
+{CSCI 136, (DSAP,)}
+{CSCI 237, (CO,)}
+{CSCI 256, (ADA,)}
+{CSCI 334, (PPL,)}
+{CSCI 361, (TC,)}
+{Electives, (300-400,)}
+^^CS:= Computer Science.^^
+^^100-Level:= CSCI 134, CSCI 136.^^
+^^200-Level:= CSCI 237, CSCI 256.^^
+^^300-Level:= CSCI 334, CSCI 361, Electives.^^
+^^CSCI 134:= ITCS (Introduction to Computer Science).^^
+^^CSCI 136:= DSAP (Data Structures and Advanced Programming).^^
+^^CSCI 237:= CO (Computer Organization).^^
+^^CSCI 256:= ADA (Algorithm Design and Analysis).^^
+^^CSCI 334:= PPL (Principles of Programming Languages).^^
+^^CSCI 361:= TC (Theory of Computation).^^
+^^Electives:= 300-400 Level Courses.^^

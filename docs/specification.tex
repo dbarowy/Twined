@@ -208,14 +208,22 @@
     \singlespacing
       \begin{tabular}{lll}
           $<\textbf{expression}>$ & ::= & $<\textbf{Node}>$  \\
-                                  & $|$  & $<\textbf{edgeList}>$ \\
-                                  & $|$  & $<\textbf{nodeName}>$ \\
-                                  & $|$  & $<\textbf{listOfNodes}>$ \\
+                                  & $|$  & $<\textbf{NodeInfo}>$ \\
+                                  & $|$  & $<\textbf{EdgeList}>$ \\
+                                  & $|$  & $<\textbf{NodeName}>$ \\
+                                  & $|$  & $<\textbf{NodeList}>$ \\
+                                  & $|$  & $<\textbf{Assignment}>$ \\
+                                  & $|$  & $<\textbf{AssignmentList}>$ \\
+                                  & $|$  & $<\textbf{NodesAndAssignments}>$ \\
                                   
-          $<\textbf{Node}>$   & ::= & \{ $<\textbf{String}>$, $<\textbf{nodeName}>$ \} \\
-          $<\textbf{nodeName}>$& ::= &  $<\textbf{String}>$ \\
-          $<\textbf{edgeList}>$& ::= & ($<\textbf{nodeName}>$ +) \\
-          $<\textbf{listOfNodes}>$& ::= & $<\textbf{Node}>$ + \\
+          $<\textbf{Node}>$   & ::= & \{ $<\textbf{String}>$, $<\textbf{NodeName}>$ \} \\
+          $<\textbf{NodeName}>$& ::= &  $<\textbf{String}>$ \\
+          $<\textbf{EdgeList}>$& ::= & ($<\textbf{NodeName}>$ +) \\
+          $<\textbf{NodeInfo}>$& ::= & $<\textbf{String}>$ \\
+          $<\textbf{NodeLists}>$& ::= & $<\textbf{Node}>$ + \\
+          $<\textbf{Assignment}>$   & ::= & \{ $<\textbf{NodeName}>$, $<\textbf{NodeInfo}>$ \} \\
+          $<\textbf{AssignmentList}>$& ::= & $<\textbf{Assignment}>$ + \\
+          $<\textbf{NodesAndAssignments}>$   & ::= & \{ $<\textbf{NodeList}>$, $<\textbf{AssignmentList}>$ \} \\
           
           \end{tabular}
 
@@ -225,107 +233,98 @@
     \begin{center}
       %\caption{Multirow table.}
       \label{tab:table1}
-      \begin{tabular}{l|c|r|l}
+      \begin{tabular}{|l|c|r|l|}
+        \hline
         \textbf{Syntax} & \textbf{Abstract Syntax} & \textbf{Prec./Assoc.} & \textbf{Meaning}\\
         \hline
-        $<$\text{NodeName}$>$ & Name of string & N/A & NodeName is a primative\\
-        & & & represented using an f\# string\\
+        \text{NodeName} & Name of string & N/A & NodeName is a primitive\\
+        & & & represented using an F\# string\\
         
         \hline
-        $<$\text{EdgeList}$>$ & NodeName list & N/A & An edgeList is a list of\\
-        & & &  NodeNames stored in an f\# list\\
+        \text{(name1, name2,)} & EdgeList list & N/A & An EdgeList is a list of\\
+        & & & NodeNames stored in an F\# list\\
+    
         \hline
-        $<$\text{Node}$>$ & Node of (NodeName * EdgeList) & N/A & A node is a combining form\\
-        & & & that stores a NodeName and \\
+        \text{NodeInfo} & Info of string & N/A & NodeInfo is a primitive\\
+        & & & represented using an F\# string\\
+    
+        \hline
+        \text{name, (name1,)} & Node of (NodeName * EdgeList) & N/A & A node is a combining form\\
+        & & & that stores a NodeName and\\
         & & & a list of nodes that that node is\\
-        & & & connected to in an f\# list \\
-        \hline
-        $<$\text{NodeList}$>$ & Node list & N/A &A series of nodes in the form\\
-        & & & \{node\} \{node\}\\
-        & & & separated by whitespace including\\ 
-        & & & newlines these are used to store all \\
-        & & & nodes in a graph\\
-        \hline
-        $<$\text{NodeInfo}$>$& NodeInfo of String & N/A & primative of information that will\\
-        & & &  be associated with a node\\
-        & & & represented with an f\# string.\\
+        & & & connected to in an F\# list\\
         
         \hline
-        $<$\text{NodeName}$>$ := $<$\text{NodeInfo}$>$& Definition of NodeName := NodeInfo & N/A & A node is a combining form that\\
-        & & & stores a NodeName and a list of \\
-        & & & nodes that the named node is \\
-        & & &  connected to in an f\# list \\
-
+        \text{\{node\} \{node\}} & Node list & N/A & A series of nodes separated\\
+        & & & by whitespace including\\
+        & & & newlines. These are used to \\
+        & & & store all nodes in a graph\\
+        
+        \hline
+        \texttt{\symbol{94}\symbol{94}NodeName := NodeInfo\symbol{94}\symbol{94}} & Assignment of NodeName := NodeInfo & N/A & A combining form that\\
+        & & & uses a NodeName and its\\
+        & & & associated information stored\\
+        & & & in an F\# map\\
+        
+        \hline
+        \texttt{\symbol{94}\symbol{94}NodeName := NodeInfo\symbol{94}\symbol{94}} & List of Assignments & N/A & A series of assignments\\
+        & & & to be stored in an environment\\
+        
+        \hline
+        \text{NodeList and AssignmentList} & Tuple of NodeList  & N/A & A list of nodes\\
+        & and AssignmentList & & that form the graph\\
+        & & & and the assignments of\\
+        & & & each node\\
+        \hline
       \end{tabular}
+
     \end{center}
   \end{table}
-
+  \newpage
+  \newpage
+  \subsection*{Remaining Work}
+  
     \begin{enumerate}
-      \item Primitive values:
+    
+      \item \textbf{Backend Enhancements}
         \begin{enumerate}
-          \item NodeName: A series of characters digits or spaces that represent the name of a node. stored in
-          a string.
-          \item EdgeList: A series of NodeNames, or 0 stored in the form (NodeName, NodeName,) 
-          that contains the NodeNames of nodes connected to the node, stored in a list.
+        \item Enable PDF and other input formats for summarization and graph creation.
+        \item Improve the parser for flexible inputs to prevent errors from missing punctuation.
+        \item Optimize parsing and evaluation algorithms for larger datasets and implement caching.
+        \item Refactor the backend for horizontal scaling and utilize cloud services for dynamic scaling.
         \end{enumerate}
-      \item Combining forms:
+        
+      \item \textbf{Frontend Improvements}
         \begin{enumerate}
-          \item Node: A tuple of the form {NodeName, (EdgeList)} that represents a full node, which is
-          the name of the node and its EdgeList. In the future the node name will be used to access
-          a dictionary that contains the information associted with that node
-          \item NodeList: A series of nodes in the form Node Node separated by whitespace including newlines
-          these are used to represent all nodes in a graph
+        \item Develop a sophisticated, intuitive interface using modern frameworks like React or Vue.js.
+        \item Implement real-time feedback and enhance visualizations with interactive elements and theming options.
+        \item Utilize JavaScript libraries like D3.js for more dynamic and visually appealing graphs.
+        \item Provide export options for graphs in various formats.
         \end{enumerate}
-      \item Evalutation:
-          \begin{enumerate}
-            \item The programs in our language read inputs given in a txt file, it parses the text file and
-            separating the series of nodes and their edges.
-            \item When the program is evaluated it produces a graph using the nodes and their edgelist on the
-            screen
-          \end{enumerate}
-    \end{enumerate}
+        
+      \item \textbf{User Experience and Security}
+        \begin{enumerate}
+        \item Enhance the web interface for smoother interaction and better navigation tools.
+        \item Implement robust authentication systems, including OAuth and connection with student email.
+        \item Integrate OCR technology for extracting text from images and PDFs.
+        \item Add text-to-speech and speech-to-text features for enhanced accessibility.
+        \end{enumerate}
+      
+      \item \textbf{Advanced Features and Documentation}
+        \begin{enumerate}
+        \item Integrate machine learning for insights, recommendations, and automatic node categorization.
+        \item Develop thorough documentation and create a community support portal.
+        \end{enumerate}
 
-
-\newpage
-  \begin{enumerate}
-    \item $[NO]$ You have created a 5-10 minute video presentation, and included this video with your implementation. Note: large video files cannot be added to git; please include a link to Google Drive/YouTube/etc. instead.
-    \item $[YE]$  Your project has a (silly) name.
-    \item $[NO]$ Your project has a specification.
-    \item $[YE]$ Your parser is in a file called \texttt{Parser.fs}.
-    \item $[YE]$ Your AST is in a file called \texttt{AST.fs}.
-    \item $[YE]$ Your interpreter/evaluator is in a file called \texttt{Evaluator.fs}.
-    \item $[YE]$ Your main function is in a file called \texttt{Program.fs}.
-    \item $[YE]$ Your project compiles (this is very important).
-    \item $[YE]$ Your project runs (this is very important).
-    \item $[YE]$ Your language “does something.” It prints out a computed result, it generates a file, etc.
-    \item $[???]$ You are sure to tell the user (me) what the expected result should be!
-    \item $[YE]$ Your implementation has a test suite and it runs.
-    \item $[YE]$ There is at least one test written for the parser.
-    \item $[YE]$ There is at least one test written for the interpreter.
-    \item $[???]$ Your project can be run at the project level by calling \texttt{dotnet run <input>} or at the solution level by calling \texttt{dotnet run --project <whatever.fsproj> <input>}.
-    \item $[YE]$ Your specification document has a title.
-    \item $[YE]$ Your name and your partner’s name is written at the top of the spec.
-    \item $[YE]$ Your specification has an Introduction section consisting of 2+ paragraphs.
-    \item $[YE]$ Your specification has a Design Principles section consisting of 1+ paragraphs.
-    \item $[YE]$ Your specification has an Examples section consisting of 3+ short examples.
-    \item $[NO]$ Each of your examples is provided (and ideally, each example is in a separate file) so that an interested third party (me or one of your classmates) can run them. Instructions to run the examples is provided.
-    \item $[YE]$ Your specification has a Language Concepts section consisting of 1+ paragraphs.
-    \item $[YE]$ Your specification has a Formal Syntax section consisting of as much BNF is needed to completely describe your language’s syntax.
-    \item $[YE]$ Your specification has a Semantics section consisting of one short description per language element(where an element is normally an AST node), completely describing your language.
-    \item $[NO]$ Your specification provides enough detail that an interested third-party (like me or one of your classmates) can write a new program in your language.
-    \item $[\hspace{1em}]$ If your parser is “generous” and accepts programs that actually do not make sense, make sure that the program detects these cases and shuts down cleanly (i.e., the user does not see an exception).
-    \item $[YE]$ You committed your specification, in a folder called docs, to a branch called final-submission.
-    \item $[YE]$ You committed your implementation, in a folder called code, to a branch called final-submission.
-    \item $[NO]$ Your specification has a Remaining Work section that describes further enhancements, if any, you would like to see. If your prior draft had features that you did not get to by the final submission, briefly explain why you were not able to implement them.
-    \item $[\hspace{1em}]$ If you would like me to transfer ownership of your repository to you, please provide the name of a Github user or organization that will take over ownership. Put this username in a file called TRANSFER.txt.
-    \item $[\hspace{1em}]$ If you intend to make your repository public, put a LICENSE.txt copyright statement in your repository, at the root level, so that people know under what conditions you plan to let them use your code. For example, provide a copy of the GNU Public License, or BSD License, etc.
-    \item $[\hspace{1em}]$ Is it OK for me to share your project with future CSCI 334 students? Students often tell me that it is helpful to see what others did. If so, please add a file called SHARING.txt to your repository. If you have any conditions on sharing, please put your notes in the f ile, otherwise it’s OK to leave the file blank. If you do not want to share, do not create the file.
+      \item \textbf{Features Not Implemented}
+        We had planned to implement several additional features and commands, such as 
+        direct interaction with OpenAI's interface for chatting, and the use of OCR technology
+        to convert PNG/JPG images to work with notes on paper. Additionally, we attempted to
+        work with PDF-to-text conversion. Unfortunately, due to time constraints, we were unable
+        to fully develop and integrate these functionalities by the final submission.
   \end{enumerate}
 
-  \newpage
-  \begin{figure} 
-    \includegraphics[width=1\linewidth]{images/ArchitectureDiagram.png} 
-  \end{figure}
+
 
 % DO NOT DELETE ANYTHING BELOW THIS LINE
 \end{document}

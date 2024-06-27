@@ -1,0 +1,20 @@
+{Sunlight, (Plant Growth, Photolysis, Electron Excitation, ATP Formation, NADPH Formation,)}
+{Water, (Plant Growth, Photolysis, Electron Supply, Proton Gradient,)}
+{Photolysis, (Oxygen, Electron Supply, Proton Gradient,)}
+{Oxygen, (Aerobic Organisms,)}
+{Soil Nutrients, (Plant Growth, Photosynthesis,)}
+{Electron Excitation, (Energy Transfer,)}
+{ATP Formation, (Energy Storage,)}
+{NADPH Formation, (Calvin Cycle,)}
+{Electron Supply, (Electron Transport,)}
+{Proton Gradient, (ATP Synthesis,)}
+^^Sunlight:= Excites electrons.^^
+^^Water:= Supplies electrons.^^
+^^Photolysis:= Splits water.^^
+^^Oxygen:= Byproduct of photolysis.^^
+^^Soil Nutrients:= Supports growth.^^
+^^Electron Excitation:= Energy transfer.^^
+^^ATP Formation:= Stores energy.^^
+^^NADPH Formation:= Calvin cycle input.^^
+^^Electron Supply:= Drives transport chain.^^
+^^Proton Gradient:= Synthesizes ATP.^^

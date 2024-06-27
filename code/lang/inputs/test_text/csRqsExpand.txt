@@ -1,0 +1,15 @@
+{CS, (100-Level, 200-Level, 300-Level,)}
+{100-Level, (CSCI 134, CSCI 136,)}
+{200-Level, (CSCI 237, CSCI 256,)}
+{300-Level, (CSCI 334, CSCI 361, Electives,)}
+^^CS:= Computer Science.^^
+^^100-Level:= Intro.^^
+^^200-Level:= Core.^^
+^^300-Level:= Advanced.^^
+^^CSCI 134:= Intro.^^
+^^CSCI 136:= DS&AP.^^
+^^CSCI 237:= CO.^^
+^^CSCI 256:= AD&A.^^
+^^CSCI 334:= PPL.^^
+^^CSCI 361:= TC.^^
+^^Electives:= 300-400 Level.^^

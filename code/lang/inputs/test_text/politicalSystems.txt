@@ -1,0 +1,11 @@
+{Political System, (Monarchy, Democracy, Republic, Empire, Feudalism,)}
+{Monarchy, (Absolute, Constitutional,)}
+{Democracy, (Direct, Representative,)}
+{Republic, (Federal, Parliamentary,)}
+{Empire, (Colonial, Ancient,)}
+{Feudalism, (Medieval,)}
+^^Monarchy:= Rule by a sovereign.^^
+^^Democracy:= Rule by the people.^^
+^^Republic:= Rule by elected representatives.^^
+^^Empire:= Rule over extensive territories.^^
+^^Feudalism:= Medieval hierarchical structure.^^

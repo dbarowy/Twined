@@ -1,6 +1,0 @@
-digraph G {
-"Heat" -> "Melting Glass";
-"Silica" -> "Melting Glass";
-"Soda Ash" -> "Melting Glass";
-"Lime" -> "Melting Glass";
-}

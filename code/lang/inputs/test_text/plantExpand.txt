@@ -1,0 +1,31 @@
+{Roots, (Nutrient Uptake, Plant Growth,)}
+{Leaves, (Photosynthesis, Plant Growth,)}
+{Stem, (Nutrient Transport, Plant Growth,)}
+{Flowers, (Reproduction, Plant Growth,)}
+{Nutrient Uptake, (Plant Growth,)}
+{Photosynthesis, (Energy Production,)}
+{Nutrient Transport, (Energy Distribution,)}
+{Reproduction, (Seed Formation,)}
+{Plant Growth, (Ecosystem Stability,)}
+{Energy Production, (Plant Growth,)}
+{Energy Distribution, (Plant Growth,)}
+{Seed Formation, (New Plants,)}
+{New Plants, (Biodiversity,)}
+{Ecosystem Stability, (Biodiversity,)}
+{Biodiversity, (Ecological Balance,)}
+^^Roots:= Absorb Nutrients.^^
+^^Leaves:= Conduct Photosynthesis.^^
+^^Stem:= Support and Transport.^^
+^^Flowers:= Facilitate Reproduction.^^
+^^Nutrient Uptake:= Absorbs Minerals.^^
+^^Photosynthesis:= Creates Energy.^^
+^^Nutrient Transport:= Distributes Nutrients.^^
+^^Reproduction:= Generates Seeds.^^
+^^Plant Growth:= Increases Size.^^
+^^Energy Production:= Generates Food.^^
+^^Energy Distribution:= Spreads Energy.^^
+^^Seed Formation:= Creates Offspring.^^
+^^New Plants:= Increases Population.^^
+^^Ecosystem Stability:= Maintains Balance.^^
+^^Biodiversity:= Variety of Species.^^
+^^Ecological Balance:= Harmonious Ecosystem.^^

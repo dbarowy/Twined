@@ -1,6 +1,6 @@
-PWD c:\Users\lucas\Projects\CS\Twined_Final\cs334-project-la5-zss1\docs
+PWD c:\Users\lucas\Projects\CS\xxTwined\cs334-project-la5-zss1\docs
 INPUT C:\Users\lucas\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\lucas\Projects\CS\Twined_Final\cs334-project-la5-zss1\docs\specification.tex
+INPUT c:\Users\lucas\Projects\CS\xxTwined\cs334-project-la5-zss1\docs\specification.tex
 OUTPUT specification.log
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
@@ -407,13 +407,6 @@ INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\omsptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\omsptm.fd
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb7t.vf
 INPUT C:\Users\lucas\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
-INPUT .\images\ArchitectureDiagram.png
 INPUT specification.aux
 INPUT .\specification.out
 INPUT .\specification.out
