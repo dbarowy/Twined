@@ -78,7 +78,7 @@
 // // OpenAI
 // // ---------------------------------
 
-// let apiKey = "***REMOVED***"
+// let apiKey = "XXXXXXXX"
 
 // (*
 //     https://learn.microsoft.com/en-us/dotnet/api/system.net.http.headers.authenticationheadervalue.-ctor?view=net-8.0

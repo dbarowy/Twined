@@ -160,7 +160,7 @@ module Views =
 // OpenAI API Integration
 // ---------------------------------
 
-let apiKey = "***REMOVED***"
+let apiKey = "XXXXXXXX"
 
 // Create an HttpClient for making HTTP requests
 let httpClient = new HttpClient()
